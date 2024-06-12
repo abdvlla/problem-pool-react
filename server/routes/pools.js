@@ -42,7 +42,9 @@ function saveImages(pool, coversEncoded, removeCover) {
 // Get all pools with optional filters
 router.get("/", async (req, res) => {
   try {
-    const pools = await Pool.find({});
+    const pools = await Pool.find({}).select(
+      "firstName lastName email number assignedTo status"
+    );
 
     return res.status(200).json({
       count: pools.length,
