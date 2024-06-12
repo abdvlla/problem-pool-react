@@ -60,6 +60,17 @@ const PoolsTable = ({ pools }) => {
 
   const totalPages = Math.ceil(filteredPools.length / entriesPerPage);
 
+  let startPage = Math.max(1, currentPage - 2);
+  let endPage = Math.min(startPage + 4, totalPages);
+
+  if (endPage - startPage < 4) {
+    startPage = Math.max(1, endPage - 4);
+  }
+
+  const pages = [...Array(endPage - startPage + 1).keys()].map(
+    (i) => startPage + i
+  );
+
   return (
     <div className="content-center py-4 px-4 mx-auto max-w-screen-xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50">
       <div className="flex justify-between mb-2">
@@ -213,28 +224,46 @@ const PoolsTable = ({ pools }) => {
         <div className="flex-start">
           <p>
             Showing {indexOfFirstPool + 1} to{" "}
-            {indexOfLastPool > filteredPools.length
-              ? filteredPools.length
-              : indexOfLastPool}{" "}
-            of {filteredPools.length} entries
+            {Math.min(indexOfLastPool, filteredPools.length)} of{" "}
+            {filteredPools.length} entries
           </p>
         </div>
         <div className="flex-end">
-          <div className="flex space-x-2">
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i + 1}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`px-4 py-2 rounded-md ${
-                  currentPage === i + 1
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-900"
-                }`}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div>
+          <button
+            className={`px-4 py-2 rounded-md mr-2 ${
+              currentPage === 1
+                ? "bg-gray-200 text-gray-900 cursor-not-allowed"
+                : "bg-blue-500 text-white"
+            }`}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          {pages.map((page) => (
+            <button
+              key={page}
+              className={`px-3 py-2 rounded-md mr-2 ${
+                currentPage === page
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-900"
+              }`}
+              onClick={() => setCurrentPage(page)}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            className={`px-3 py-2 rounded-md ${
+              currentPage === totalPages
+                ? "bg-gray-200 text-gray-900 cursor-not-allowed"
+                : "bg-blue-500 text-white"
+            }`}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
