@@ -1,5 +1,3 @@
-// backend/routes/pools.js
-
 import express from "express";
 import { Pool } from "../models/pool.js";
 const router = express.Router();
@@ -43,28 +41,16 @@ function saveImages(pool, coversEncoded, removeCover) {
 
 // Get all pools with optional filters
 router.get("/", async (req, res) => {
-  let query = Pool.find();
-  const statusFilter = req.query.status || "";
-  const assignedFilter = req.query.assignedTo || "";
-
-  if (statusFilter) {
-    query = query.where({ status: statusFilter });
-  }
-
-  if (assignedFilter) {
-    query = query.where({ assignedTo: assignedFilter });
-  }
-
   try {
-    const pools = await query.exec();
-    res.json({
-      pools: pools,
-      statusFilter: statusFilter,
-      assignedFilter: assignedFilter,
+    const pools = await Pool.find({});
+
+    return res.status(200).json({
+      count: pools.length,
+      data: pools,
     });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to fetch pools" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
   }
 });
 
@@ -141,18 +127,20 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete a specific pool by ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (request, response) => {
   try {
-    const pool = await Pool.findById(req.params.id).exec();
-    if (!pool) {
-      return res.status(404).json({ error: "Pool not found" });
+    const { id } = request.params;
+
+    const result = await Pool.findByIdAndDelete(id);
+
+    if (!result) {
+      return response.status(404).json({ message: "Pool not found" });
     }
 
-    await pool.remove();
-    res.json({ message: "Pool deleted" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to delete pool" });
+    return response.status(200).send({ message: "Pool deleted successfully" });
+  } catch (error) {
+    console.log(error.message);
+    response.status(500).send({ message: error.message });
   }
 });
 

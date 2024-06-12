@@ -2,6 +2,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 import { FilePond, registerPlugin } from "react-filepond";
 import FilePondPluginFileEncode from "filepond-plugin-file-encode";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
@@ -107,7 +110,7 @@ const Edit = () => {
   };
 
   const handleCancel = () => {
-    navigate("/");
+    navigate(`/pools/${id}`);
   };
 
   return (

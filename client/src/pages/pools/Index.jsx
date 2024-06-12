@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+import PoolsTable from "../../components/PoolsTable";
 
 const Index = () => {
+  const [pools, setPools] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/pools")
+      .then((response) => {
+        setPools(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
-    <div>
-      <h1 className="text-2xl mt-2">Pools home</h1>
-    </div>
+    <>
+      <PoolsTable pools={pools} />
+    </>
   );
 };
 
