@@ -27,12 +27,15 @@ const PoolsTable = ({ pools }) => {
     }
 
     if (searchQuery) {
-      filteredData = filteredData.filter(
-        (pool) =>
-          pool.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          pool.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          pool.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          pool.number.includes(searchQuery)
+      const keywords = searchQuery.toLowerCase().split(" ");
+      filteredData = filteredData.filter((pool) =>
+        keywords.every(
+          (keyword) =>
+            pool.firstName.toLowerCase().includes(keyword) ||
+            pool.lastName.toLowerCase().includes(keyword) ||
+            pool.email.toLowerCase().includes(keyword) ||
+            pool.number.includes(keyword)
+        )
       );
     }
 
