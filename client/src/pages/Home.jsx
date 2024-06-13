@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [counts, setCounts] = useState({
@@ -36,7 +37,7 @@ const Home = () => {
             </h2>
           </div>
           <div className="relative mt-2">
-            <a href="/pools">
+            <Link to="/pools">
               <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">
                 <div className="p-9">
                   <h3 className="w-12 h-9 mx-auto text-gray-900 text-4xl font-bold sm:mx-0">
@@ -50,7 +51,7 @@ const Home = () => {
                   </p>
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="grid max-w-4xl lg:max-w-6xl grid-cols-1 mx-auto mt-8 text-center gap-y-4 sm:gap-x-8 sm:grid-cols-2 lg:grid-cols-3 sm:mt-12 lg:mt-20 sm:text-left">
             <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">

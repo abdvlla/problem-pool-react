@@ -63,7 +63,7 @@ const Navbar = () => {
             </button>
           ) : (
             <NavLink
-              to="/auth"
+              to="/login"
               className="text-sm font-semibold leading-6 text-gray-800"
             >
               Log in
@@ -120,7 +120,7 @@ const Navbar = () => {
                   </button>
                 ) : (
                   <NavLink
-                    to="/auth"
+                    to="/login"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7"
                     onClick={() => setMobileMenuOpen(false)}
                   >
