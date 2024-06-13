@@ -51,7 +51,7 @@ const Show = () => {
 
   return (
     <>
-      <h1 className="text-2xl font-bold">Customer BoW information</h1>
+      <h1 className="text-2xl font-bold mt-3">Customer BoW information</h1>
       <div className="content-center py-8 px-6 mx-auto max-w-4xl bg-gray-50 shadow-lg rounded-lg text-left">
         <div className="border-t border-gray-200">
           <dl className="divide-y divide-gray-200">

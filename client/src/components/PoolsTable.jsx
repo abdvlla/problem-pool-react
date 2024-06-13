@@ -19,8 +19,10 @@ const PoolsTable = ({ pools }) => {
     }
 
     if (staffFilter) {
-      filteredData = filteredData.filter((pool) =>
-        pool.assignedTo.toLowerCase().includes(staffFilter.toLowerCase())
+      filteredData = filteredData.filter(
+        (pool) =>
+          pool.assignedTo &&
+          pool.assignedTo.toLowerCase().includes(staffFilter.toLowerCase())
       );
     }
 
@@ -35,6 +37,7 @@ const PoolsTable = ({ pools }) => {
     }
 
     setFilteredPools(filteredData);
+    setCurrentPage(1);
   }, [statusFilter, staffFilter, searchQuery, pools]);
 
   const handleEntriesChange = (e) => {
@@ -72,8 +75,8 @@ const PoolsTable = ({ pools }) => {
   );
 
   return (
-    <div className="content-center py-4 px-4 mx-auto max-w-screen-xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50">
-      <div className="flex justify-between mb-2">
+    <div className="content-center py-6 px-5 mx-auto max-w-screen-xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 mt-4">
+      <div className="flex justify-between mb-4">
         <div className="justify-start">
           <label className="block text-sm font-medium leading-6 text-gray-900 px-2">
             Entries per page
@@ -108,6 +111,13 @@ const PoolsTable = ({ pools }) => {
                 <option value="">All</option>
                 <option value="New BoW">New BoW</option>
                 <option value="Received">Received</option>
+                <option value="Follow-up 1">Follow-up 1</option>
+                <option value="Follow-up 2">Follow-up 2</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="Improving">Improving</option>
+                <option value="No update">No update</option>
+                <option value="Almost">Almost</option>
+                <option value="Closed">Closed</option>
               </select>
             </div>
           </div>

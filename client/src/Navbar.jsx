@@ -14,11 +14,21 @@ const Navbar = () => {
   };
 
   return (
-    <header className="top-0 z-50 sticky ">
+    <header className="top-0 z-50 sticky border-solid border-2  bg-gray-50 bg-opacity-95">
       <nav
-        className="flex items-center justify-between px-6 py-1 mb-6 lg:px-8 mx-auto max-w-6xl"
+        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
       >
+        <div className="flex lg:flex-1">
+          <NavLink to="/" className="-m-1.5 p-1.5">
+            <span className="sr-only">HHL Home</span>
+            <img
+              className="h-8 w-auto"
+              src="https://poolsuppliesnovascotia.pro/cdn/shop/files/Logo_e26ade37-5699-44c7-831e-4e21036feb4e.jpg?v=1711477056&width=300"
+              alt="Logo"
+            />
+          </NavLink>
+        </div>
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -30,12 +40,6 @@ const Navbar = () => {
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          <NavLink
-            to="/"
-            className="text-sm font-semibold leading-6 text-gray-800"
-          >
-            Home
-          </NavLink>
           <NavLink
             to="/pools"
             className="text-sm font-semibold leading-6 text-gray-800"
@@ -73,7 +77,7 @@ const Navbar = () => {
         onClose={setMobileMenuOpen}
       >
         <div className="fixed inset-0 z-50" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-movieDark px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-50">
+        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-stone-400 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-50">
           <div className="flex items-center justify-between">
             <NavLink
               to="/"

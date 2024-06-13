@@ -31,6 +31,7 @@ const poolSchema = new mongoose.Schema({
 
   status: {
     type: String,
+    index: true,
   },
 
   description: {

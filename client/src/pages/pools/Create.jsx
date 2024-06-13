@@ -81,7 +81,7 @@ const Create = () => {
 
   return (
     <section className="dark:bg-gray-900">
-      <h1 className="text-xl font-bold">Add a new body of water</h1>
+      <h1 className="text-xl font-bold mt-3">Add a new body of water</h1>
       <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-lg">
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 text-left">
           <div className="max-w-full">
@@ -342,15 +342,33 @@ const Create = () => {
             </label>
             <div className="flex gap-x-3">
               <div className="flex space-x-0.5">
-                <input type="radio" name="hhlBuild" />
+                <input
+                  type="radio"
+                  name="hhlBuild"
+                  value="Yes"
+                  checked={hhlBuild === "Yes"}
+                  onChange={(e) => setHhlBuild(e.target.value)}
+                />
                 <label className="text-sm text-gray-500 ms-3">Yes</label>
               </div>
               <div className="flex space-x-0.5">
-                <input type="radio" name="hhlBuild" />
+                <input
+                  type="radio"
+                  name="hhlBuild"
+                  value="No"
+                  checked={hhlBuild === "No"}
+                  onChange={(e) => setHhlBuild(e.target.value)}
+                />
                 <label className="text-sm text-gray-500 ms-3">No</label>
               </div>
               <div className="flex space-x-0.5">
-                <input type="radio" name="hhlBuild" />
+                <input
+                  type="radio"
+                  name="hhlBuild"
+                  value="Unknown"
+                  checked={hhlBuild === "Unknown"}
+                  onChange={(e) => setHhlBuild(e.target.value)}
+                />
                 <label className="text-sm text-gray-500 ms-3">Unknown</label>
               </div>
             </div>

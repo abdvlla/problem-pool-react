@@ -19,6 +19,7 @@ const Index = () => {
 
   return (
     <>
+      <h1 className="mt-3 text-xl font-bold">All customer bodies of water</h1>
       <PoolsTable pools={pools} />
     </>
   );
