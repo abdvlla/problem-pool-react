@@ -40,7 +40,8 @@ const Edit = () => {
   const [brand, setBrand] = useState("");
   const [make, setMake] = useState("");
   const [assignedTo, setAssignedTo] = useState("");
-  const [condition, setCondition] = useState("");
+  const [conditionPool, setConditionPool] = useState("");
+  const [conditionHt, setConditionHt] = useState("");
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -74,7 +75,8 @@ const Edit = () => {
         setBrand(data.brand);
         setMake(data.make);
         setAssignedTo(data.assignedTo);
-        setCondition(data.condition);
+        setConditionPool(data.conditionPool);
+        setConditionHt(data.conditionHt);
       })
       .catch((error) => {
         console.log(error);
@@ -102,7 +104,8 @@ const Edit = () => {
       brand,
       make,
       assignedTo,
-      condition,
+      conditionPool,
+      conditionHt,
     };
     axios
       .put(`http://localhost:5000/pools/${id}`, data, {
@@ -124,9 +127,7 @@ const Edit = () => {
 
   return (
     <section className="dark:bg-gray-900">
-      <h1 className="text-xl font-bold mt-3 text-center">
-        Update body of water
-      </h1>
+      <h1 className="text-xl font-bold mt-3">Add a new body of water</h1>
       <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-lg">
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 text-left">
           <div className="max-w-full">
@@ -151,6 +152,7 @@ const Edit = () => {
               onChange={(e) => setLastName(e.target.value)}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
               placeholder="Last name"
+              required={true}
             />
           </div>
           <div className="w-full">
@@ -243,42 +245,6 @@ const Edit = () => {
           </div>
           <div className="w-full">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Pool size
-            </label>
-            <input
-              type="text"
-              value={size}
-              onChange={(e) => setSize(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Pool size"
-            />
-          </div>
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Brand
-            </label>
-            <input
-              type="text"
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Brand"
-            />
-          </div>
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Make
-            </label>
-            <input
-              type="text"
-              value={make}
-              onChange={(e) => setMake(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Make"
-            />
-          </div>
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               System
             </label>
             <input
@@ -286,45 +252,143 @@ const Edit = () => {
               value={system}
               onChange={(e) => setSystem(e.target.value)}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Maintenance Chemicals"
+              placeholder="Maintenance chemicals"
             />
           </div>
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Pump
-            </label>
-            <input
-              type="text"
-              value={pump}
-              onChange={(e) => setPump(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Pool pump"
-            />
-          </div>
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Filter
-            </label>
-            <input
-              type="text"
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Pool filter"
-            />
-          </div>
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Heater
-            </label>
-            <input
-              type="text"
-              value={heater}
-              onChange={(e) => setHeater(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              placeholder="Heating system (if any)"
-            />
-          </div>
+          {["Pool (Unknown type)", "IG", "AG", "OG"].includes(bodyOfWater) && (
+            <>
+              <div className="w-full">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Pool size
+                </label>
+                <input
+                  type="text"
+                  value={size}
+                  onChange={(e) => setSize(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="Pool size"
+                />
+              </div>
+              <div className="w-full">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Pump
+                </label>
+                <input
+                  type="text"
+                  value={pump}
+                  onChange={(e) => setPump(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="Pool pump"
+                />
+              </div>
+              <div className="w-full">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Filter
+                </label>
+                <input
+                  type="text"
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="Pool filter"
+                />
+              </div>
+              <div className="w-full">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Heater
+                </label>
+                <input
+                  type="text"
+                  value={heater}
+                  onChange={(e) => setHeater(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="Heating system (if any)"
+                />
+              </div>
+              <div className="w-full">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Condition
+                </label>
+                <select
+                  value={conditionPool}
+                  onChange={(e) => setConditionPool(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                >
+                  <option value=""></option>
+                  <option value="Clear">Clear</option>
+                  <option value="Blue/Cloudy (cannot see floor)">
+                    Blue/Cloudy (cannot see floor)
+                  </option>
+                  <option value="Milky Dead Algae">Milky Dead Algae</option>
+                  <option value="Hazy">Hazy</option>
+                  <option value="Algae - Green Cloudy">
+                    Algae - Green Cloudy
+                  </option>
+                  <option value="Discolored water">Discolored water</option>
+                  <option value="Stains">Stains</option>
+                  <option value="Fine debris settling on floor">
+                    Fine debris settling on floor
+                  </option>
+                  <option value="Zero Alkalinity">Zero Alkalinity</option>
+                </select>
+              </div>
+            </>
+          )}
+          {["HT", "SS"].includes(bodyOfWater) && (
+            <>
+              <div className="w-full">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Brand
+                </label>
+                <input
+                  type="text"
+                  value={brand}
+                  onChange={(e) => setBrand(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="Brand"
+                />
+              </div>
+              <div className="w-full">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Make
+                </label>
+                <input
+                  type="text"
+                  value={make}
+                  onChange={(e) => setMake(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="Make"
+                />
+              </div>
+              <div className="w-full">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Condition
+                </label>
+                <select
+                  value={conditionHt}
+                  onChange={(e) => setConditionHt(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                >
+                  <option value=""></option>
+                  <option value="Clear">Clear</option>
+                  <option value="Blue/Cloudy (cannot see floor)">
+                    Blue/Cloudy (cannot see floor)
+                  </option>
+                  <option value="Milky Dead Algae">Milky Dead Algae</option>
+                  <option value="Hazy">Hazy</option>
+                  <option value="Algae - Green Cloudy">
+                    Algae - Green Cloudy
+                  </option>
+                  <option value="Discolored water">Discolored water</option>
+                  <option value="Stains">Stains</option>
+                  <option value="Fine debris settling on floor">
+                    Fine debris settling on floor
+                  </option>
+                  <option value="Zero Alkalinity">Zero Alkalinity</option>
+                </select>
+              </div>
+            </>
+          )}
           <div className="w-full">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Other equipment
@@ -344,7 +408,8 @@ const Edit = () => {
             <select
               value={assignedTo}
               onChange={(e) => setAssignedTo(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus
+block w-full p-2.5"
             >
               <option value=""></option>
               <option value="Colby">Colby</option>
@@ -355,30 +420,6 @@ const Edit = () => {
               <option value="Hannah">Hannah</option>
               <option value="Jack">Jack</option>
               <option value="Jaime">Jaime</option>
-            </select>
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Condition
-            </label>
-            <select
-              value={condition}
-              onChange={(e) => setCondition(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            >
-              <option value=""></option>
-              <option value="Clear">Clear</option>
-              <option value="Blue/Cloudy (cannot see floor)">
-                Blue/Cloudy (cannot see floor)
-              </option>
-              <option value="Milky Dead Algae">Milky Dead Algae</option>
-              <option value="Hazy">Hazy</option>
-              <option value="Algae - Green Cloudy">Algae - Green Cloudy</option>
-              <option value="Discolored water">Discolored water</option>
-              <option value="Stains">Stains</option>
-              <option value="Fine debris settling on floor">
-                Fine debris settling on floor
-              </option>
             </select>
           </div>
           <div className="max-w-full">
