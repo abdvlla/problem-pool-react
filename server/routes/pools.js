@@ -97,9 +97,7 @@ router.post("/", async (req, res) => {
 // Get a specific pool by ID
 router.get("/:id", async (req, res) => {
   try {
-    const pool = await Pool.findById(req.params.id).select(
-      "firstName lastName email number altNumber altEmail bodyOfWater description system pump filter heater hhlBuild size otherEquipment brand make condition assignedTo status"
-    );
+    const pool = await Pool.findById(req.params.id);
     if (!pool) {
       return res.status(404).json({ error: "Pool not found" });
     }

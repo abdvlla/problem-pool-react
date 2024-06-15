@@ -44,10 +44,15 @@ const Edit = () => {
 
   const navigate = useNavigate();
   const { id } = useParams();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/pools/${id}`)
+      .get(`http://localhost:5000/pools/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         const data = response.data;
         setFirstName(data.firstName);
@@ -100,7 +105,11 @@ const Edit = () => {
       condition,
     };
     axios
-      .put(`http://localhost:5000/pools/${id}`, data)
+      .put(`http://localhost:5000/pools/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then(() => {
         navigate(`/pools/${id}`);
       })

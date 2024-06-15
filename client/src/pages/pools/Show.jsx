@@ -1,4 +1,3 @@
-// src/components/Show.js
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link, useNavigate } from "react-router-dom";
@@ -6,14 +5,20 @@ import Swal from "sweetalert2";
 import BackButton from "../../components/BackButton";
 
 const Show = () => {
+  const token = localStorage.getItem("token");
   const [pool, setPool] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/pools/${id}`)
+      .get(`http://localhost:5000/pools/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
+        console.log(response.data);
         setPool(response.data);
       })
       .catch((error) => {
@@ -38,7 +43,11 @@ const Show = () => {
           icon: "success",
         });
         axios
-          .delete(`http://localhost:5000/pools/${id}`)
+          .delete(`http://localhost:5000/pools/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
           .then(() => {
             navigate("/pools");
           })
@@ -74,10 +83,10 @@ const Show = () => {
                 <div>
                   <dt className="text-sm font-medium text-gray-900">E-mail</dt>
                   <dd className="mt-1 text-sm text-blue-600 underline">
-                    <a>{pool.email}</a>
+                    <a href={`mailto:${pool.email}`}>{pool.email}</a>
                   </dd>
                   <dd className="mt-1 text-sm text-blue-600 underline">
-                    <a>{pool.altEmail}</a>
+                    <a href={`mailto:${pool.altEmail}`}>{pool.altEmail}</a>
                   </dd>
                 </div>
               )}
@@ -113,7 +122,9 @@ const Show = () => {
               <div id="condition">
                 <dt className="text-sm font-medium text-gray-900">Condition</dt>
                 <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
-                  {pool.condition}
+                  {pool.conditionPool === true
+                    ? pool.conditionPool
+                    : pool.conditionHt}
                 </dd>
               </div>
             </div>
@@ -242,12 +253,38 @@ const Show = () => {
                 </div>
               </div>
             )}
-            {/* {pool.images && (
-            <div className="py-6">
-              <dt className="text-sm font-medium text-gray-900">Images</dt>
-              <dd className="mt-2 text-sm text-gray-900"></dd>
-            </div>
-          )} */}
+            {pool.coverImagePath && pool.coverImagePath.length > 0 && (
+              <div className="py-6">
+                <dt className="text-sm font-medium text-gray-900">Images</dt>
+                <dd className="mt-2 text-sm text-gray-900">
+                  <ul
+                    role="list"
+                    className="divide-y divide-gray-100 rounded-md border border-gray-200"
+                  >
+                    {pool.coverImagePath.map((imagePath, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
+                      >
+                        <div className="flex w-0 flex-1 items-center">
+                          <div className="ml-2 flex min-w-0 flex-1 gap-2">
+                            <img
+                              className=""
+                              style={{
+                                marginTop: "10px",
+                                marginBottom: "10px",
+                              }}
+                              src={imagePath}
+                              alt={`Image ${index + 1}`}
+                            />
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            )}
           </dl>
           <div className="py-6 flex space-x-2 justify-center">
             <Link to={`/pools/${pool._id}/edit`}>
