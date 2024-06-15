@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  const token = localStorage.getItem("token");
   const [counts, setCounts] = useState({
     allBodiesOfWater: 0,
     newBoWCount: 0,
@@ -18,7 +19,11 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/")
+      .get("http://localhost:5000/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         setCounts(response.data.data);
       })

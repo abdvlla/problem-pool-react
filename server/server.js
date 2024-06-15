@@ -52,7 +52,7 @@ const authenticateToken = (req, res, next) => {
 };
 
 app.use("/pools", authenticateToken, pools);
-app.use("/", index);
+app.use("/", authenticateToken, index);
 
 mongoose
   .connect(process.env.DATABASE_URL)
