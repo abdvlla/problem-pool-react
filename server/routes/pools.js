@@ -1,5 +1,7 @@
 import express from "express";
 import { Pool } from "../models/pool.js";
+const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
+
 const router = express.Router();
 
 // Helper function to log request body
@@ -58,8 +60,6 @@ router.get("/", async (req, res) => {
 
 // Create a new pool
 router.post("/", async (req, res) => {
-  logRequestBody(req.body); // Log the request body
-
   const newPool = new Pool({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -84,14 +84,16 @@ router.post("/", async (req, res) => {
     conditionHt: req.body.conditionHt,
   });
 
-  // saveImages(newPool, req.body.images);
+  saveImages(newPool, req.body.images, req.body.removeCover);
 
   try {
     const pool = await Pool.create(newPool);
     return res.status(201).send(pool);
   } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: "Failed to create pool" });
+    console.error(err.message);
+    res
+      .status(400)
+      .json({ error: "Failed to create pool", details: err.message });
   }
 });
 
@@ -113,12 +115,15 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-
-    const result = await Pool.findByIdAndUpdate(id, req.body);
-
-    if (!result) {
+    const pool = await Pool.findById(id);
+    if (!pool) {
       return res.status(404).json({ message: "Body of water not found" });
     }
+
+    Object.assign(pool, req.body);
+    saveImages(pool, req.body.images, req.body.removeCover);
+
+    await pool.save();
 
     return res
       .status(200)

@@ -15,18 +15,17 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use(cors());
+app.use(express.json({ limit: "50mb" }));
+app.use(cors({}));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
+
+app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 
 const USERNAME = process.env.ADMIN_USERNAME;
 const PASSWORD = process.env.ADMIN_PASSWORD;
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
-
-console.log("USERNAME:", USERNAME);
-console.log("PASSWORD:", PASSWORD);
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -42,10 +41,10 @@ const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (token == null) return res.sendStatus(401); // If there's no token
+  if (token == null) return res.sendStatus(401);
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403); // If the token is no longer valid
+    if (err) return res.sendStatus(403);
     req.user = user;
     next();
   });

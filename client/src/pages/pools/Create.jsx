@@ -1,20 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
 import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
 import FilePondPluginFileEncode from "filepond-plugin-file-encode";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-import "filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css";
-import "filepond/dist/filepond.min.css";
 
-registerPlugin(
-  FilePondPluginFileEncode,
-  FilePondPluginImagePreview,
-  FilePondPluginImageExifOrientation
-);
+registerPlugin(FilePondPluginFileEncode, FilePondPluginImagePreview);
 
 const Create = () => {
   const [firstName, setFirstName] = useState("");
@@ -39,10 +34,27 @@ const Create = () => {
   const [conditionPool, setConditionPool] = useState("");
   const [conditionHt, setConditionHt] = useState("");
 
+  const [files, setFiles] = useState([]);
+
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
   const handleSavePool = () => {
+    if (!firstName || !lastName || !bodyOfWater) {
+      Swal.fire({
+        icon: "error",
+        title: "Missing Fields",
+        text: "Please fill out name and body of water.",
+      });
+      return;
+    }
+
+    const images = files.map((fileItem) => {
+      const file = fileItem.getFileEncodeBase64String();
+      const type = fileItem.fileType;
+      return JSON.stringify({ type, data: file });
+    });
+
     const data = {
       firstName,
       lastName,
@@ -65,19 +77,43 @@ const Create = () => {
       assignedTo,
       conditionPool,
       conditionHt,
+      images,
     };
     axios
       .post("http://localhost:5000/pools", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        maxBodyLength: Infinity,
       })
       .then((response) => {
         const createdPoolId = response.data._id;
         navigate(`/pools/${createdPoolId}`);
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Body of water successfully added.",
+          width: 500,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong! Body of water not added.",
+          width: 500,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
       });
   };
 
@@ -425,23 +461,16 @@ block w-full p-2.5"
               placeholder="Description"
             />
           </div>
-          {/* <div className="sm:col-span-2">
-              <label
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Image(s)
-              </label>
-              <FilePond
-                files={poolData.images.map((image) => ({
-                  source: image.image,
-                  options: {
-                    type: "local",
-                  },
-                }))}
-                allowMultiple={true}
-                onupdatefiles={handleImageChange}
-              />
-            </div> */}
+          <div className="sm:col-span-2">
+            <FilePond
+              files={files}
+              onupdatefiles={setFiles}
+              allowMultiple={true}
+              maxTotalFileSize="100MB"
+              name="images"
+              labelIdle='Drag & drop your images or <span class="filepond--label-action">Browse</span>'
+            />
+          </div>
           <div className="flex flex-cols-2 space-x-1">
             <button
               onClick={handleCancel}

@@ -41,6 +41,11 @@ const Show = () => {
           title: "Deleted!",
           text: "Your file has been deleted.",
           icon: "success",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          position: "top-end",
+          toast: true,
         });
         axios
           .delete(`http://localhost:5000/pools/${id}`, {
