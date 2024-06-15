@@ -122,9 +122,7 @@ const Show = () => {
               <div id="condition">
                 <dt className="text-sm font-medium text-gray-900">Condition</dt>
                 <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
-                  {pool.conditionPool === true
-                    ? pool.conditionPool
-                    : pool.conditionHt}
+                  {pool.conditionPool ? pool.conditionPool : pool.conditionHt}
                 </dd>
               </div>
             </div>

@@ -80,7 +80,8 @@ router.post("/", async (req, res) => {
     brand: req.body.brand,
     make: req.body.make,
     assignedTo: req.body.assignedTo,
-    condition: req.body.condition,
+    conditionPool: req.body.conditionPool,
+    conditionHt: req.body.conditionHt,
   });
 
   // saveImages(newPool, req.body.images);

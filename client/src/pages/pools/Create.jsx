@@ -37,7 +37,8 @@ const Create = () => {
   const [brand, setBrand] = useState("");
   const [make, setMake] = useState("");
   const [assignedTo, setAssignedTo] = useState("");
-  const [condition, setCondition] = useState("");
+  const [conditionPool, setConditionPool] = useState("");
+  const [conditionHt, setConditionHt] = useState("");
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -63,7 +64,8 @@ const Create = () => {
       brand,
       make,
       assignedTo,
-      condition,
+      conditionPool,
+      conditionHt,
     };
     axios
       .post("http://localhost:5000/pools", data, {
@@ -323,8 +325,8 @@ const Create = () => {
               Condition
             </label>
             <select
-              value={condition}
-              onChange={(e) => setCondition(e.target.value)}
+              value={conditionPool}
+              onChange={(e) => setConditionPool(e.target.value)}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             >
               <option value=""></option>
