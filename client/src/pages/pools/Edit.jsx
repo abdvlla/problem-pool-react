@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 
 import { FilePond, registerPlugin } from "react-filepond";
 import FilePondPluginFileEncode from "filepond-plugin-file-encode";
@@ -42,6 +41,9 @@ const Edit = () => {
   const [assignedTo, setAssignedTo] = useState("");
   const [conditionPool, setConditionPool] = useState("");
   const [conditionHt, setConditionHt] = useState("");
+
+  const [files, setFiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -84,6 +86,23 @@ const Edit = () => {
   }, []);
 
   const handleEditPool = () => {
+    if (!firstName || !lastName || !bodyOfWater) {
+      Swal.fire({
+        icon: "error",
+        title: "Missing Fields",
+        text: "Please fill out name and body of water.",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    const images = files.map((fileItem) => {
+      const file = fileItem.getFileEncodeBase64String();
+      const type = fileItem.fileType;
+      return JSON.stringify({ type, data: file });
+    });
+
     const data = {
       firstName,
       lastName,
@@ -106,6 +125,7 @@ const Edit = () => {
       assignedTo,
       conditionPool,
       conditionHt,
+      images,
     };
     axios
       .put(`http://localhost:5000/pools/${id}`, data, {
@@ -114,10 +134,34 @@ const Edit = () => {
         },
       })
       .then(() => {
+        setIsLoading(false);
         navigate(`/pools/${id}`);
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Body of water successfully updated.",
+          width: 500,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong! Body of water not updated.",
+          width: 500,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
       });
   };
 
@@ -465,35 +509,30 @@ block w-full p-2.5"
               placeholder="Description"
             />
           </div>
-          {/* <div className="sm:col-span-2">
-              <label
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Image(s)
-              </label>
-              <FilePond
-                files={poolData.images.map((image) => ({
-                  source: image.image,
-                  options: {
-                    type: "local",
-                  },
-                }))}
-                allowMultiple={true}
-                onupdatefiles={handleImageChange}
-              />
-            </div> */}
+          <div className="sm:col-span-2">
+            <FilePond
+              files={files}
+              onupdatefiles={setFiles}
+              allowMultiple={true}
+              maxTotalFileSize="100MB"
+              name="images"
+              labelIdle='Drag & drop your images or <span class="filepond--label-action">Browse</span>'
+            />
+          </div>
           <div className="flex flex-cols-2 space-x-1">
             <button
               onClick={handleCancel}
               className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+              disabled={isLoading}
             >
               Cancel
             </button>
             <button
               onClick={handleEditPool}
               className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
+              disabled={isLoading}
             >
-              Update
+              {isLoading ? "Updating..." : "Update"}
             </button>
           </div>
         </div>

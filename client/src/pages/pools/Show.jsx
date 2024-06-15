@@ -7,6 +7,7 @@ import BackButton from "../../components/BackButton";
 const Show = () => {
   const token = localStorage.getItem("token");
   const [pool, setPool] = useState({});
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -20,9 +21,11 @@ const Show = () => {
       .then((response) => {
         console.log(response.data);
         setPool(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
       });
   }, []);
 
@@ -62,6 +65,15 @@ const Show = () => {
       }
     });
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader"></div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <>

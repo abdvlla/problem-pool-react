@@ -35,6 +35,7 @@ const Create = () => {
   const [conditionHt, setConditionHt] = useState("");
 
   const [files, setFiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -48,6 +49,8 @@ const Create = () => {
       });
       return;
     }
+
+    setIsLoading(true);
 
     const images = files.map((fileItem) => {
       const file = fileItem.getFileEncodeBase64String();
@@ -87,6 +90,7 @@ const Create = () => {
         maxBodyLength: Infinity,
       })
       .then((response) => {
+        setIsLoading(false);
         const createdPoolId = response.data._id;
         navigate(`/pools/${createdPoolId}`);
         Swal.fire({
@@ -102,6 +106,7 @@ const Create = () => {
         });
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log(error);
         Swal.fire({
           icon: "error",
@@ -475,14 +480,16 @@ block w-full p-2.5"
             <button
               onClick={handleCancel}
               className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+              disabled={isLoading}
             >
               Cancel
             </button>
             <button
               onClick={handleSavePool}
               className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              disabled={isLoading}
             >
-              Add
+              {isLoading ? "Adding..." : "Add"}
             </button>
           </div>
         </div>
