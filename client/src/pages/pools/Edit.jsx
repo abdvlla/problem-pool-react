@@ -371,20 +371,13 @@ const Edit = () => {
                 >
                   <option value=""></option>
                   <option value="Clear">Clear</option>
-                  <option value="Blue/Cloudy (cannot see floor)">
-                    Blue/Cloudy (cannot see floor)
-                  </option>
-                  <option value="Milky Dead Algae">Milky Dead Algae</option>
-                  <option value="Hazy">Hazy</option>
-                  <option value="Algae - Green Cloudy">
-                    Algae - Green Cloudy
-                  </option>
-                  <option value="Discolored water">Discolored water</option>
+                  <option value="Cloudy">Cloudy</option>
+                  <option value="Foaming">Foaming</option>
+                  <option value="Odors">Odors</option>
                   <option value="Stains">Stains</option>
-                  <option value="Fine debris settling on floor">
-                    Fine debris settling on floor
-                  </option>
-                  <option value="Zero Alkalinity">Zero Alkalinity</option>
+                  <option value="Discolored water">Discolored water</option>
+                  <option value="Scale">Scale</option>
+                  <option value="Biofilm">Biofilm</option>
                 </select>
               </div>
             </>
