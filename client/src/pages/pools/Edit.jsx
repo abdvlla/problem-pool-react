@@ -115,7 +115,9 @@ const Edit = () => {
 
   return (
     <section className="dark:bg-gray-900">
-      <h1 className="text-xl font-bold mt-3">Update body of water</h1>
+      <h1 className="text-xl font-bold mt-3 text-center">
+        Update body of water
+      </h1>
       <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-lg">
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 text-left">
           <div className="max-w-full">

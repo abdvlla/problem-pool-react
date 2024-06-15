@@ -3,18 +3,21 @@ import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink, useNavigate } from "react-router-dom";
 
-const Navbar = () => {
-  const isLoggedIn = localStorage.getItem("guest_session_id") !== null;
-  const navigate = useNavigate();
+const Navbar = ({ isLoggedIn, onLogout }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const logout = () => {
-    localStorage.removeItem("guest_session_id");
+    onLogout();
     navigate("/auth");
   };
 
+  if (!isLoggedIn) {
+    return null;
+  }
+
   return (
-    <header className="top-0 z-50 sticky border-solid border-2  bg-gray-50 bg-opacity-95">
+    <header className="top-0 z-50 sticky border-solid border-2 bg-gray-50 bg-opacity-95">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -54,21 +57,12 @@ const Navbar = () => {
           </NavLink>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {isLoggedIn ? (
-            <button
-              className="text-md font-semibold leading-6 text-gray-800"
-              onClick={logout}
-            >
-              Log out
-            </button>
-          ) : (
-            <NavLink
-              to="/login"
-              className="text-sm font-semibold leading-6 text-gray-800"
-            >
-              Log in
-            </NavLink>
-          )}
+          <button
+            className="text-sm font-semibold leading-6 text-gray-800"
+            onClick={logout}
+          >
+            Log out
+          </button>
         </div>
       </nav>
       <Dialog
@@ -108,25 +102,15 @@ const Navbar = () => {
                 </NavLink>
               </div>
               <div className="py-6">
-                {isLoggedIn ? (
-                  <button
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7"
-                    onClick={() => {
-                      logout();
-                      setMobileMenuOpen(false);
-                    }}
-                  >
-                    Log out
-                  </button>
-                ) : (
-                  <NavLink
-                    to="/login"
-                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Log in
-                  </NavLink>
-                )}
+                <button
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7"
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  Log out
+                </button>
               </div>
             </div>
           </div>

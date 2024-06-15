@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
+import jwt from "jsonwebtoken";
 
 // Routes imports
 
@@ -20,7 +21,37 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/pools", pools);
+const USERNAME = process.env.ADMIN_USERNAME;
+const PASSWORD = process.env.ADMIN_PASSWORD;
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
+
+console.log("USERNAME:", USERNAME);
+console.log("PASSWORD:", PASSWORD);
+
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  if (username === USERNAME && password === PASSWORD) {
+    const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" });
+    res.status(200).send({ message: "Login successful", token });
+  } else {
+    res.status(401).send({ message: "Invalid credentials" });
+  }
+});
+
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null) return res.sendStatus(401); // If there's no token
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403); // If the token is no longer valid
+    req.user = user;
+    next();
+  });
+};
+
+app.use("/pools", authenticateToken, pools);
 app.use("/", index);
 
 mongoose
