@@ -19,7 +19,7 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    setIsLoggedIn(localStorage.getItem("guest_session_id") !== null);
+    setIsLoggedIn(localStorage.getItem("token") !== null);
   }, []);
 
   const handleLogin = () => {
@@ -29,7 +29,7 @@ const App = () => {
 
   const handleLogout = () => {
     console.log("User logged out");
-    localStorage.removeItem("guest_session_id");
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
   };
 
