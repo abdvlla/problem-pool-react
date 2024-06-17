@@ -27,7 +27,7 @@ app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN, // Your client URL
+    origin: process.env.CORS_ORIGIN, // client URL
     optionsSuccessStatus: 200,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
@@ -66,7 +66,7 @@ const authenticateToken = (req, res, next) => {
 
 // Routes
 app.use("/pools", authenticateToken, pools);
-app.use("/api", authenticateToken, index);
+app.use("/home", authenticateToken, index);
 app.post("/verify-token", authenticateToken, (req, res) => {
   res.status(200).send({ valid: true });
 });
