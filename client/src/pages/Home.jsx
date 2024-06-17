@@ -25,7 +25,7 @@ const Home = () => {
         },
       })
       .then((response) => {
-        setCounts(response.data.data);
+        setCounts(response.data.data || {});
       })
       .catch((error) => {
         console.log(error);
@@ -46,7 +46,7 @@ const Home = () => {
               <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">
                 <div className="p-9">
                   <h3 className="w-12 h-9 mx-auto text-gray-900 text-4xl font-bold sm:mx-0">
-                    {counts.allBodiesOfWater}
+                    {counts?.allBodiesOfWater ?? 0}
                   </h3>
                   <h3 className="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">
                     All Bodies of Water
@@ -62,7 +62,7 @@ const Home = () => {
             <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">
               <div className="p-9">
                 <h3 className="w-12 h-9 mx-auto text-gray-900 text-4xl font-bold sm:mx-0">
-                  {counts.newBoWCount}
+                  {counts?.newBoWCount ?? 0}
                 </h3>
                 <h3 className="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">
                   New BoW
@@ -76,7 +76,7 @@ const Home = () => {
               <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">
                 <div className="p-9">
                   <h3 className="w-12 h-12 mx-auto text-gray-900 text-4xl font-bold sm:mx-0">
-                    {counts.receivedCount}
+                    {counts?.receivedCount ?? 0}
                   </h3>
                   <h3 className="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">
                     Received
@@ -90,7 +90,7 @@ const Home = () => {
             <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">
               <div className="p-9">
                 <h3 className="w-12 h-12 mx-auto text-gray-900 text-4xl font-bold sm:mx-0">
-                  {counts.ongoingCount}
+                  {counts?.ongoingCount ?? 0}
                 </h3>
                 <h3 className="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">
                   Ongoing
@@ -104,7 +104,7 @@ const Home = () => {
             <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">
               <div className="p-9">
                 <h3 className="w-12 h-12 mx-auto text-gray-900 text-4xl font-bold sm:mx-0">
-                  {counts.improvingCount}
+                  {counts?.improvingCount ?? 0}
                 </h3>
                 <h3 className="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">
                   Improving
@@ -117,7 +117,7 @@ const Home = () => {
             <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">
               <div className="p-9">
                 <h3 className="w-12 h-12 mx-auto text-gray-900 text-4xl font-bold sm:mx-0">
-                  {counts.almostCount}
+                  {counts?.almostCount ?? 0}
                 </h3>
                 <h3 className="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">
                   Almost
@@ -131,7 +131,7 @@ const Home = () => {
             <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">
               <div className="p-9">
                 <h3 className="w-12 h-12 mx-auto text-gray-900 text-4xl font-bold sm:mx-0">
-                  {counts.closedCount}
+                  {counts?.closedCount ?? 0}
                 </h3>
                 <h3 className="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">
                   Closed
@@ -144,7 +144,7 @@ const Home = () => {
             <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">
               <div className="p-9">
                 <h3 className="w-12 h-12 mx-auto text-gray-900 text-4xl font-bold sm:mx-0">
-                  {counts.followUp1Count}
+                  {counts?.followUp1Count ?? 0}
                 </h3>
                 <h3 className="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">
                   Follow-up 1
@@ -158,7 +158,7 @@ const Home = () => {
             <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">
               <div className="p-9">
                 <h3 className="w-12 h-12 mx-auto text-gray-900 text-4xl font-bold sm:mx-0">
-                  {counts.followUp2Count}
+                  {counts?.followUp2Count ?? 0}
                 </h3>
                 <h3 className="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">
                   Follow-up 2
@@ -172,7 +172,7 @@ const Home = () => {
             <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-full hover:bg-gray-200 transition duration-300">
               <div className="p-9">
                 <h3 className="w-12 h-12 mx-auto text-gray-900 text-4xl font-bold sm:mx-0">
-                  {counts.noUpdateCount}
+                  {counts?.noUpdateCount ?? 0}
                 </h3>
                 <h3 className="mt-6 text-2xl font-bold text-gray-900 sm:mt-10">
                   No Update
