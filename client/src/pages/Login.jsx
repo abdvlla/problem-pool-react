@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
@@ -29,6 +30,17 @@ const Login = ({ onLogin }) => {
     } catch (err) {
       console.error("Login failed:", err);
       setError("Invalid credentials");
+      Swal.fire({
+        icon: "error",
+        title: "Failed login attempt",
+        text: "You were not able to login. Please check your credentials.",
+        width: 500,
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
     }
   };
 

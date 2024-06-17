@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Home = () => {
   const token = localStorage.getItem("token");
@@ -36,6 +37,17 @@ const Home = () => {
         setCounts(response.data.data || {});
       } catch (error) {
         console.error("Error fetching data:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "Unable to fetch data. Check console for details.",
+          width: 500,
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
       }
     };
 

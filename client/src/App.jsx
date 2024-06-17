@@ -14,6 +14,7 @@ import Edit from "./pages/pools/Edit";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
+import Swal from "sweetalert2";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -50,11 +51,33 @@ const App = () => {
 
   const handleLogin = () => {
     console.log("User logged in");
+    Swal.fire({
+      icon: "success",
+      title: "Success!",
+      text: "Successfully logged in.",
+      width: 500,
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+    });
     setIsLoggedIn(true);
   };
 
   const handleLogout = () => {
     console.log("User logged out");
+    Swal.fire({
+      icon: "success",
+      title: "Success!",
+      text: "Successfully logged out.",
+      width: 500,
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+    });
     localStorage.removeItem("token");
     setIsLoggedIn(false);
   };
