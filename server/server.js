@@ -16,7 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // For react deploy
-app.use(express.static(path.join(__dirname, "../client/build")));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.use(express.json({ limit: "50mb" }));
 app.use(cors({}));
@@ -57,7 +57,7 @@ app.use("/pools", authenticateToken, pools);
 app.use("/", authenticateToken, index);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
 mongoose
