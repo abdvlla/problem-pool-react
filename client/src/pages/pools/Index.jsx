@@ -17,11 +17,14 @@ const Index = () => {
 
     const fetchPools = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/pools", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/pools`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setPools(response.data.data);
         setLoading(false);
       } catch (err) {
