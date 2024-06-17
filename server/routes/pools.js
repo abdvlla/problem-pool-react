@@ -4,11 +4,6 @@ const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
 
 const router = express.Router();
 
-// Helper function to log request body
-function logRequestBody(body) {
-  console.log("Request Body:", JSON.stringify(body, null, 2));
-}
-
 // Save images to the pool
 function saveImages(pool, coversEncoded, removeCover) {
   if (removeCover && Array.isArray(removeCover)) {
