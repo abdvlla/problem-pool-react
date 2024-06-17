@@ -17,9 +17,35 @@ import "./App.css";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoggedIn(localStorage.getItem("token") !== null);
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/verify-token`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.valid) {
+            setIsLoggedIn(true);
+          } else {
+            localStorage.removeItem("token");
+            setIsLoggedIn(false);
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error verifying token:", error);
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   const handleLogin = () => {
@@ -32,6 +58,10 @@ const App = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -77,7 +107,12 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+        <Route
+          path="/login"
+          element={
+            isLoggedIn ? <Navigate to="/" /> : <Login onLogin={handleLogin} />
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>

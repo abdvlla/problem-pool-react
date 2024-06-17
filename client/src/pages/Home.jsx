@@ -18,19 +18,29 @@ const Home = () => {
   });
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_BASE_URL}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
+    if (!token) {
+      console.error("User not authenticated");
+      return;
+    }
+
+    const fetchCounts = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setCounts(response.data.data || {});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchCounts();
+  }, [token]);
 
   return (
     <div>

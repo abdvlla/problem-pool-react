@@ -8,7 +8,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 // Routes imports
-
 import index from "./routes/index.js";
 import pools from "./routes/pools.js";
 
@@ -21,24 +20,26 @@ const PORT = process.env.PORT || 3000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
+// Middleware
 app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 app.use(
   cors({
-    origin: "https://problem-pool-react-eaaf8e2fb238.herokuapp.com", // Your client URL
+    origin: process.env.CORS_ORIGIN, // Your client URL
+    optionsSuccessStatus: 200,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
-
-app.use(bodyParser.json({ limit: "100mb" }));
-app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
-
+// Environment variables
 const USERNAME = process.env.ADMIN_USERNAME;
 const PASSWORD = process.env.ADMIN_PASSWORD;
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
+// Login route
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   if (username === USERNAME && password === PASSWORD) {
@@ -49,6 +50,7 @@ app.post("/login", (req, res) => {
   }
 });
 
+// Authentication middleware
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -62,13 +64,19 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
+// Routes
 app.use("/pools", authenticateToken, pools);
-app.use("/", authenticateToken, index);
+app.use("/api", authenticateToken, index);
+app.post("/verify-token", authenticateToken, (req, res) => {
+  res.status(200).send({ valid: true });
+});
 
+// Serve React app
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
+// Database connection
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
@@ -80,7 +88,11 @@ mongoose
   .catch((error) => {
     console.error("Error connecting to database:", error);
   });
+
+// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something went wrong!");
 });
+
+export default app;
