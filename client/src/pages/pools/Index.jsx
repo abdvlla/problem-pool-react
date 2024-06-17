@@ -3,9 +3,9 @@ import axios from "axios";
 import PoolsTable from "../../components/PoolsTable";
 
 const Index = () => {
+  const token = localStorage.getItem("token");
   const [pools, setPools] = useState([]);
   const [error, setError] = useState("");
-  const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
