@@ -12,10 +12,13 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     setError("");
     try {
-      const response = await axios.post("http://localhost:5000/login", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/login`,
+        {
+          username,
+          password,
+        }
+      );
       if (response.status === 200) {
         console.log("Login successful, executing onLogin");
         localStorage.setItem("token", response.data.token);
