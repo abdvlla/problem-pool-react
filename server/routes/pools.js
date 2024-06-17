@@ -11,9 +11,13 @@ function logRequestBody(body) {
 
 // Save images to the pool
 function saveImages(pool, coversEncoded, removeCover) {
-  if (removeCover) {
-    pool.images = [];
-    return;
+  if (removeCover && Array.isArray(removeCover)) {
+    pool.images = pool.images.filter(
+      (img) =>
+        !removeCover.includes(
+          `data:${img.imageType};base64,${img.image.toString("base64")}`
+        )
+    );
   }
 
   if (!coversEncoded) return;
@@ -120,8 +124,9 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ message: "Body of water not found" });
     }
 
-    Object.assign(pool, req.body);
-    saveImages(pool, req.body.images, req.body.removeCover);
+    const { images, removedImages, ...otherData } = req.body;
+    Object.assign(pool, otherData);
+    saveImages(pool, images, removedImages);
 
     await pool.save();
 

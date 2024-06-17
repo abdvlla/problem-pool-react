@@ -44,6 +44,8 @@ const Edit = () => {
 
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [existingImages, setExistingImages] = useState([]);
+  const [removedImages, setRemovedImages] = useState([]);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -79,6 +81,7 @@ const Edit = () => {
         setAssignedTo(data.assignedTo);
         setConditionPool(data.conditionPool);
         setConditionHt(data.conditionHt);
+        setExistingImages(data.coverImagePath);
       })
       .catch((error) => {
         console.log(error);
@@ -126,6 +129,7 @@ const Edit = () => {
       conditionPool,
       conditionHt,
       images,
+      removedImages,
     };
     axios
       .put(`http://localhost:5000/pools/${id}`, data, {
@@ -167,6 +171,11 @@ const Edit = () => {
 
   const handleCancel = () => {
     navigate(`/pools/${id}`);
+  };
+
+  const handleRemoveImage = (image) => {
+    setRemovedImages((prev) => [...prev, image]);
+    setExistingImages((prev) => prev.filter((img) => img !== image));
   };
 
   return (
@@ -508,6 +517,46 @@ block w-full p-2.5"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Description"
             />
+          </div>
+          <div className="sm:col-span-2">
+            {existingImages.length > 0 && (
+              <>
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Existing Images
+                </label>
+                <div className="flex flex-wrap gap-4">
+                  {existingImages.map((image, index) => (
+                    <div key={index} className="relative group">
+                      <img
+                        src={image}
+                        alt={`Image ${index + 1}`}
+                        className="w-40 h-40 object-cover rounded-lg shadow-md"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage(image)}
+                        className="absolute top-0 right-0 bg-red-600 text-white p-1 rounded-full opacity-75 group-hover:opacity-100 transition-opacity"
+                      >
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M6 18L18 6M6 6l12 12"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
           <div className="sm:col-span-2">
             <FilePond
