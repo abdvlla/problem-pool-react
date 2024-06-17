@@ -5,6 +5,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import jwt from "jsonwebtoken";
 import path from "path";
+import { fileURLToPath } from "url";
 
 // Routes imports
 
@@ -17,6 +18,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // For react deploy
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.use(express.json({ limit: "50mb" }));
