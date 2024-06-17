@@ -53,7 +53,7 @@ const Edit = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/pools/${id}`, {
+      .get(`${import.meta.env.VITE_API_BASE_URL}/pools/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -132,7 +132,7 @@ const Edit = () => {
       removedImages,
     };
     axios
-      .put(`http://localhost:5000/pools/${id}`, data, {
+      .put(`${import.meta.env.VITE_API_BASE_URL}/pools/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

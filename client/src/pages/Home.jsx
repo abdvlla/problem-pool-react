@@ -19,7 +19,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_BASE_URL}/`, {
+      .get(`${import.meta.env.VITE_API_BASE_URL}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

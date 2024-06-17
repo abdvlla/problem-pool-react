@@ -13,7 +13,7 @@ const Show = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/pools/${id}`, {
+      .get(`${import.meta.env.VITE_API_BASE_URL}/pools/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -51,7 +51,7 @@ const Show = () => {
           toast: true,
         });
         axios
-          .delete(`http://localhost:5000/pools/${id}`, {
+          .delete(`${import.meta.env.VITE_API_BASE_URL}/pools/${id}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
