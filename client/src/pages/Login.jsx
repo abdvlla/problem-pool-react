@@ -81,7 +81,7 @@ const Login = ({ onLogin }) => {
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 flex items-center px-4 mt-6"
+                className="absolute inset-y-0 right-0 flex items-center px-4 mt-7"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
