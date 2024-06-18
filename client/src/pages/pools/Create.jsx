@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import BackButton from "../../components/BackButton";
 
 import { FilePond, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
@@ -129,6 +130,9 @@ const Create = () => {
   return (
     <section className="dark:bg-gray-900">
       <h1 className="text-xl font-bold mt-3">Add a new body of water</h1>
+      <div className="mx-auto max-w-6xl">
+        <BackButton />
+      </div>
       <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-lg">
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 text-left">
           <div className="max-w-full">

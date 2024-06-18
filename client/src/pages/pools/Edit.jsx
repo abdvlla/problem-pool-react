@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import BackButton from "../../components/BackButton";
 
 import { FilePond, registerPlugin } from "react-filepond";
 import FilePondPluginFileEncode from "filepond-plugin-file-encode";
@@ -180,7 +181,10 @@ const Edit = () => {
 
   return (
     <section className="dark:bg-gray-900">
-      <h1 className="text-xl font-bold mt-3">Add a new body of water</h1>
+      <h1 className="text-xl font-bold mt-3">Edit body of water</h1>
+      <div className="mx-auto max-w-6xl">
+        <BackButton destination={`/pools/${id}`} />
+      </div>
       <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-lg">
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 text-left">
           <div className="max-w-full">
@@ -535,7 +539,7 @@ block w-full p-2.5"
                       <button
                         type="button"
                         onClick={() => handleRemoveImage(image)}
-                        className="absolute top-0 right-0 bg-red-600 text-white p-1 rounded-full opacity-75 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-0 left-0 bg-white text-black p-1 rounded-full opacity-85 group-hover:opacity-100 transition-opacity"
                       >
                         <svg
                           className="w-4 h-4"
