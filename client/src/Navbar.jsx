@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -7,10 +7,14 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const logout = () => {
+  const logout = useCallback(() => {
     onLogout();
     navigate("/auth");
-  };
+  }, [onLogout, navigate]);
+
+  const closeMobileMenu = useCallback(() => {
+    setMobileMenuOpen(false);
+  }, []);
 
   if (!isLoggedIn) {
     return null;
@@ -68,7 +72,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
       <Dialog
         className="lg:hidden"
         open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
+        onClose={closeMobileMenu}
       >
         <div className="fixed inset-0 z-50" />
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-stone-400 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-50">
@@ -76,7 +80,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             <NavLink
               to="/"
               className="-m-1.5 p-1.5 block rounded-lg py-2 text-base font-semibold leading-7"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={closeMobileMenu}
             >
               Home
               <span className="sr-only">Your Company</span>
@@ -84,7 +88,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-50"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={closeMobileMenu}
             >
               <span className="sr-only">Close menu</span>
               <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -96,7 +100,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 <NavLink
                   to="/pools"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={closeMobileMenu}
                 >
                   Pools
                 </NavLink>
@@ -106,7 +110,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7"
                   onClick={() => {
                     logout();
-                    setMobileMenuOpen(false);
+                    closeMobileMenu();
                   }}
                 >
                   Log out

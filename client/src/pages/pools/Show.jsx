@@ -27,6 +27,16 @@ const Show = () => {
       .catch((error) => {
         console.log(error);
         setLoading(false);
+        Swal.fire({
+          title: "Error!",
+          text: "Not able to load file. Make sure it exists and try again later",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+          position: "top-end",
+          toast: true,
+        });
       });
   }, []);
 
@@ -62,6 +72,16 @@ const Show = () => {
           })
           .catch((error) => {
             console.log(error);
+            Swal.fire({
+              title: "Error!",
+              text: "Not able to delete file. Make sure it exists and try again later.",
+              icon: "error",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              position: "top-end",
+              toast: true,
+            });
           });
       }
     });

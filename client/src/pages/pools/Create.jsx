@@ -488,7 +488,8 @@ block w-full p-2.5"
               files={files}
               onupdatefiles={setFiles}
               allowMultiple={true}
-              maxTotalFileSize="100MB"
+              allowReorder={true}
+              maxTotalFileSize="20MB"
               name="images"
               labelIdle='Drag & drop your images or <span class="filepond--label-action">Browse</span>'
             />

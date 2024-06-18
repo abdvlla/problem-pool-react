@@ -98,6 +98,16 @@ const Edit = () => {
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire({
+          title: "Error!",
+          text: "Not unable to load file. Make sure it exists and try again later.",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+          position: "top-end",
+          toast: true,
+        });
       });
   }, []);
 
@@ -161,7 +171,7 @@ const Edit = () => {
           toast: true,
           position: "top-end",
           showConfirmButton: false,
-          timer: 2000,
+          timer: 2500,
           timerProgressBar: true,
         });
       })
@@ -176,7 +186,7 @@ const Edit = () => {
           toast: true,
           position: "top-end",
           showConfirmButton: false,
-          timer: 2000,
+          timer: 2500,
           timerProgressBar: true,
         });
       });
@@ -577,7 +587,8 @@ block w-full p-2.5"
               files={files}
               onupdatefiles={setFiles}
               allowMultiple={true}
-              maxTotalFileSize="100MB"
+              allowReorder={true}
+              maxTotalFileSize="20MB"
               name="images"
               labelIdle='Drag & drop your images or <span class="filepond--label-action">Browse</span>'
             />
