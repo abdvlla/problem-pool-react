@@ -75,7 +75,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
         onClose={closeMobileMenu}
       >
         <div className="fixed inset-0 z-50" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-stone-400 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-50">
+        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-50 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-300">
           <div className="flex items-center justify-between">
             <NavLink
               to="/"
@@ -87,7 +87,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             </NavLink>
             <button
               type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-50"
+              className="-m-2.5 rounded-md p-2.5 text-gray-800"
               onClick={closeMobileMenu}
             >
               <span className="sr-only">Close menu</span>
@@ -95,19 +95,26 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
             </button>
           </div>
           <div className="flow-root">
-            <div className="-my-6 divide-y divide-gray-50">
-              <div className="space-y-2 py-6">
+            <div className="-my-6 divide-y divide-gray-900">
+              <div className="py-6">
                 <NavLink
                   to="/pools"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-800 hover:bg-gray-200"
                   onClick={closeMobileMenu}
                 >
-                  Pools
+                  BoW
+                </NavLink>
+                <NavLink
+                  to="/pools/new"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-800 hover:bg-gray-200"
+                  onClick={closeMobileMenu}
+                >
+                  New BoW
                 </NavLink>
               </div>
               <div className="py-6">
                 <button
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7"
+                  className="-mx-3 block w-full rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-800 hover:bg-gray-200 text-left"
                   onClick={() => {
                     logout();
                     closeMobileMenu();
