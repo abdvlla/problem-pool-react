@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import BackButton from "../../components/BackButton";
+import "quill/dist/quill.snow.css";
 
 const Show = () => {
   const token = localStorage.getItem("token");
@@ -263,7 +264,12 @@ const Show = () => {
                     Description
                   </dt>
                   <dd className="mt-1 text-sm text-gray-700 whitespace-pre-line">
-                    {pool.description}
+                    <div className="ql-container ql-snow">
+                      <div
+                        className="ql-editor"
+                        dangerouslySetInnerHTML={{ __html: pool.description }}
+                      />
+                    </div>
                   </dd>
                 </div>
               </div>

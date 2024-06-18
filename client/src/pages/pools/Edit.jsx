@@ -1,5 +1,5 @@
 // src/components/Create.js
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -13,6 +13,9 @@ import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orien
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import "filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css";
 import "filepond/dist/filepond.min.css";
+
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
 
 registerPlugin(
   FilePondPluginFileEncode,
@@ -52,6 +55,8 @@ const Edit = () => {
   const { id } = useParams();
   const token = localStorage.getItem("token");
 
+  const quillRef = useRef(null);
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_BASE_URL}/customers/${id}`, {
@@ -83,6 +88,13 @@ const Edit = () => {
         setConditionPool(data.conditionPool);
         setConditionHt(data.conditionHt);
         setExistingImages(data.coverImagePath);
+        const quill = new Quill(quillRef.current, {
+          theme: "snow",
+        });
+        quill.root.innerHTML = data.description;
+        quill.on("text-change", () => {
+          setDescription(quill.root.innerHTML);
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -510,17 +522,15 @@ block w-full p-2.5"
             </div>
           </div>
           <div className="sm:col-span-2">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Description
-            </label>
-            <textarea
-              type="text"
-              rows="8"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Description"
-            />
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Description
+              </label>
+              <div
+                className="bg-gray-50 border border-gray-300"
+                ref={quillRef}
+              />
+            </div>
           </div>
           <div className="sm:col-span-2">
             {existingImages.length > 0 && (
