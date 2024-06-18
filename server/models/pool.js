@@ -1,34 +1,37 @@
 import mongoose from "mongoose";
 
-const poolSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  number: String,
-  email: String,
-  altNumber: String,
-  altEmail: String,
-  bodyOfWater: String,
-  status: String,
-  description: String,
-  images: [
-    {
-      image: Buffer,
-      imageType: String,
-    },
-  ],
-  system: String,
-  pump: String,
-  filter: String,
-  heater: String,
-  size: String,
-  otherEquipment: String,
-  hhlBuild: String,
-  brand: String,
-  make: String,
-  assignedTo: String,
-  conditionPool: String,
-  conditionHt: String,
-});
+const poolSchema = new mongoose.Schema(
+  {
+    firstName: String,
+    lastName: String,
+    number: String,
+    email: String,
+    altNumber: String,
+    altEmail: String,
+    bodyOfWater: String,
+    status: String,
+    description: String,
+    images: [
+      {
+        image: Buffer,
+        imageType: String,
+      },
+    ],
+    system: String,
+    pump: String,
+    filter: String,
+    heater: String,
+    size: String,
+    otherEquipment: String,
+    hhlBuild: String,
+    brand: String,
+    make: String,
+    assignedTo: String,
+    conditionPool: String,
+    conditionHt: String,
+  },
+  { timestamps: true }
+);
 
 poolSchema.virtual("coverImagePath").get(function () {
   if (this.images != null && this.images.length > 0) {

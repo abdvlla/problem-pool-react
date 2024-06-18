@@ -48,14 +48,17 @@ const PoolsTable = ({ pools }) => {
 
   const handleStatusFilterChange = (e) => {
     setStatusFilter(e.target.value);
+    setCurrentPage(1);
   };
 
   const handleStaffFilterChange = (e) => {
     setStaffFilter(e.target.value);
+    setCurrentPage(1);
   };
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
+    setCurrentPage(1);
   };
 
   const indexOfLastPool = currentPage * entriesPerPage;
