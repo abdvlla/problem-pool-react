@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import PoolsTable from "../../components/PoolsTable";
 
@@ -8,38 +8,34 @@ const Index = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchPools = useCallback(async () => {
     if (!token) {
       setError("User not authenticated");
       setLoading(false);
       return;
     }
 
-    const fetchPools = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/customers`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setPools(response.data.data);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching pools data:", err);
-        setError("Failed to fetch pools data");
-        setLoading(false);
-      }
-    };
-
-    fetchPools();
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/customers`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setPools(response.data.data);
+    } catch (err) {
+      console.error("Error fetching pools data:", err);
+      setError("Failed to fetch pools data");
+    } finally {
+      setLoading(false);
+    }
   }, [token]);
 
-  if (error) {
-    return <div className="mt-3 text-xl font-bold text-red-500">{error}</div>;
-  }
+  useEffect(() => {
+    fetchPools();
+  }, [fetchPools]);
 
   if (loading) {
     return (

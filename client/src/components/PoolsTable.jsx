@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 const PoolsTable = ({ pools }) => {
@@ -7,9 +7,8 @@ const PoolsTable = ({ pools }) => {
   const [statusFilter, setStatusFilter] = useState("");
   const [staffFilter, setStaffFilter] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredPools, setFilteredPools] = useState([]);
 
-  useEffect(() => {
+  const filteredPools = useMemo(() => {
     let filteredData = pools;
 
     if (statusFilter) {
@@ -39,8 +38,7 @@ const PoolsTable = ({ pools }) => {
       );
     }
 
-    setFilteredPools(filteredData);
-    setCurrentPage(1);
+    return filteredData;
   }, [statusFilter, staffFilter, searchQuery, pools]);
 
   const handleEntriesChange = (e) => {
