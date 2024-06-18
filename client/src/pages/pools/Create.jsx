@@ -83,7 +83,7 @@ const Create = () => {
       images,
     };
     axios
-      .post(`${import.meta.env.VITE_API_BASE_URL}/pools`, data, {
+      .post(`${import.meta.env.VITE_API_BASE_URL}/customers`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -57,7 +57,7 @@ const authenticateToken = (req, res, next) => {
 
   if (token == null) {
     console.log("No token provided");
-    return res.redirect("/");
+    return res.status(401).send("Unauthorized");
   }
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
@@ -69,7 +69,7 @@ const authenticateToken = (req, res, next) => {
 
 // Routes
 app.use("/home", authenticateToken, index);
-app.use("/pools", authenticateToken, pools);
+app.use("/customers", authenticateToken, pools);
 app.post("/verify-token", authenticateToken, (req, res) => {
   res.status(200).send({ valid: true });
 });
