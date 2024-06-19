@@ -45,7 +45,7 @@ router.get("/", async (req, res) => {
   try {
     const pools = await Pool.find({})
       .sort({ createdAt: -1 })
-      .select("firstName lastName email number assignedTo status");
+      .select("firstName lastName email number assignedTo status updatedAt");
 
     return res.status(200).json({
       count: pools.length,

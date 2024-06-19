@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 const PoolsTable = ({ pools }) => {
@@ -7,9 +7,35 @@ const PoolsTable = ({ pools }) => {
   const [statusFilter, setStatusFilter] = useState("");
   const [staffFilter, setStaffFilter] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortConfig, setSortConfig] = useState({
+    key: "updatedAt",
+    direction: "descending",
+  });
+
+  const handleSort = (key) => {
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedPools = useMemo(() => {
+    const sorted = [...pools];
+    sorted.sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === "ascending" ? -1 : 1;
+      }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === "ascending" ? 1 : -1;
+      }
+      return 0;
+    });
+    return sorted;
+  }, [pools, sortConfig]);
 
   const filteredPools = useMemo(() => {
-    let filteredData = pools;
+    let filteredData = sortedPools;
 
     if (statusFilter) {
       filteredData = filteredData.filter((pool) =>
@@ -39,7 +65,7 @@ const PoolsTable = ({ pools }) => {
     }
 
     return filteredData;
-  }, [statusFilter, staffFilter, searchQuery, pools]);
+  }, [statusFilter, staffFilter, searchQuery, sortedPools]);
 
   const handleEntriesChange = (e) => {
     setEntriesPerPage(parseInt(e.target.value, 10));
@@ -200,6 +226,17 @@ const PoolsTable = ({ pools }) => {
             <th className="py-3 font-semibold text-gray-800 dark:text-white">
               Assigned to
             </th>
+            <th
+              className="py-3 font-semibold text-gray-800 dark:text-white cursor-pointer"
+              onClick={() => handleSort("updatedAt")}
+            >
+              Last updated{" "}
+              {sortConfig.key === "updatedAt"
+                ? sortConfig.direction === "ascending"
+                  ? "↑"
+                  : "↓"
+                : ""}
+            </th>
             <th className="text-right font-semibold text-gray-800 dark:text-white"></th>
           </tr>
         </thead>
@@ -219,6 +256,10 @@ const PoolsTable = ({ pools }) => {
               <td className="py-3 select-all">{pool.number}</td>
               <td className="py-3"> {pool.status} </td>
               <td className="py-3"> {pool.assignedTo} </td>
+              <td className="py-3">
+                {" "}
+                {new Date(pool.updatedAt).toLocaleDateString()}{" "}
+              </td>
               <td className="py-3">
                 <Link
                   to={`/pools/${pool._id}`}
