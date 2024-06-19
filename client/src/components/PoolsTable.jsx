@@ -224,12 +224,16 @@ const PoolsTable = ({ pools }) => {
                 <option value="">All</option>
                 <option value="Jenn">Jenn</option>
                 <option value="Colby">Colby</option>
-                <option value="Ben">Ben</option>
-                <option className="text-pink-600" value="Hannah">
+                <option className="text-blue-500" value="Ben">
+                  Ben
+                </option>
+                <option className="text-pink-500" value="Hannah">
                   Hannah
                 </option>
                 <option value="Amaya">Amaya</option>
-                <option value="Jack">Jack</option>
+                <option className="text-orange-500" value="Jack">
+                  Jack
+                </option>
                 <option value="Jaime">Jaime</option>
               </select>
             </div>
