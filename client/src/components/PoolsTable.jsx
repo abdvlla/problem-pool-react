@@ -225,7 +225,9 @@ const PoolsTable = ({ pools }) => {
                 <option value="Jenn">Jenn</option>
                 <option value="Colby">Colby</option>
                 <option value="Ben">Ben</option>
-                <option value="Hannah">Hannah</option>
+                <option className="text-pink-600" value="Hannah">
+                  Hannah
+                </option>
                 <option value="Amaya">Amaya</option>
                 <option value="Jack">Jack</option>
                 <option value="Jaime">Jaime</option>
