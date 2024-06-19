@@ -45,7 +45,9 @@ router.get("/", async (req, res) => {
   try {
     const pools = await Pool.find({})
       .sort({ updatedAt: -1 })
-      .select("firstName lastName email number assignedTo status updatedAt");
+      .select(
+        "firstName lastName email number assignedTo status updatedAt todaysList"
+      );
 
     return res.status(200).json({
       count: pools.length,
@@ -81,6 +83,7 @@ router.post("/", async (req, res) => {
     assignedTo: req.body.assignedTo,
     conditionPool: req.body.conditionPool,
     conditionHt: req.body.conditionHt,
+    todaysList: req.body.todaysList,
   });
 
   saveImages(newPool, req.body.images, req.body.removeCover);

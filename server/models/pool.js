@@ -29,6 +29,7 @@ const poolSchema = new mongoose.Schema(
     assignedTo: String,
     conditionPool: String,
     conditionHt: String,
+    todaysList: String,
   },
   { timestamps: true }
 );

@@ -6,6 +6,7 @@ const PoolsTable = ({ pools }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState("");
   const [staffFilter, setStaffFilter] = useState("");
+  const [todaysListFilter, setTodaysListFilter] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState({
     key: "updatedAt",
@@ -51,6 +52,14 @@ const PoolsTable = ({ pools }) => {
       );
     }
 
+    if (todaysListFilter) {
+      filteredData = filteredData.filter(
+        (pool) =>
+          pool.todaysList &&
+          pool.todaysList.toLowerCase().includes(todaysListFilter.toLowerCase())
+      );
+    }
+
     if (searchQuery) {
       const keywords = searchQuery.toLowerCase().split(" ");
       filteredData = filteredData.filter((pool) =>
@@ -65,7 +74,7 @@ const PoolsTable = ({ pools }) => {
     }
 
     return filteredData;
-  }, [statusFilter, staffFilter, searchQuery, sortedPools]);
+  }, [statusFilter, staffFilter, todaysListFilter, searchQuery, sortedPools]);
 
   const handleEntriesChange = (e) => {
     setEntriesPerPage(parseInt(e.target.value, 10));
@@ -79,6 +88,11 @@ const PoolsTable = ({ pools }) => {
 
   const handleStaffFilterChange = (e) => {
     setStaffFilter(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handleTodaysListFilterChange = (e) => {
+    setTodaysListFilter(e.target.value);
     setCurrentPage(1);
   };
 
@@ -174,6 +188,25 @@ const PoolsTable = ({ pools }) => {
               </select>
             </div>
           </div>
+          <div>
+            <label className="block text-sm font-medium leading-6 text-gray-900">
+              Filter today's list
+            </label>
+            <div className="relative mt-2">
+              <select
+                className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                id="todaysList-filter"
+                name="todaysList"
+                aria-labelledby="todaysList-filter-label"
+                value={todaysListFilter}
+                onChange={handleTodaysListFilterChange}
+              >
+                <option value="">All</option>
+                <option value="yes">Yes</option>
+                <option value="done">Done</option>
+              </select>
+            </div>
+          </div>
         </div>
         <div className="justify-end">
           <label className="block text-sm font-medium leading-6 text-gray-900 px-2">
@@ -226,6 +259,9 @@ const PoolsTable = ({ pools }) => {
             <th className="py-3 font-semibold text-gray-800 dark:text-white">
               Assigned to
             </th>
+            <th className="py-3 font-semibold text-gray-800 dark:text-white">
+              Today's list
+            </th>
             <th
               className="py-3 font-semibold text-gray-800 dark:text-white cursor-pointer"
               onClick={() => handleSort("updatedAt")}
@@ -256,6 +292,7 @@ const PoolsTable = ({ pools }) => {
               <td className="py-3 select-all">{pool.number}</td>
               <td className="py-3"> {pool.status} </td>
               <td className="py-3"> {pool.assignedTo} </td>
+              <td className="py-3"> {pool.todaysList} </td>
               <td className="py-3">
                 {" "}
                 {new Date(pool.updatedAt).toLocaleDateString()}{" "}

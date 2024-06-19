@@ -45,6 +45,7 @@ const Edit = () => {
   const [assignedTo, setAssignedTo] = useState("");
   const [conditionPool, setConditionPool] = useState("");
   const [conditionHt, setConditionHt] = useState("");
+  const [todaysList, setTodaysList] = useState("");
 
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -88,6 +89,7 @@ const Edit = () => {
         setConditionPool(data.conditionPool);
         setConditionHt(data.conditionHt);
         setExistingImages(data.coverImagePath);
+        setTodaysList(data.todaysList);
         const quill = new Quill(quillRef.current, {
           theme: "snow",
         });
@@ -153,6 +155,7 @@ const Edit = () => {
       conditionHt,
       images,
       removedImages,
+      todaysList,
     };
     axios
       .put(`${import.meta.env.VITE_API_BASE_URL}/customers/${id}`, data, {
@@ -492,6 +495,21 @@ block w-full p-2.5"
               <option value="Hannah">Hannah</option>
               <option value="Jack">Jack</option>
               <option value="Jaime">Jaime</option>
+            </select>
+          </div>
+          <div className="">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Today's List
+            </label>
+            <select
+              value={todaysList}
+              onChange={(e) => setTodaysList(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus
+block w-full p-2.5"
+            >
+              <option value=""></option>
+              <option value="Yes">Yes</option>
+              <option value="Done">Done</option>
             </select>
           </div>
           <div className="max-w-full">

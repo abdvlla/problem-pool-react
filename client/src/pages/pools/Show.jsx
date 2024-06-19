@@ -190,6 +190,14 @@ const Show = () => {
                   {pool.updatedAt.toLocaleDateString("en-US", options)}
                 </dd>
               </div>
+              <div>
+                <dt className="text-sm font-medium text-gray-900">
+                  Today's list
+                </dt>
+                <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
+                  {pool.todaysList}
+                </dd>
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
               <div>
