@@ -119,10 +119,10 @@ const PoolsTable = ({ pools }) => {
   );
 
   return (
-    <div className="content-center py-6 px-5 mx-auto max-w-screen-xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 mt-4">
+    <div className="content-center py-6 px-5 mx-auto max-w-screen-xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 mt-4 ">
       <div className="flex justify-between mb-4">
         <div className="justify-start">
-          <label className="block text-sm font-medium leading-6 text-gray-900 px-2">
+          <label className="block text-sm font-medium leading-6 text-gray-900 px-2 ">
             Entries per page
           </label>
           <div className="relative mt-2">
@@ -139,9 +139,9 @@ const PoolsTable = ({ pools }) => {
             </select>
           </div>
         </div>
-        <div className="mx-auto flex flex-row items-center space-x-4">
+        <div className="mx-auto flex flex-row items-center space-x-4 ">
           <div>
-            <label className="block text-sm font-medium leading-6 text-gray-900">
+            <label className="block text-sm font-medium leading-6 text-gray-900 ">
               Filter by status
             </label>
             <div className="relative mt-2">
@@ -166,7 +166,7 @@ const PoolsTable = ({ pools }) => {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium leading-6 text-gray-900">
+            <label className="block text-sm font-medium leading-6 text-gray-900 ">
               Filter by staff
             </label>
             <div className="relative mt-2">
@@ -189,7 +189,7 @@ const PoolsTable = ({ pools }) => {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium leading-6 text-gray-900">
+            <label className="block text-sm font-medium leading-6 text-gray-900 ">
               Filter today's list
             </label>
             <div className="relative mt-2">
@@ -209,7 +209,7 @@ const PoolsTable = ({ pools }) => {
           </div>
         </div>
         <div className="justify-end">
-          <label className="block text-sm font-medium leading-6 text-gray-900 px-2">
+          <label className="block text-sm font-medium leading-6 text-gray-900 px-2 ">
             Search records
           </label>
           <div className="relative mt-1">
@@ -239,31 +239,17 @@ const PoolsTable = ({ pools }) => {
         </div>
       </div>
       <table id="poolTable" className="table-auto shadow-lg rounded w-full">
-        <thead className="bg-gray-200">
+        <thead className="bg-gray-200 ">
           <tr className="text-sm">
-            <th className=" font-semibold text-gray-800 dark:text-white">
-              First name
-            </th>
-            <th className="py-3 font-semibold text-gray-800 dark:text-white">
-              Last name
-            </th>
-            <th className="py-3 font-semibold text-gray-800 dark:text-white">
-              Email
-            </th>
-            <th className="py-3 font-semibold text-gray-800 dark:text-white">
-              Phone
-            </th>
-            <th className="py-3 font-semibold text-gray-800 dark:text-white">
-              Status
-            </th>
-            <th className="py-3 font-semibold text-gray-800 dark:text-white">
-              Assigned to
-            </th>
-            <th className="py-3 font-semibold text-gray-800 dark:text-white">
-              Today's list
-            </th>
+            <th className=" font-semibold text-gray-800 ">First name</th>
+            <th className="py-3 font-semibold text-gray-800 ">Last name</th>
+            <th className="py-3 font-semibold text-gray-800 ">Email</th>
+            <th className="py-3 font-semibold text-gray-800 ">Phone</th>
+            <th className="py-3 font-semibold text-gray-800 ">Status</th>
+            <th className="py-3 font-semibold text-gray-800 ">Assigned to</th>
+            <th className="py-3 font-semibold text-gray-800 ">Today's list</th>
             <th
-              className="py-3 font-semibold text-gray-800 dark:text-white cursor-pointer"
+              className="py-3 font-semibold text-gray-800  cursor-pointer"
               onClick={() => handleSort("updatedAt")}
             >
               Last updated{" "}
@@ -273,22 +259,22 @@ const PoolsTable = ({ pools }) => {
                   : "↓"
                 : ""}
             </th>
-            <th className="text-right font-semibold text-gray-800 dark:text-white"></th>
+            <th className="text-right font-semibold text-gray-800 "></th>
           </tr>
         </thead>
         <tbody>
           {currentPools.map((pool) => (
             <tr
               key={pool._id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-sm"
+              className="bg-white border-b   hover:bg-gray-200 text-sm"
             >
-              <td className="py-3 text-gray-900 dark:text-white select-all">
+              <td className="py-3 text-gray-900  select-all">
                 {pool.firstName}
               </td>
-              <td className="py-3 text-gray-900 dark:text-white font-bold select-all">
+              <td className="py-3 text-gray-900  font-bold select-all">
                 {pool.lastName}
               </td>
-              <td className="py-3 text-blue-600 underline">
+              <td className="py-3 text-blue-600 underline ">
                 <button
                   className="underline"
                   onClick={() => (window.location = `mailto:${pool.email}`)}
@@ -296,15 +282,15 @@ const PoolsTable = ({ pools }) => {
                   {pool.email}
                 </button>
               </td>
-              <td className="py-3 select-all">{pool.number}</td>
-              <td className="py-3"> {pool.status} </td>
-              <td className="py-3"> {pool.assignedTo} </td>
-              <td className="py-3"> {pool.todaysList} </td>
-              <td className="py-3">
+              <td className="py-3 select-all ">{pool.number}</td>
+              <td className="py-3 "> {pool.status} </td>
+              <td className="py-3 "> {pool.assignedTo} </td>
+              <td className="py-3 "> {pool.todaysList} </td>
+              <td className="py-3 ">
                 {" "}
                 {new Date(pool.updatedAt).toLocaleDateString()}{" "}
               </td>
-              <td className="py-3">
+              <td className="py-3 ">
                 <Link
                   to={`/pools/${pool._id}`}
                   className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
