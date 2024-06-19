@@ -1,17 +1,47 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const PoolsTable = ({ pools }) => {
-  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [entriesPerPage, setEntriesPerPage] = useState(
+    () => parseInt(localStorage.getItem("entriesPerPage")) || 10
+  );
   const [currentPage, setCurrentPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState("");
-  const [staffFilter, setStaffFilter] = useState("");
-  const [todaysListFilter, setTodaysListFilter] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState(
+    localStorage.getItem("statusFilter") || ""
+  );
+  const [staffFilter, setStaffFilter] = useState(
+    localStorage.getItem("staffFilter") || ""
+  );
+  const [todaysListFilter, setTodaysListFilter] = useState(
+    localStorage.getItem("todaysListFilter") || ""
+  );
+  const [searchQuery, setSearchQuery] = useState(
+    localStorage.getItem("searchQuery") || ""
+  );
   const [sortConfig, setSortConfig] = useState({
     key: "updatedAt",
     direction: "descending",
   });
+
+  useEffect(() => {
+    localStorage.setItem("entriesPerPage", entriesPerPage);
+  }, [entriesPerPage]);
+
+  useEffect(() => {
+    localStorage.setItem("statusFilter", statusFilter);
+  }, [statusFilter]);
+
+  useEffect(() => {
+    localStorage.setItem("staffFilter", staffFilter);
+  }, [staffFilter]);
+
+  useEffect(() => {
+    localStorage.setItem("todaysListFilter", todaysListFilter);
+  }, [todaysListFilter]);
+
+  useEffect(() => {
+    localStorage.setItem("searchQuery", searchQuery);
+  }, [searchQuery]);
 
   const handleSort = (key) => {
     let direction = "ascending";
@@ -118,6 +148,17 @@ const PoolsTable = ({ pools }) => {
     (i) => startPage + i
   );
 
+  const clearFilters = () => {
+    setStatusFilter("");
+    setStaffFilter("");
+    setTodaysListFilter("");
+    setSearchQuery("");
+    localStorage.removeItem("statusFilter");
+    localStorage.removeItem("staffFilter");
+    localStorage.removeItem("todaysListFilter");
+    localStorage.removeItem("searchQuery");
+  };
+
   return (
     <div className="content-center py-6 px-5 mx-auto max-w-screen-xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 dark:bg-neutral-900 mt-4 ">
       <div className="flex justify-between mb-4">
@@ -131,6 +172,7 @@ const PoolsTable = ({ pools }) => {
               id="page-length"
               aria-labelledby="page-length-label"
               onChange={handleEntriesChange}
+              value={entriesPerPage}
             >
               <option value="10">10</option>
               <option value="25">25</option>
@@ -151,6 +193,7 @@ const PoolsTable = ({ pools }) => {
                 name="status"
                 aria-labelledby="status-filter-label"
                 onChange={handleStatusFilterChange}
+                value={statusFilter}
               >
                 <option value="">All</option>
                 <option value="New BoW">New BoW</option>
@@ -176,6 +219,7 @@ const PoolsTable = ({ pools }) => {
                 name="staff"
                 aria-labelledby="staff-filter-label"
                 onChange={handleStaffFilterChange}
+                value={staffFilter}
               >
                 <option value="">All</option>
                 <option value="Jenn">Jenn</option>
@@ -207,6 +251,25 @@ const PoolsTable = ({ pools }) => {
               </select>
             </div>
           </div>
+          <button
+            onClick={clearFilters}
+            className="flex items-center justify-center p-2 mt-8 text-gray-100 bg-gray-500 rounded-full shadow-md hover:bg-gray-300 dark:bg-neutral-700 dark:text-gray-100 dark:hover:bg-neutral-600"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
         </div>
         <div className="justify-end">
           <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 px-2 ">
@@ -218,6 +281,7 @@ const PoolsTable = ({ pools }) => {
               className="block w-full p-2 text-sm text-gray-900 dark:bg-neutral-800 dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-blue-500 focus:border-blue-500"
               placeholder="Search..."
               onChange={handleSearchChange}
+              value={searchQuery}
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <svg
