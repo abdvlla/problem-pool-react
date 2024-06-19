@@ -93,7 +93,7 @@ const Show = () => {
     return (
       <div className="flex justify-center items-center h-screen">
         <div className="loader"></div>
-        <p>Loading...</p>
+        <p className="dark:text-gray-50">Loading...</p>
       </div>
     );
   }
@@ -109,12 +109,12 @@ const Show = () => {
 
   return (
     <>
-      <h1 className="text-2xl font-bold mt-3 dark:text-gray-100">
-        Customer BoW information
-      </h1>
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-5xl mt-4">
         <BackButton />
       </div>
+      <h1 className="text-xl font-bold mb-4 dark:text-gray-100">
+        Customer BoW information
+      </h1>
       <div className="content-center py-8 px-6 mx-auto max-w-4xl bg-gray-50 dark:bg-neutral-900 shadow-lg rounded-lg text-left">
         <div className="border-t border-gray-200 dark:border-gray-700">
           <dl className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -124,7 +124,7 @@ const Show = () => {
                   <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     Customer name
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                     {pool.firstName + " " + pool.lastName}
                   </dd>
                 </div>
@@ -162,11 +162,11 @@ const Show = () => {
                   <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     Phone number(s)
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                     {pool.number}
                   </dd>
                   {pool.altNumber && (
-                    <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                    <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                       {pool.altNumber}
                     </dd>
                   )}
@@ -178,7 +178,7 @@ const Show = () => {
                 <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Current status
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
                   {pool.status}
                 </dd>
               </div>
@@ -186,7 +186,7 @@ const Show = () => {
                 <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Assigned to
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
                   {pool.assignedTo}
                 </dd>
               </div>
@@ -194,7 +194,7 @@ const Show = () => {
                 <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Condition
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
                   {pool.conditionPool ? pool.conditionPool : pool.conditionHt}
                 </dd>
               </div>
@@ -202,7 +202,7 @@ const Show = () => {
                 <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Created at
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
                   {pool.createdAt.toLocaleDateString("en-US", options)}
                 </dd>
               </div>
@@ -210,7 +210,7 @@ const Show = () => {
                 <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Last updated
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
                   {pool.updatedAt.toLocaleDateString("en-US", options)}
                 </dd>
               </div>
@@ -218,7 +218,7 @@ const Show = () => {
                 <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Today's list
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
                   {pool.todaysList}
                 </dd>
               </div>
@@ -228,7 +228,7 @@ const Show = () => {
                 <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Body of water
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                   {pool.bodyOfWater}
                 </dd>
               </div>
@@ -237,7 +237,7 @@ const Show = () => {
                   <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     System
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                     {pool.system}
                   </dd>
                 </div>
@@ -247,7 +247,7 @@ const Show = () => {
                   <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     HHL Build
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                     {pool.hhlBuild}
                   </dd>
                 </div>
@@ -265,7 +265,7 @@ const Show = () => {
                         <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Pump
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                           {pool.pump}
                         </dd>
                       </div>
@@ -275,7 +275,7 @@ const Show = () => {
                         <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Filter
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                           {pool.filter}
                         </dd>
                       </div>
@@ -285,7 +285,7 @@ const Show = () => {
                         <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Pool size
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                           {pool.size}
                         </dd>
                       </div>
@@ -295,7 +295,7 @@ const Show = () => {
                         <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Heater
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                           {pool.heater}
                         </dd>
                       </div>
@@ -311,7 +311,7 @@ const Show = () => {
                         <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Brand
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                           {pool.brand}
                         </dd>
                       </div>
@@ -321,7 +321,7 @@ const Show = () => {
                         <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Make
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                           {pool.make}
                         </dd>
                       </div>
@@ -334,7 +334,7 @@ const Show = () => {
                   <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     Other equipment
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
                     {pool.otherEquipment}
                   </dd>
                 </div>
@@ -346,7 +346,7 @@ const Show = () => {
                   <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     Description
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 whitespace-pre-line">
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 whitespace-pre-line">
                     <div className="ql-container ql-snow dark:bg-neutral-800 dark:border-gray-700">
                       <div
                         className="ql-editor dark:text-white"

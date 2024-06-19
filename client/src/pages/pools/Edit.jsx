@@ -205,12 +205,12 @@ const Edit = () => {
 
   return (
     <section className="">
-      <h1 className="text-xl font-bold mt-3 dark:text-gray-100">
-        Edit body of water
-      </h1>
-      <div className="mx-auto max-w-5xl my-2">
+      <div className="mx-auto max-w-5xl mt-4">
         <BackButton />
       </div>
+      <h1 className="text-xl font-bold mb-4 dark:text-gray-100">
+        Edit body of water
+      </h1>
       <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-lg bg-gray-50 dark:bg-neutral-900 dark:shadow-gray-400">
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 text-left">
           <div className="max-w-full">
