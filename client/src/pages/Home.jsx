@@ -56,7 +56,7 @@ const Home = () => {
 
   return (
     <div>
-      <section className="py-12 bg-gray-50 dark:bg-zinc-800 text-gray-100 sm:py-12 lg:py-16">
+      <section className="py-12 bg-gray-50 dark:bg-neutral-800 text-gray-100 sm:py-12 lg:py-16">
         <div className="px-4 mx-auto max-w-4xl sm:px-6 lg:px-8">
           <div className="max-w-xl mx-auto text-center xl:max-w-2xl">
             <h2 className="text-3xl font-bold leading-tight dark:text-gray-50 sm:text-4xl xl:text-5xl mb-6 text-black">

@@ -1,4 +1,3 @@
-// src/components/Create.js
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -111,7 +110,7 @@ const Edit = () => {
           toast: true,
         });
       });
-  }, []);
+  }, [id, token]);
 
   const handleEditPool = () => {
     if (!firstName || !lastName || !bodyOfWater) {
@@ -206,93 +205,95 @@ const Edit = () => {
 
   return (
     <section className="">
-      <h1 className="text-xl font-bold mt-3">Edit body of water</h1>
+      <h1 className="text-xl font-bold mt-3 dark:text-gray-100">
+        Edit body of water
+      </h1>
       <div className="mx-auto max-w-5xl my-2">
         <BackButton />
       </div>
-      <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-lg">
+      <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-lg bg-gray-50 dark:bg-neutral-900 dark:shadow-gray-400">
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 text-left">
           <div className="max-w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Customer first name
             </label>
             <input
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="First name"
             />
           </div>
           <div className="max-w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Customer last name
             </label>
             <input
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Last name"
               required={true}
             />
           </div>
           <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Email"
             />
           </div>
           <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Phone #
             </label>
             <input
               type="text"
               value={number}
               onChange={(e) => setNumber(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="(902) XXX-XXXX"
             />
           </div>
           <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Alternative email
             </label>
             <input
               type="email"
               value={altEmail}
               onChange={(e) => setAltEmail(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Email"
             />
           </div>
           <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Alternative phone #
             </label>
             <input
               type="text"
               value={altNumber}
               onChange={(e) => setAltNumber(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="(902) XXX-XXXX"
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Body of Water
             </label>
             <select
               value={bodyOfWater}
               onChange={(e) => setBodyOfWater(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 "
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
             >
               <option value=""></option>
               <option value="Pool (Unknown type)">Pool (Unknown type)</option>
@@ -305,13 +306,13 @@ const Edit = () => {
             </select>
           </div>
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Status
             </label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 "
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
             >
               <option value=""></option>
               <option value="New BoW">New BoW</option>
@@ -326,75 +327,75 @@ const Edit = () => {
             </select>
           </div>
           <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               System
             </label>
             <input
               type="text"
               value={system}
               onChange={(e) => setSystem(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Maintenance chemicals"
             />
           </div>
           {["Pool (Unknown type)", "IG", "AG", "OG"].includes(bodyOfWater) && (
             <>
               <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                   Pool size
                 </label>
                 <input
                   type="text"
                   value={size}
                   onChange={(e) => setSize(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="Pool size"
                 />
               </div>
               <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                   Pump
                 </label>
                 <input
                   type="text"
                   value={pump}
                   onChange={(e) => setPump(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="Pool pump"
                 />
               </div>
               <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                   Filter
                 </label>
                 <input
                   type="text"
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="Pool filter"
                 />
               </div>
               <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                   Heater
                 </label>
                 <input
                   type="text"
                   value={heater}
                   onChange={(e) => setHeater(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="Heating system (if any)"
                 />
               </div>
               <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                   Condition
                 </label>
                 <select
                   value={conditionPool}
                   onChange={(e) => setConditionPool(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 "
+                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                 >
                   <option value=""></option>
                   <option value="Clear">Clear</option>
@@ -419,37 +420,37 @@ const Edit = () => {
           {["HT", "SS"].includes(bodyOfWater) && (
             <>
               <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                   Brand
                 </label>
                 <input
                   type="text"
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="Brand"
                 />
               </div>
               <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                   Make
                 </label>
                 <input
                   type="text"
                   value={make}
                   onChange={(e) => setMake(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                   placeholder="Make"
                 />
               </div>
               <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                   Condition
                 </label>
                 <select
                   value={conditionHt}
                   onChange={(e) => setConditionHt(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 "
+                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                 >
                   <option value=""></option>
                   <option value="Clear">Clear</option>
@@ -465,26 +466,25 @@ const Edit = () => {
             </>
           )}
           <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Other equipment
             </label>
             <input
               type="text"
               value={otherEquipment}
               onChange={(e) => setOtherEquipment(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               placeholder="Other equipment (if any)"
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Assigned to
             </label>
             <select
               value={assignedTo}
               onChange={(e) => setAssignedTo(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus
-block w-full p-2.5"
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
             >
               <option value=""></option>
               <option value="Colby">Colby</option>
@@ -498,14 +498,13 @@ block w-full p-2.5"
             </select>
           </div>
           <div className="">
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Today's List
             </label>
             <select
               value={todaysList}
               onChange={(e) => setTodaysList(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus
-block w-full p-2.5"
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
             >
               <option value=""></option>
               <option value="Yes">Yes</option>
@@ -513,7 +512,7 @@ block w-full p-2.5"
             </select>
           </div>
           <div className="max-w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 ">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               HHL Build
             </label>
             <div className="flex gap-x-3">
@@ -525,7 +524,9 @@ block w-full p-2.5"
                   checked={hhlBuild === "Yes"}
                   onChange={(e) => setHhlBuild(e.target.value)}
                 />
-                <label className="text-sm text-gray-500 ms-3">Yes</label>
+                <label className="text-sm text-gray-500 dark:text-gray-400 ms-3">
+                  Yes
+                </label>
               </div>
               <div className="flex space-x-0.5">
                 <input
@@ -535,7 +536,9 @@ block w-full p-2.5"
                   checked={hhlBuild === "No"}
                   onChange={(e) => setHhlBuild(e.target.value)}
                 />
-                <label className="text-sm text-gray-500 ms-3">No</label>
+                <label className="text-sm text-gray-500 dark:text-gray-400 ms-3">
+                  No
+                </label>
               </div>
               <div className="flex space-x-0.5">
                 <input
@@ -545,17 +548,19 @@ block w-full p-2.5"
                   checked={hhlBuild === "Unknown"}
                   onChange={(e) => setHhlBuild(e.target.value)}
                 />
-                <label className="text-sm text-gray-500 ms-3">Unknown</label>
+                <label className="text-sm text-gray-500 dark:text-gray-400 ms-3">
+                  Unknown
+                </label>
               </div>
             </div>
           </div>
           <div className="sm:col-span-2">
             <div>
-              <label className="block mb-2 text-sm font-medium text-gray-900 ">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                 Description
               </label>
               <div
-                className="bg-gray-50 border border-gray-300"
+                className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 dark:text-white"
                 ref={quillRef}
               />
             </div>
@@ -563,7 +568,7 @@ block w-full p-2.5"
           <div className="sm:col-span-2">
             {existingImages.length > 0 && (
               <>
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
                   Existing Images
                 </label>
                 <div className="flex flex-wrap gap-4">
@@ -609,6 +614,7 @@ block w-full p-2.5"
               maxTotalFileSize="20MB"
               name="images"
               labelIdle='Drag & drop your images or <span class="filepond--label-action">Browse</span>'
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 rounded-lg"
             />
           </div>
           <div className="flex flex-cols-2 space-x-1">

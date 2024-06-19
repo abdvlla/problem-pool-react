@@ -119,15 +119,15 @@ const PoolsTable = ({ pools }) => {
   );
 
   return (
-    <div className="content-center py-6 px-5 mx-auto max-w-screen-xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 mt-4 ">
+    <div className="content-center py-6 px-5 mx-auto max-w-screen-xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 dark:bg-neutral-900 mt-4 ">
       <div className="flex justify-between mb-4">
         <div className="justify-start">
-          <label className="block text-sm font-medium leading-6 text-gray-900 px-2 ">
+          <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 px-2 ">
             Entries per page
           </label>
           <div className="relative mt-2">
             <select
-              className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+              className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
               id="page-length"
               aria-labelledby="page-length-label"
               onChange={handleEntriesChange}
@@ -141,12 +141,12 @@ const PoolsTable = ({ pools }) => {
         </div>
         <div className="mx-auto flex flex-row items-center space-x-4 ">
           <div>
-            <label className="block text-sm font-medium leading-6 text-gray-900 ">
+            <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 ">
               Filter by status
             </label>
             <div className="relative mt-2">
               <select
-                className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 id="status-filter"
                 name="status"
                 aria-labelledby="status-filter-label"
@@ -166,12 +166,12 @@ const PoolsTable = ({ pools }) => {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium leading-6 text-gray-900 ">
+            <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 ">
               Filter by staff
             </label>
             <div className="relative mt-2">
               <select
-                className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 id="staff-filter"
                 name="staff"
                 aria-labelledby="staff-filter-label"
@@ -189,12 +189,12 @@ const PoolsTable = ({ pools }) => {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium leading-6 text-gray-900 ">
+            <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 ">
               Filter today's list
             </label>
             <div className="relative mt-2">
               <select
-                className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 id="todaysList-filter"
                 name="todaysList"
                 aria-labelledby="todaysList-filter-label"
@@ -209,13 +209,13 @@ const PoolsTable = ({ pools }) => {
           </div>
         </div>
         <div className="justify-end">
-          <label className="block text-sm font-medium leading-6 text-gray-900 px-2 ">
+          <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 px-2 ">
             Search records
           </label>
           <div className="relative mt-1">
             <input
               type="text"
-              className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full p-2 text-sm text-gray-900 dark:bg-neutral-800 dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-blue-500 focus:border-blue-500"
               placeholder="Search..."
               onChange={handleSearchChange}
             />
@@ -239,17 +239,31 @@ const PoolsTable = ({ pools }) => {
         </div>
       </div>
       <table id="poolTable" className="table-auto shadow-lg rounded w-full">
-        <thead className="bg-gray-200 ">
+        <thead className="bg-gray-200 dark:bg-neutral-600">
           <tr className="text-sm">
-            <th className=" font-semibold text-gray-800 ">First name</th>
-            <th className="py-3 font-semibold text-gray-800 ">Last name</th>
-            <th className="py-3 font-semibold text-gray-800 ">Email</th>
-            <th className="py-3 font-semibold text-gray-800 ">Phone</th>
-            <th className="py-3 font-semibold text-gray-800 ">Status</th>
-            <th className="py-3 font-semibold text-gray-800 ">Assigned to</th>
-            <th className="py-3 font-semibold text-gray-800 ">Today's list</th>
+            <th className=" font-semibold text-gray-800 dark:text-gray-100">
+              First name
+            </th>
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
+              Last name
+            </th>
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
+              Email
+            </th>
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
+              Phone
+            </th>
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
+              Status
+            </th>
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
+              Assigned to
+            </th>
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
+              Today's list
+            </th>
             <th
-              className="py-3 font-semibold text-gray-800  cursor-pointer"
+              className="py-3 font-semibold text-gray-800 dark:text-gray-100 cursor-pointer"
               onClick={() => handleSort("updatedAt")}
             >
               Last updated{" "}
@@ -259,22 +273,22 @@ const PoolsTable = ({ pools }) => {
                   : "↓"
                 : ""}
             </th>
-            <th className="text-right font-semibold text-gray-800 "></th>
+            <th className=" font-semibold text-gray-800 dark:text-gray-100"></th>
           </tr>
         </thead>
         <tbody>
           {currentPools.map((pool) => (
             <tr
               key={pool._id}
-              className="bg-white border-b   hover:bg-gray-200 text-sm"
+              className="bg-white dark:bg-neutral-800 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-neutral-700 text-sm"
             >
-              <td className="py-3 text-gray-900  select-all">
+              <td className="py-3 text-gray-900 dark:text-gray-100 select-all">
                 {pool.firstName}
               </td>
-              <td className="py-3 text-gray-900  font-bold select-all">
+              <td className="py-3 text-gray-900 dark:text-gray-100 font-bold select-all">
                 {pool.lastName}
               </td>
-              <td className="py-3 text-blue-600 underline ">
+              <td className="py-3 text-blue-600 dark:text-blue-400 underline ">
                 <button
                   className="underline"
                   onClick={() => (window.location = `mailto:${pool.email}`)}
@@ -282,25 +296,35 @@ const PoolsTable = ({ pools }) => {
                   {pool.email}
                 </button>
               </td>
-              <td className="py-3 select-all ">{pool.number}</td>
-              <td className="py-3 "> {pool.status} </td>
-              <td className="py-3 "> {pool.assignedTo} </td>
-              <td className="py-3 "> {pool.todaysList} </td>
-              <td className="py-3 ">
-                {" "}
-                {new Date(pool.updatedAt).toLocaleDateString()}{" "}
+              <td className="py-3 select-all text-gray-900 dark:text-gray-100">
+                {pool.number}
               </td>
-              <td className="py-3 ">
+              <td className="py-3 text-gray-900 dark:text-gray-100">
+                {" "}
+                {pool.status}{" "}
+              </td>
+              <td className="py-3 text-gray-900 dark:text-gray-100">
+                {" "}
+                {pool.assignedTo}{" "}
+              </td>
+              <td className="py-3 text-gray-900 dark:text-gray-100">
+                {" "}
+                {pool.todaysList}{" "}
+              </td>
+              <td className="py-3 text-gray-900 dark:text-gray-100">
+                {new Date(pool.updatedAt).toLocaleDateString()}
+              </td>
+              <td className="py-3 dark:text-white">
                 <Link
                   to={`/pools/${pool._id}`}
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  className="font-medium text-blue-600 dark:text-blue-400 hover:underline"
                 >
                   View
                 </Link>
                 /
                 <Link
                   to={`/pools/${pool._id}/edit`}
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  className="font-medium text-blue-600 dark:text-blue-400 hover:underline"
                 >
                   Edit
                 </Link>
@@ -310,7 +334,7 @@ const PoolsTable = ({ pools }) => {
         </tbody>
       </table>
       <div className="flex justify-between mt-3">
-        <div className="flex-start">
+        <div className="flex-start text-gray-900 dark:text-gray-100">
           <p>
             Showing {indexOfFirstPool + 1} to{" "}
             {Math.min(indexOfLastPool, filteredPools.length)} of{" "}
@@ -321,7 +345,7 @@ const PoolsTable = ({ pools }) => {
           <button
             className={`px-4 py-2 rounded-md mr-2 ${
               currentPage === 1
-                ? "bg-gray-200 text-gray-900 cursor-not-allowed"
+                ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
                 : "bg-blue-500 text-white"
             }`}
             onClick={() => setCurrentPage(currentPage - 1)}
@@ -335,7 +359,7 @@ const PoolsTable = ({ pools }) => {
               className={`px-3 py-2 rounded-md mr-2 ${
                 currentPage === page
                   ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-900"
+                  : "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100"
               }`}
               onClick={() => setCurrentPage(page)}
             >
@@ -345,7 +369,7 @@ const PoolsTable = ({ pools }) => {
           <button
             className={`px-3 py-2 rounded-md ${
               currentPage === totalPages
-                ? "bg-gray-200 text-gray-900 cursor-not-allowed"
+                ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
                 : "bg-blue-500 text-white"
             }`}
             onClick={() => setCurrentPage(currentPage + 1)}

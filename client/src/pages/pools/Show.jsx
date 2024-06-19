@@ -40,7 +40,7 @@ const Show = () => {
           toast: true,
         });
       });
-  }, []);
+  }, [id, token]);
 
   const handleDelete = () => {
     Swal.fire({
@@ -109,20 +109,22 @@ const Show = () => {
 
   return (
     <>
-      <h1 className="text-2xl font-bold mt-3">Customer BoW information</h1>
+      <h1 className="text-2xl font-bold mt-3 dark:text-gray-100">
+        Customer BoW information
+      </h1>
       <div className="mx-auto max-w-6xl">
         <BackButton />
       </div>
-      <div className="content-center py-8 px-6 mx-auto max-w-4xl bg-gray-50 shadow-lg rounded-lg text-left">
-        <div className="border-t border-gray-200">
-          <dl className="divide-y divide-gray-200">
+      <div className="content-center py-8 px-6 mx-auto max-w-4xl bg-gray-50 dark:bg-neutral-900 shadow-lg rounded-lg text-left">
+        <div className="border-t border-gray-200 dark:border-gray-700">
+          <dl className="divide-y divide-gray-200 dark:divide-gray-700">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
               {pool.lastName && (
                 <div>
-                  <dt className="text-sm font-medium text-gray-900">
+                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     Customer name
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-700">
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                     {pool.firstName + " " + pool.lastName}
                   </dd>
                 </div>
@@ -130,10 +132,10 @@ const Show = () => {
 
               {pool.email && (
                 <div>
-                  <dt className="text-sm font-medium text-gray-900">
+                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     E-mail(s)
                   </dt>
-                  <dd className="mt-1 text-sm text-blue-600 underline">
+                  <dd className="mt-1 text-sm text-blue-600 dark:text-blue-400 underline">
                     <button
                       className="underline"
                       onClick={() => (window.location = `mailto:${pool.email}`)}
@@ -142,11 +144,11 @@ const Show = () => {
                     </button>
                   </dd>
                   {pool.altEmail && (
-                    <dd className="mt-1 text-sm text-blue-600 underline">
+                    <dd className="mt-1 text-sm text-blue-600 dark:text-blue-400 underline">
                       <button
                         className="underline"
                         onClick={() =>
-                          (window.location = `mailto:${pool.altemail}`)
+                          (window.location = `mailto:${pool.altEmail}`)
                         }
                       >
                         {pool.altEmail}
@@ -157,12 +159,14 @@ const Show = () => {
               )}
               {pool.number && (
                 <div>
-                  <dt className="text-sm font-medium text-gray-900">
+                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     Phone number(s)
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-700">{pool.number}</dd>
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                    {pool.number}
+                  </dd>
                   {pool.altNumber && (
-                    <dd className="mt-1 text-sm text-gray-700">
+                    <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                       {pool.altNumber}
                     </dd>
                   )}
@@ -171,73 +175,79 @@ const Show = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
               <div>
-                <dt className="text-sm font-medium text-gray-900">
+                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Current status
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
                   {pool.status}
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-gray-900">
+                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Assigned to
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
                   {pool.assignedTo}
                 </dd>
               </div>
               <div id="condition">
-                <dt className="text-sm font-medium text-gray-900">Condition</dt>
-                <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
+                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                  Condition
+                </dt>
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
                   {pool.conditionPool ? pool.conditionPool : pool.conditionHt}
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-gray-900">
+                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Created at
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
                   {pool.createdAt.toLocaleDateString("en-US", options)}
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-gray-900">
+                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Last updated
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
                   {pool.updatedAt.toLocaleDateString("en-US", options)}
                 </dd>
               </div>
               <div>
-                <dt className="text-sm font-medium text-gray-900">
+                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Today's list
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 font-semibold underline">
                   {pool.todaysList}
                 </dd>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
               <div>
-                <dt className="text-sm font-medium text-gray-900">
+                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                   Body of water
                 </dt>
-                <dd className="mt-1 text-sm text-gray-700">
+                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                   {pool.bodyOfWater}
                 </dd>
               </div>
               {pool.system && (
                 <div>
-                  <dt className="text-sm font-medium text-gray-900">System</dt>
-                  <dd className="mt-1 text-sm text-gray-700">{pool.system}</dd>
+                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                    System
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
+                    {pool.system}
+                  </dd>
                 </div>
               )}
               {pool.hhlBuild && (
                 <div>
-                  <dt className="text-sm font-medium text-gray-900">
+                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     HHL Build
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-700">
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                     {pool.hhlBuild}
                   </dd>
                 </div>
@@ -252,40 +262,40 @@ const Show = () => {
                   <>
                     {pool.pump && (
                       <div id="pump">
-                        <dt className="text-sm font-medium text-gray-900">
+                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Pump
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                           {pool.pump}
                         </dd>
                       </div>
                     )}
                     {pool.filter && (
                       <div id="filter">
-                        <dt className="text-sm font-medium text-gray-900">
+                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Filter
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                           {pool.filter}
                         </dd>
                       </div>
                     )}
                     {pool.size && (
                       <div id="size">
-                        <dt className="text-sm font-medium text-gray-900">
+                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Pool size
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                           {pool.size}
                         </dd>
                       </div>
                     )}
                     {pool.heater && (
                       <div id="heater">
-                        <dt className="text-sm font-medium text-gray-900">
+                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Heater
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                           {pool.heater}
                         </dd>
                       </div>
@@ -298,20 +308,20 @@ const Show = () => {
                   <>
                     {pool.brand && (
                       <div id="brand">
-                        <dt className="text-sm font-medium text-gray-900">
+                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Brand
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                           {pool.brand}
                         </dd>
                       </div>
                     )}
                     {pool.make && (
                       <div id="make">
-                        <dt className="text-sm font-medium text-gray-900">
+                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                           Make
                         </dt>
-                        <dd className="mt-1 text-sm text-gray-700">
+                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                           {pool.make}
                         </dd>
                       </div>
@@ -321,10 +331,10 @@ const Show = () => {
 
               {pool.otherEquipment && (
                 <div>
-                  <dt className="text-sm font-medium text-gray-900">
+                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     Other equipment
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-700">
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400">
                     {pool.otherEquipment}
                   </dd>
                 </div>
@@ -333,13 +343,13 @@ const Show = () => {
             {pool.description && (
               <div className="grid grid-cols-1 gap-8 py-6">
                 <div>
-                  <dt className="text-sm font-medium text-gray-900">
+                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
                     Description
                   </dt>
-                  <dd className="mt-1 text-sm text-gray-700 whitespace-pre-line">
-                    <div className="ql-container ql-snow">
+                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-400 whitespace-pre-line">
+                    <div className="ql-container ql-snow dark:bg-neutral-800 dark:border-gray-700">
                       <div
-                        className="ql-editor"
+                        className="ql-editor dark:text-white"
                         dangerouslySetInnerHTML={{ __html: pool.description }}
                       />
                     </div>
@@ -349,11 +359,13 @@ const Show = () => {
             )}
             {pool.coverImagePath && pool.coverImagePath.length > 0 && (
               <div className="py-6">
-                <dt className="text-sm font-medium text-gray-900">Images</dt>
-                <dd className="mt-2 text-sm text-gray-900">
+                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                  Images
+                </dt>
+                <dd className="mt-2 text-sm text-gray-900 dark:text-gray-100">
                   <ul
                     role="list"
-                    className="divide-y divide-gray-100 rounded-md border border-gray-200"
+                    className="divide-y divide-gray-100 dark:divide-gray-700 rounded-md border border-gray-200 dark:border-gray-700"
                   >
                     {pool.coverImagePath.map((imagePath, index) => (
                       <li

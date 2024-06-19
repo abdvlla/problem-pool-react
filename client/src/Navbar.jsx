@@ -38,7 +38,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
   }
 
   return (
-    <header className="top-0 z-50 sticky border-solid border-2 dark:border-neutral-900 bg-gray-50 dark:bg-neutral-900 dark:bg-opacity-95 bg-opacity-95">
+    <header className="top-0 z-50 sticky border-solid border-2 dark:border-gray-600 dark:border-t-0  dark:border dark:border-x-0 bg-gray-50 dark:bg-neutral-900 dark:bg-opacity-95 bg-opacity-95">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
