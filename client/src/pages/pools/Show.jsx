@@ -20,8 +20,10 @@ const Show = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
-        setPool(response.data);
+        const data = response.data;
+        data.createdAt = new Date(data.createdAt);
+        data.updatedAt = new Date(data.updatedAt);
+        setPool(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -96,6 +98,15 @@ const Show = () => {
     );
   }
 
+  var options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
+
   return (
     <>
       <h1 className="text-2xl font-bold mt-3">Customer BoW information</h1>
@@ -161,6 +172,22 @@ const Show = () => {
                 <dt className="text-sm font-medium text-gray-900">Condition</dt>
                 <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
                   {pool.conditionPool ? pool.conditionPool : pool.conditionHt}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-gray-900">
+                  Created at
+                </dt>
+                <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
+                  {pool.createdAt.toLocaleDateString("en-US", options)}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-gray-900">
+                  Last updated
+                </dt>
+                <dd className="mt-1 text-sm text-gray-700 font-semibold underline">
+                  {pool.updatedAt.toLocaleDateString("en-US", options)}
                 </dd>
               </div>
             </div>
