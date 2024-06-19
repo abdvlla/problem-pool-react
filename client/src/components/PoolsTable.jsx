@@ -288,7 +288,14 @@ const PoolsTable = ({ pools }) => {
               <td className="py-3 text-gray-900 dark:text-white font-bold select-all">
                 {pool.lastName}
               </td>
-              <td className="py-3 text-blue-600 underline">{pool.email}</td>
+              <td className="py-3 text-blue-600 underline">
+                <button
+                  className="underline"
+                  onClick={() => (window.location = `mailto:${pool.email}`)}
+                >
+                  {pool.email}
+                </button>
+              </td>
               <td className="py-3 select-all">{pool.number}</td>
               <td className="py-3"> {pool.status} </td>
               <td className="py-3"> {pool.assignedTo} </td>

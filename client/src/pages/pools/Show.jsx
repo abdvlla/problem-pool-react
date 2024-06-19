@@ -130,24 +130,42 @@ const Show = () => {
 
               {pool.email && (
                 <div>
-                  <dt className="text-sm font-medium text-gray-900">E-mail</dt>
+                  <dt className="text-sm font-medium text-gray-900">
+                    E-mail(s)
+                  </dt>
                   <dd className="mt-1 text-sm text-blue-600 underline">
-                    <a href={`mailto:${pool.email}`}>{pool.email}</a>
+                    <button
+                      className="underline"
+                      onClick={() => (window.location = `mailto:${pool.email}`)}
+                    >
+                      {pool.email}
+                    </button>
                   </dd>
-                  <dd className="mt-1 text-sm text-blue-600 underline">
-                    <a href={`mailto:${pool.altEmail}`}>{pool.altEmail}</a>
-                  </dd>
+                  {pool.altEmail && (
+                    <dd className="mt-1 text-sm text-blue-600 underline">
+                      <button
+                        className="underline"
+                        onClick={() =>
+                          (window.location = `mailto:${pool.altemail}`)
+                        }
+                      >
+                        {pool.altEmail}
+                      </button>
+                    </dd>
+                  )}
                 </div>
               )}
               {pool.number && (
                 <div>
                   <dt className="text-sm font-medium text-gray-900">
-                    Phone number
+                    Phone number(s)
                   </dt>
                   <dd className="mt-1 text-sm text-gray-700">{pool.number}</dd>
-                  <dd className="mt-1 text-sm text-gray-700">
-                    {pool.altNumber}
-                  </dd>
+                  {pool.altNumber && (
+                    <dd className="mt-1 text-sm text-gray-700">
+                      {pool.altNumber}
+                    </dd>
+                  )}
                 </div>
               )}
             </div>
