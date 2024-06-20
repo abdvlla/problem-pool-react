@@ -113,6 +113,27 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.put("/bulk-update", async (req, res) => {
+  try {
+    const { ids, assignedTo, todaysList } = req.body;
+
+    const updateData = {};
+    if (assignedTo !== undefined) {
+      updateData.assignedTo = assignedTo;
+    }
+    if (todaysList !== undefined) {
+      updateData.todaysList = todaysList;
+    }
+
+    await Pool.updateMany({ _id: { $in: ids } }, { $set: updateData });
+
+    return res.status(200).send({ message: "Pools updated successfully" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
 // Update a specific pool by ID
 router.put("/:id", async (req, res) => {
   try {

@@ -33,6 +33,38 @@ const Index = () => {
     }
   }, [token]);
 
+  const handleBulkUpdate = async (
+    selectedPools,
+    bulkAssignedTo,
+    bulkTodaysList
+  ) => {
+    if (!token) {
+      setError("User not authenticated");
+      return;
+    }
+
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_API_BASE_URL}/customers/bulk-update`,
+        {
+          ids: selectedPools,
+          assignedTo: bulkAssignedTo || undefined,
+          todaysList: bulkTodaysList || undefined,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      fetchPools(); // Refresh the pools data after the update
+    } catch (err) {
+      console.error("Failed to update pools", err);
+      setError("Failed to update pools");
+    }
+  };
+
   useEffect(() => {
     fetchPools();
   }, [fetchPools]);
@@ -55,7 +87,7 @@ const Index = () => {
       <h1 className="mt-3 text-xl font-bold dark:text-white">
         All bodies of water
       </h1>
-      <PoolsTable pools={pools} />
+      <PoolsTable pools={pools} onBulkUpdate={handleBulkUpdate} />
     </>
   );
 };

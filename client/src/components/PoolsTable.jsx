@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const PoolsTable = ({ pools }) => {
+const PoolsTable = ({ pools, onBulkUpdate }) => {
   const [entriesPerPage, setEntriesPerPage] = useState(
     () => parseInt(localStorage.getItem("entriesPerPage")) || 10
   );
@@ -22,6 +22,10 @@ const PoolsTable = ({ pools }) => {
     key: "updatedAt",
     direction: "descending",
   });
+  const [selectedPools, setSelectedPools] = useState([]);
+  const [bulkAssignedTo, setBulkAssignedTo] = useState("");
+  const [bulkTodaysList, setBulkTodaysList] = useState("");
+  const [showBulkOptions, setShowBulkOptions] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("entriesPerPage", entriesPerPage);
@@ -159,6 +163,20 @@ const PoolsTable = ({ pools }) => {
     localStorage.removeItem("searchQuery");
   };
 
+  const handleCheckboxChange = (e, poolId) => {
+    if (e.target.checked) {
+      setSelectedPools([...selectedPools, poolId]);
+    } else {
+      setSelectedPools(selectedPools.filter((id) => id !== poolId));
+    }
+  };
+
+  const handleBulkUpdate = async () => {
+    if (selectedPools.length === 0) return;
+
+    await onBulkUpdate(selectedPools, bulkAssignedTo, bulkTodaysList);
+  };
+
   return (
     <div className="content-center py-6 px-5 mx-auto max-w-screen-xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 dark:bg-neutral-900 mt-4 ">
       <div className="flex justify-between mb-4">
@@ -181,6 +199,7 @@ const PoolsTable = ({ pools }) => {
             </select>
           </div>
         </div>
+
         <div className="mx-auto flex flex-row items-center space-x-4 ">
           <div>
             <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 ">
@@ -208,6 +227,7 @@ const PoolsTable = ({ pools }) => {
               </select>
             </div>
           </div>
+
           <div>
             <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 ">
               Filter by staff
@@ -224,16 +244,10 @@ const PoolsTable = ({ pools }) => {
                 <option value="">All</option>
                 <option value="Jenn">Jenn</option>
                 <option value="Colby">Colby</option>
-                <option className="text-blue-500" value="Ben">
-                  Ben
-                </option>
-                <option className="text-pink-500" value="Hannah">
-                  Hannah
-                </option>
+                <option value="Ben">Ben</option>
+                <option value="Hannah">Hannah</option>
                 <option value="Amaya">Amaya</option>
-                <option className="text-orange-500" value="Jack">
-                  Jack
-                </option>
+                <option value="Jack">Jack</option>
                 <option value="Jaime">Jaime</option>
               </select>
             </div>
@@ -257,24 +271,12 @@ const PoolsTable = ({ pools }) => {
               </select>
             </div>
           </div>
+
           <button
             onClick={clearFilters}
-            className="flex items-center justify-center p-2 mt-8 text-gray-100 bg-gray-500 rounded-full shadow-md hover:bg-gray-300 dark:bg-neutral-700 dark:text-gray-100 dark:hover:bg-neutral-600"
+            className="flex items-center justify-center mt-9 text-blue-500 font-semibold underline "
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
+            Clear
           </button>
         </div>
         <div className="justify-end">
@@ -308,9 +310,69 @@ const PoolsTable = ({ pools }) => {
           </div>
         </div>
       </div>
+      {showBulkOptions && (
+        <div className="flex justify-center items-center space-x-4 mb-4">
+          <div className="flex justify-center items-center space-x-4 mb-4">
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+                Assign to staff
+              </label>
+              <select
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                value={bulkAssignedTo}
+                onChange={(e) => setBulkAssignedTo(e.target.value)}
+              >
+                <option value=""></option>
+                <option value="Jenn">Jenn</option>
+                <option value="Colby">Colby</option>
+                <option value="Ben">Ben</option>
+                <option value="Hannah">Hannah</option>
+                <option value="Amaya">Amaya</option>
+                <option value="Jack">Jack</option>
+                <option value="Jaime">Jaime</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+                Add to today's list
+              </label>
+              <select
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                value={bulkTodaysList}
+                onChange={(e) => setBulkTodaysList(e.target.value)}
+              >
+                <option value=" "></option>
+                <option value="Yes">Yes</option>
+                <option value="Done">Done</option>
+              </select>
+            </div>
+            <button
+              onClick={handleBulkUpdate}
+              className="px-2 py-2 bg-blue-500 text-white rounded-lg text-sm mt-5"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      )}
       <table id="poolTable" className="table-auto shadow-lg rounded w-full">
         <thead className="bg-gray-200 dark:bg-neutral-600">
           <tr className="text-sm">
+            <th>
+              {showBulkOptions && (
+                <input
+                  type="checkbox"
+                  onChange={(e) =>
+                    setSelectedPools(
+                      e.target.checked
+                        ? currentPools.map((pool) => pool._id)
+                        : []
+                    )
+                  }
+                  checked={selectedPools.length === currentPools.length}
+                />
+              )}
+            </th>
             <th className=" font-semibold text-gray-800 dark:text-gray-100">
               First name
             </th>
@@ -343,7 +405,27 @@ const PoolsTable = ({ pools }) => {
                   : "↓"
                 : ""}
             </th>
-            <th className=" font-semibold text-gray-800 dark:text-gray-100"></th>
+            <th className=" font-semibold text-gray-800 dark:text-gray-100">
+              <button
+                onClick={() => setShowBulkOptions(!showBulkOptions)}
+                className=" ml-4flex items-center justify-center px-2 py-2 text-gray-100 bg-gray-700 rounded-full shadow-md hover:bg-gray-900 dark:bg-neutral-800 dark:text-gray-100 dark:hover:bg-gray-700"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                  />
+                </svg>
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -352,6 +434,15 @@ const PoolsTable = ({ pools }) => {
               key={pool._id}
               className="bg-white dark:bg-neutral-800 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-neutral-700 text-sm"
             >
+              <td>
+                {showBulkOptions && (
+                  <input
+                    type="checkbox"
+                    checked={selectedPools.includes(pool._id)}
+                    onChange={(e) => handleCheckboxChange(e, pool._id)}
+                  />
+                )}
+              </td>
               <td className="py-3 text-gray-900 dark:text-gray-100 select-all">
                 {pool.firstName}
               </td>
@@ -370,16 +461,13 @@ const PoolsTable = ({ pools }) => {
                 {pool.number}
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100">
-                {" "}
-                {pool.status}{" "}
+                {pool.status}
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100">
-                {" "}
-                {pool.assignedTo}{" "}
+                {pool.assignedTo}
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100">
-                {" "}
-                {pool.todaysList}{" "}
+                {pool.todaysList}
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100">
                 {new Date(pool.updatedAt).toLocaleDateString()}
