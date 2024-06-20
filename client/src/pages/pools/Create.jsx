@@ -47,8 +47,27 @@ const Create = () => {
 
   const quillRef = useRef(null);
 
+  const toolbarOptions = [
+    [{ header: [1, 2, 3, false] }],
+    ["bold", "italic", "underline", "strike"], // toggled buttons
+    ["link", "image"],
+    [{ header: 1 }, { header: 2 }], // custom button values
+
+    [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+    [{ script: "super" }], // superscript/subscript
+    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+
+    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+    [{ align: [] }],
+
+    ["clean"], // remove formatting button
+  ];
+
   useEffect(() => {
     const quill = new Quill(quillRef.current, {
+      modules: {
+        toolbar: toolbarOptions,
+      },
       theme: "snow",
     });
 
