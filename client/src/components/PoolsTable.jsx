@@ -232,10 +232,16 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 <option value="">All</option>
                 <option value="Jenn">Jenn</option>
                 <option value="Colby">Colby</option>
-                <option value="Ben">Ben</option>
-                <option value="Hannah">Hannah</option>
+                <option className="text-blue-500" value="Ben">
+                  Ben
+                </option>
+                <option className="text-pink-500" value="Hannah">
+                  Hannah
+                </option>
                 <option value="Amaya">Amaya</option>
-                <option value="Jack">Jack</option>
+                <option className="text-orange-500" value="Jack">
+                  Jack
+                </option>
                 <option value="Jaime">Jaime</option>
               </select>
             </div>
@@ -335,10 +341,16 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 <option value=" "></option>
                 <option value="Jenn">Jenn</option>
                 <option value="Colby">Colby</option>
-                <option value="Ben">Ben</option>
-                <option value="Hannah">Hannah</option>
+                <option className="text-blue-500" value="Ben">
+                  Ben
+                </option>
+                <option className="text-pink-500" value="Hannah">
+                  Hannah
+                </option>
                 <option value="Amaya">Amaya</option>
-                <option value="Jack">Jack</option>
+                <option className="text-orange-500" value="Jack">
+                  Jack
+                </option>
                 <option value="Jaime">Jaime</option>
               </select>
             </div>
@@ -512,7 +524,31 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
         </div>
         <div className="flex-end">
           <button
-            className={`px-4 py-2 rounded-md mr-2 ${
+            className={`px-3 py-2 rounded-md mr-2 ${
+              currentPage === 1
+                ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
+                : "bg-blue-500 text-white"
+            }`}
+            onClick={() => setCurrentPage(1)}
+            disabled={currentPage === 1}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"
+              />
+            </svg>
+          </button>
+          <button
+            className={`px-3 py-2 rounded-md mr-2 ${
               currentPage === 1
                 ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
                 : "bg-blue-500 text-white"
@@ -520,23 +556,23 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
-            Previous
-          </button>
-          {pages.map((page) => (
-            <button
-              key={page}
-              className={`px-3 py-2 rounded-md mr-2 ${
-                currentPage === page
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100"
-              }`}
-              onClick={() => setCurrentPage(page)}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-5"
             >
-              {page}
-            </button>
-          ))}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
           <button
-            className={`px-3 py-2 rounded-md ${
+            className={`px-3 py-2 rounded-md mr-2 ${
               currentPage === totalPages
                 ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
                 : "bg-blue-500 text-white"
@@ -544,7 +580,44 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             onClick={() => setCurrentPage(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
-            Next
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </button>
+          <button
+            className={`px-3 py-2 rounded-md ${
+              currentPage === totalPages
+                ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
+                : "bg-blue-500 text-white"
+            }`}
+            onClick={() => setCurrentPage(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"
+              />
+            </svg>
           </button>
         </div>
       </div>
