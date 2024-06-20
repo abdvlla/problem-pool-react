@@ -147,12 +147,6 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                 >
                   Log out
                 </button>
-                <DarkModeSwitch
-                  checked={darkMode}
-                  onChange={toggleDarkMode}
-                  className=""
-                  aria-hidden="true"
-                />
               </div>
             </div>
           </div>

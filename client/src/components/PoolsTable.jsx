@@ -402,10 +402,10 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
               Last name
             </th>
-            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100 hidden md:table-cell">
               Email
             </th>
-            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100 hidden md:table-cell">
               Phone
             </th>
             <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
@@ -418,7 +418,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               Today's list
             </th>
             <th
-              className="py-3 font-semibold text-gray-800 dark:text-gray-100 cursor-pointer"
+              className="py-3 font-semibold text-gray-800 dark:text-gray-100 cursor-pointer hidden md:table-cell"
               onClick={() => handleSort("updatedAt")}
             >
               Last updated{" "}
@@ -472,7 +472,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               <td className="py-3 text-gray-900 dark:text-gray-100 font-bold select-all">
                 {pool.lastName}
               </td>
-              <td className="py-3 text-blue-600 dark:text-blue-400 underline ">
+              <td className="py-3 text-blue-600 dark:text-blue-400 underline hidden md:table-cell">
                 <button
                   className="underline"
                   onClick={() => (window.location = `mailto:${pool.email}`)}
@@ -480,7 +480,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                   {pool.email}
                 </button>
               </td>
-              <td className="py-3 select-all text-gray-900 dark:text-gray-100">
+              <td className="py-3 select-all text-gray-900 dark:text-gray-100 hidden md:table-cell">
                 {pool.number}
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100">
@@ -492,7 +492,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               <td className="py-3 text-gray-900 dark:text-gray-100">
                 {pool.todaysList}
               </td>
-              <td className="py-3 text-gray-900 dark:text-gray-100">
+              <td className="py-3 text-gray-900 dark:text-gray-100 hidden md:table-cell">
                 {new Date(pool.updatedAt).toLocaleDateString()}
               </td>
               <td className="py-3 dark:text-white">
@@ -608,13 +608,13 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
-              class="size-5"
+              className="size-5"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5"
               />
             </svg>
