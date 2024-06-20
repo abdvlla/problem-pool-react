@@ -30,85 +30,66 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
 
   useEffect(() => {
     localStorage.setItem("entriesPerPage", entriesPerPage);
-  }, [entriesPerPage]);
-
-  useEffect(() => {
     localStorage.setItem("statusFilter", statusFilter);
-  }, [statusFilter]);
-
-  useEffect(() => {
     localStorage.setItem("staffFilter", staffFilter);
-  }, [staffFilter]);
-
-  useEffect(() => {
     localStorage.setItem("todaysListFilter", todaysListFilter);
-  }, [todaysListFilter]);
-
-  useEffect(() => {
     localStorage.setItem("searchQuery", searchQuery);
-  }, [searchQuery]);
+  }, [
+    entriesPerPage,
+    statusFilter,
+    staffFilter,
+    todaysListFilter,
+    searchQuery,
+  ]);
 
   const handleSort = (key) => {
-    let direction = "ascending";
-    if (sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending";
-    }
-    setSortConfig({ key, direction });
+    setSortConfig((prev) => ({
+      key,
+      direction:
+        prev.key === key && prev.direction === "ascending"
+          ? "descending"
+          : "ascending",
+    }));
   };
 
   const sortedPools = useMemo(() => {
-    const sorted = [...pools];
-    sorted.sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) {
+    return [...pools].sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key])
         return sortConfig.direction === "ascending" ? -1 : 1;
-      }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
+      if (a[sortConfig.key] > b[sortConfig.key])
         return sortConfig.direction === "ascending" ? 1 : -1;
-      }
       return 0;
     });
-    return sorted;
   }, [pools, sortConfig]);
 
   const filteredPools = useMemo(() => {
-    let filteredData = sortedPools;
-
-    if (statusFilter) {
-      filteredData = filteredData.filter((pool) =>
-        pool.status.toLowerCase().includes(statusFilter.toLowerCase())
+    return sortedPools.filter((pool) => {
+      return (
+        (!statusFilter ||
+          pool.status.toLowerCase().includes(statusFilter.toLowerCase())) &&
+        (!staffFilter ||
+          (pool.assignedTo &&
+            pool.assignedTo
+              .toLowerCase()
+              .includes(staffFilter.toLowerCase()))) &&
+        (!todaysListFilter ||
+          (pool.todaysList &&
+            pool.todaysList
+              .toLowerCase()
+              .includes(todaysListFilter.toLowerCase()))) &&
+        (!searchQuery ||
+          searchQuery
+            .toLowerCase()
+            .split(" ")
+            .every(
+              (keyword) =>
+                pool.firstName.toLowerCase().includes(keyword) ||
+                pool.lastName.toLowerCase().includes(keyword) ||
+                pool.email.toLowerCase().includes(keyword) ||
+                pool.number.includes(keyword)
+            ))
       );
-    }
-
-    if (staffFilter) {
-      filteredData = filteredData.filter(
-        (pool) =>
-          pool.assignedTo &&
-          pool.assignedTo.toLowerCase().includes(staffFilter.toLowerCase())
-      );
-    }
-
-    if (todaysListFilter) {
-      filteredData = filteredData.filter(
-        (pool) =>
-          pool.todaysList &&
-          pool.todaysList.toLowerCase().includes(todaysListFilter.toLowerCase())
-      );
-    }
-
-    if (searchQuery) {
-      const keywords = searchQuery.toLowerCase().split(" ");
-      filteredData = filteredData.filter((pool) =>
-        keywords.every(
-          (keyword) =>
-            pool.firstName.toLowerCase().includes(keyword) ||
-            pool.lastName.toLowerCase().includes(keyword) ||
-            pool.email.toLowerCase().includes(keyword) ||
-            pool.number.includes(keyword)
-        )
-      );
-    }
-
-    return filteredData;
+    });
   }, [statusFilter, staffFilter, todaysListFilter, searchQuery, sortedPools]);
 
   const handleEntriesChange = (e) => {
