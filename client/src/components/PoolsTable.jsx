@@ -408,7 +408,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             <th className=" font-semibold text-gray-800 dark:text-gray-100">
               <button
                 onClick={() => setShowBulkOptions(!showBulkOptions)}
-                className=" ml-4flex items-center justify-center px-2 py-2 text-gray-100 bg-gray-700 rounded-full shadow-md hover:bg-gray-900 dark:bg-neutral-800 dark:text-gray-100 dark:hover:bg-gray-700"
+                className=" ml-4flex items-center justify-center px-2 py-2 text-gray-100 bg-gray-700 rounded-full shadow-md hover:bg-gray-900  dark:text-gray-900 dark:bg-gray-200 dark:hover:bg-gray-50"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
