@@ -192,7 +192,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
           </label>
           <div className="relative mt-2">
             <select
-              className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+              className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3  text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
               id="page-length"
               aria-labelledby="page-length-label"
               onChange={handleEntriesChange}
@@ -213,7 +213,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             </label>
             <div className="relative mt-2">
               <select
-                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 id="status-filter"
                 name="status"
                 aria-labelledby="status-filter-label"
@@ -222,6 +222,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               >
                 <option value="">All</option>
                 <option value="New BoW">New BoW</option>
+                <option value="Weekly service">Weekly service</option>
                 <option value="Received">Received</option>
                 <option value="Follow-up 1">Follow-up 1</option>
                 <option value="Follow-up 2">Follow-up 2</option>
@@ -240,7 +241,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             </label>
             <div className="relative mt-2">
               <select
-                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3  text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 id="staff-filter"
                 name="staff"
                 aria-labelledby="staff-filter-label"
@@ -264,7 +265,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             </label>
             <div className="relative mt-2">
               <select
-                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3  text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 id="todaysList-filter"
                 name="todaysList"
                 aria-labelledby="todaysList-filter-label"
@@ -317,14 +318,36 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
         </div>
       </div>
       {showBulkOptions && (
-        <div className="flex justify-center items-center space-x-4 mb-4">
+        <div className="flex justify-center items-center space-x-4 mb-4 mr-2">
           <div className="flex justify-center items-center space-x-4 mb-4">
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+                Update status
+              </label>
+              <select
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3  text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                value={bulkStatus}
+                onChange={(e) => setBulkStatus(e.target.value)}
+              >
+                <option value=""></option>
+                <option value="New BoW">New BoW</option>
+                <option value="Received">Received</option>
+                <option value="Weekly service">Weekly service</option>
+                <option value="Follow-up 1">Follow-up 1</option>
+                <option value="Follow-up 2">Follow-up 2</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="Improving">Improving</option>
+                <option value="No update">No update</option>
+                <option value="Almost">Almost</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </div>
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
                 Assign to staff
               </label>
               <select
-                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 value={bulkAssignedTo}
                 onChange={(e) => setBulkAssignedTo(e.target.value)}
               >
@@ -340,10 +363,10 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             </div>
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
-                Add to today's list
+                Update today's list
               </label>
               <select
-                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
                 value={bulkTodaysList}
                 onChange={(e) => setBulkTodaysList(e.target.value)}
               >
@@ -352,27 +375,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 <option value="Done">Done</option>
               </select>
             </div>
-            <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
-                Update status
-              </label>
-              <select
-                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                value={bulkStatus}
-                onChange={(e) => setBulkStatus(e.target.value)}
-              >
-                <option value=""></option>
-                <option value="New BoW">New BoW</option>
-                <option value="Received">Received</option>
-                <option value="Follow-up 1">Follow-up 1</option>
-                <option value="Follow-up 2">Follow-up 2</option>
-                <option value="Ongoing">Ongoing</option>
-                <option value="Improving">Improving</option>
-                <option value="No update">No update</option>
-                <option value="Almost">Almost</option>
-                <option value="Closed">Closed</option>
-              </select>
-            </div>
+
             <button
               onClick={handleBulkUpdate}
               className="px-2 py-2 bg-blue-500 text-white rounded-lg text-sm mt-5"

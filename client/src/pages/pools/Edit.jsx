@@ -317,6 +317,7 @@ const Edit = () => {
               <option value=""></option>
               <option value="New BoW">New BoW</option>
               <option value="Received">Received</option>
+              <option value="Weekly service">Weekly service</option>
               <option value="Follow-up 1">Follow-up 1</option>
               <option value="Follow-up 2">Follow-up 2</option>
               <option value="Ongoing">Ongoing</option>
