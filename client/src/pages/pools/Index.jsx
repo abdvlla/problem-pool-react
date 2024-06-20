@@ -36,7 +36,8 @@ const Index = () => {
   const handleBulkUpdate = async (
     selectedPools,
     bulkAssignedTo,
-    bulkTodaysList
+    bulkTodaysList,
+    bulkStatus
   ) => {
     if (!token) {
       setError("User not authenticated");
@@ -50,6 +51,7 @@ const Index = () => {
           ids: selectedPools,
           assignedTo: bulkAssignedTo || undefined,
           todaysList: bulkTodaysList || undefined,
+          status: bulkStatus || undefined,
         },
         {
           headers: {

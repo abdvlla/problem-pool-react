@@ -25,6 +25,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
   const [selectedPools, setSelectedPools] = useState([]);
   const [bulkAssignedTo, setBulkAssignedTo] = useState("");
   const [bulkTodaysList, setBulkTodaysList] = useState("");
+  const [bulkStatus, setBulkStatus] = useState("");
   const [showBulkOptions, setShowBulkOptions] = useState(false);
 
   useEffect(() => {
@@ -174,7 +175,12 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
   const handleBulkUpdate = async () => {
     if (selectedPools.length === 0) return;
 
-    await onBulkUpdate(selectedPools, bulkAssignedTo, bulkTodaysList);
+    await onBulkUpdate(
+      selectedPools,
+      bulkAssignedTo,
+      bulkTodaysList,
+      bulkStatus
+    );
   };
 
   return (
@@ -322,7 +328,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 value={bulkAssignedTo}
                 onChange={(e) => setBulkAssignedTo(e.target.value)}
               >
-                <option value=""></option>
+                <option value=" "></option>
                 <option value="Jenn">Jenn</option>
                 <option value="Colby">Colby</option>
                 <option value="Ben">Ben</option>
@@ -344,6 +350,27 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 <option value=" "></option>
                 <option value="Yes">Yes</option>
                 <option value="Done">Done</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+                Update status
+              </label>
+              <select
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                value={bulkStatus}
+                onChange={(e) => setBulkStatus(e.target.value)}
+              >
+                <option value=""></option>
+                <option value="New BoW">New BoW</option>
+                <option value="Received">Received</option>
+                <option value="Follow-up 1">Follow-up 1</option>
+                <option value="Follow-up 2">Follow-up 2</option>
+                <option value="Ongoing">Ongoing</option>
+                <option value="Improving">Improving</option>
+                <option value="No update">No update</option>
+                <option value="Almost">Almost</option>
+                <option value="Closed">Closed</option>
               </select>
             </div>
             <button

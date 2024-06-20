@@ -407,6 +407,7 @@ const Edit = () => {
                   <option value="Algae - Green Cloudy">
                     Algae - Green Cloudy
                   </option>
+                  <option value="Algae - On Floor">Algae - On Floor</option>
                   <option value="Discolored water">Discolored water</option>
                   <option value="Stains">Stains</option>
                   <option value="Fine debris settling on floor">

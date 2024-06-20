@@ -115,7 +115,7 @@ router.get("/:id", async (req, res) => {
 
 router.put("/bulk-update", async (req, res) => {
   try {
-    const { ids, assignedTo, todaysList } = req.body;
+    const { ids, assignedTo, todaysList, status } = req.body;
 
     const updateData = {};
     if (assignedTo !== undefined) {
@@ -123,6 +123,10 @@ router.put("/bulk-update", async (req, res) => {
     }
     if (todaysList !== undefined) {
       updateData.todaysList = todaysList;
+    }
+
+    if (status !== undefined) {
+      updateData.status = status;
     }
 
     await Pool.updateMany({ _id: { $in: ids } }, { $set: updateData });
