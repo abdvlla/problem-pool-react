@@ -67,20 +67,20 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
           <div className="hidden lg:flex lg:gap-x-12">
             <NavLink
               to="/pools"
-              className="text-sm font-semibold leading-6 text-gray-800 dark:text-gray-200"
+              className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
             >
               BoW
             </NavLink>
             <NavLink
               to="/pools/new"
-              className="text-sm font-semibold leading-6 text-gray-800 dark:text-gray-200"
+              className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
             >
               New BoW
             </NavLink>
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
             <button
-              className="text-sm font-semibold leading-6 text-gray-800 dark:text-gray-200"
+              className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
               onClick={logout}
             >
               Log out
