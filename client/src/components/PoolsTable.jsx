@@ -351,6 +351,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 onChange={(e) => setBulkStatus(e.target.value)}
               >
                 <option value=""></option>
+                <option value=" ">None</option>
                 <option value="New BoW">New BoW</option>
                 <option value="Received">Received</option>
                 <option value="Weekly service">Weekly service</option>
@@ -372,7 +373,8 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 value={bulkAssignedTo}
                 onChange={(e) => setBulkAssignedTo(e.target.value)}
               >
-                <option value=" "></option>
+                <option value=""></option>
+                <option value=" ">None</option>
                 <option value="Jenn">Jenn</option>
                 <option className="text-blue-600" value="Colby">
                   Colby
@@ -402,7 +404,8 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 value={bulkTodaysList}
                 onChange={(e) => setBulkTodaysList(e.target.value)}
               >
-                <option value=" "></option>
+                <option value=""></option>
+                <option value=" ">None</option>
                 <option value="Yes">Yes</option>
                 <option value="Done">Done</option>
               </select>
