@@ -43,7 +43,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   if (username === USERNAME && password === PASSWORD) {
-    const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "4h" });
+    const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "10h" });
     res.status(200).send({ message: "Login successful", token });
   } else {
     res.status(401).send({ message: "Invalid credentials" });
