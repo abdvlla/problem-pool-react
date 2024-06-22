@@ -4,6 +4,8 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import BackButton from "../../components/BackButton";
 import "quill/dist/quill.snow.css";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 const Show = () => {
   const token = localStorage.getItem("token");
@@ -106,6 +108,22 @@ const Show = () => {
     hour: "numeric",
     minute: "numeric",
   };
+
+  const ImagesGrid = ({ images }) => (
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      {images.map((imagePath, index) => (
+        <div key={index} className="relative">
+          <Zoom>
+            <img
+              className="w-full h-auto rounded-lg cursor-pointer transition-transform duration-300 transform hover:scale-105"
+              src={imagePath}
+              alt={`Image ${index + 1}`}
+            />
+          </Zoom>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <>
@@ -378,31 +396,7 @@ const Show = () => {
                   Images
                 </dt>
                 <dd className="mt-2 text-sm text-gray-900 dark:text-gray-100">
-                  <ul
-                    role="list"
-                    className="divide-y divide-gray-100 dark:divide-gray-700 rounded-md border border-gray-200 dark:border-gray-700"
-                  >
-                    {pool.coverImagePath.map((imagePath, index) => (
-                      <li
-                        key={index}
-                        className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
-                      >
-                        <div className="flex w-0 flex-1 items-center">
-                          <div className="ml-2 flex min-w-0 flex-1 gap-2">
-                            <img
-                              className=""
-                              style={{
-                                marginTop: "10px",
-                                marginBottom: "10px",
-                              }}
-                              src={imagePath}
-                              alt={`Image ${index + 1}`}
-                            />
-                          </div>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
+                  <ImagesGrid images={pool.coverImagePath} />
                 </dd>
               </div>
             )}
