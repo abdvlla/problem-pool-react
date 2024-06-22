@@ -6,6 +6,7 @@ import BackButton from "../../components/BackButton";
 import "quill/dist/quill.snow.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import LazyLoad from "react-lazyload";
 
 const Show = () => {
   const token = localStorage.getItem("token");
@@ -113,13 +114,15 @@ const Show = () => {
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
       {images.map((imagePath, index) => (
         <div key={index} className="relative">
-          <Zoom>
-            <img
-              className="w-full h-auto rounded-lg cursor-pointer transition-transform duration-300 transform hover:scale-105"
-              src={imagePath}
-              alt={`Image ${index + 1}`}
-            />
-          </Zoom>
+          <LazyLoad height={200} offset={100} once>
+            <Zoom>
+              <img
+                className="w-full h-auto rounded-lg cursor-pointer transition-transform duration-300 transform hover:scale-105"
+                src={imagePath}
+                alt={`Image ${index + 1}`}
+              />
+            </Zoom>
+          </LazyLoad>
         </div>
       ))}
     </div>
