@@ -601,7 +601,7 @@ const Edit = () => {
                       <img
                         src={image}
                         alt={`Image ${index + 1}`}
-                        className="w-40 h-40 object-cover rounded-lg shadow-md"
+                        className="w-48 h-48 object-cover rounded-lg shadow-md"
                       />
                       <button
                         type="button"

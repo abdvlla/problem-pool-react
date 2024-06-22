@@ -24,6 +24,8 @@ router.get("/", async (req, res) => {
       followUp1Count: counts.find((c) => c._id === "Follow-up 1")?.count || 0,
       followUp2Count: counts.find((c) => c._id === "Follow-up 2")?.count || 0,
       noUpdateCount: counts.find((c) => c._id === "No update")?.count || 0,
+      weeklyServiceCounts:
+        counts.find((c) => c._id === "Weekly service")?.count || 0,
     };
 
     res.json({ data: statusCounts });
