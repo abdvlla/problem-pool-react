@@ -243,6 +243,9 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                   Jack
                 </option>
                 <option value="Jaime">Jaime</option>
+                <option value="Mark">Mark</option>
+                <option value="Service">Service</option>
+                <option value="Construction">Construction</option>
               </select>
             </div>
           </div>
@@ -352,6 +355,9 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                   Jack
                 </option>
                 <option value="Jaime">Jaime</option>
+                <option value="Mark">Mark</option>
+                <option value="Service">Service</option>
+                <option value="Construction">Construction</option>
               </select>
             </div>
             <div>

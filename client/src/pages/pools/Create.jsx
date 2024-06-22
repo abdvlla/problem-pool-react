@@ -457,6 +457,9 @@ const Create = () => {
               <option value="Hannah">Hannah</option>
               <option value="Jack">Jack</option>
               <option value="Jaime">Jaime</option>
+              <option value="Mark">Mark</option>
+              <option value="Service">Service</option>
+              <option value="Construction">Construction</option>
             </select>
           </div>
           <div className="">
