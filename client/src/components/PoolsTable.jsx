@@ -236,7 +236,9 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               >
                 <option value="">All</option>
                 <option value="Jenn">Jenn</option>
-                <option value="Colby">Colby</option>
+                <option className="text-blue-600" value="Colby">
+                  Colby
+                </option>
                 <option className="text-blue-500" value="Ben">
                   Ben
                 </option>
@@ -247,7 +249,9 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 <option className="text-orange-500" value="Jack">
                   Jack
                 </option>
-                <option value="Jaime">Jaime</option>
+                <option className="text-pink-400" value="Jaime">
+                  Jaime
+                </option>
                 <option value="Mark">Mark</option>
                 <option value="Service">Service</option>
                 <option value="Construction">Construction</option>
@@ -276,7 +280,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
 
           <button
             onClick={clearFilters}
-            className="flex items-center justify-center mt-9 text-blue-500 font-semibold underline "
+            className="flex items-center justify-center mt-9 text-blue-500 font-semibold underline hover:text-blue-600 active:text-blue-800"
           >
             Clear
           </button>
@@ -370,7 +374,9 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               >
                 <option value=" "></option>
                 <option value="Jenn">Jenn</option>
-                <option value="Colby">Colby</option>
+                <option className="text-blue-600" value="Colby">
+                  Colby
+                </option>
                 <option className="text-blue-500" value="Ben">
                   Ben
                 </option>
@@ -404,7 +410,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
 
             <button
               onClick={handleBulkUpdate}
-              className="px-2 py-2 bg-blue-500 text-white rounded-lg text-sm mt-5"
+              className="px-2 py-2 bg-blue-500 text-white rounded-lg text-sm mt-5 hover:bg-blue-700 active:bg-blue-900"
             >
               Update
             </button>
@@ -464,7 +470,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             <th className=" font-semibold text-gray-800 dark:text-gray-100">
               <button
                 onClick={() => setShowBulkOptions(!showBulkOptions)}
-                className=" ml-4flex items-center justify-center px-2 py-2 text-gray-100 bg-gray-700 rounded-full shadow-md hover:bg-gray-900  dark:text-gray-900 dark:bg-gray-200 dark:hover:bg-gray-50"
+                className=" ml-4flex items-center justify-center px-2 py-2 text-gray-100 bg-gray-700 rounded-full shadow-md hover:bg-gray-900  dark:text-gray-900 dark:bg-gray-200 dark:hover:bg-gray-100 focus:ring ring-blue-600"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
