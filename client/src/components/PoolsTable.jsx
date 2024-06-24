@@ -531,18 +531,16 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               <td className="py-3 text-gray-900 dark:text-gray-100">
                 {pool.assignedTo}
               </td>
-              <td>
-                <span
-                  className={`py-3 ${
-                    pool.todaysList === "Yes"
-                      ? "text-yellow-500 font-bold "
-                      : pool.todaysList === "Done"
-                      ? "text-green-500 font-bold"
-                      : "text-gray-900 dark:text-gray-100"
-                  }`}
-                >
-                  {pool.todaysList}
-                </span>
+              <td className="py-3">
+                <div className="space-x-2 dark:text-gray-100 font-bold">
+                  {pool.todaysList === "Yes" && (
+                    <span className="inline-block w-3 h-3 bg-yellow-500 rounded-full"></span>
+                  )}
+                  {pool.todaysList === "Done" && (
+                    <span className="inline-block w-3 h-3 bg-green-500 rounded-full"></span>
+                  )}
+                  <span>{pool.todaysList}</span>
+                </div>
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100 hidden md:table-cell">
                 {new Date(pool.updatedAt).toLocaleDateString()}
