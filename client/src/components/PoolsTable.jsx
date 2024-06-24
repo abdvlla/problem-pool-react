@@ -499,7 +499,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               key={pool._id}
               className="bg-white dark:bg-neutral-800 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-neutral-700 text-sm"
             >
-              <td>
+              <td className="py-3">
                 {showBulkOptions && (
                   <input
                     type="checkbox"
@@ -531,8 +531,18 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               <td className="py-3 text-gray-900 dark:text-gray-100">
                 {pool.assignedTo}
               </td>
-              <td className="py-3 text-gray-900 dark:text-gray-100">
-                {pool.todaysList}
+              <td>
+                <span
+                  className={`py-3 ${
+                    pool.todaysList === "Yes"
+                      ? "text-yellow-500 font-bold "
+                      : pool.todaysList === "Done"
+                      ? "text-green-500 font-bold"
+                      : "text-gray-900 dark:text-gray-100"
+                  }`}
+                >
+                  {pool.todaysList}
+                </span>
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100 hidden md:table-cell">
                 {new Date(pool.updatedAt).toLocaleDateString()}

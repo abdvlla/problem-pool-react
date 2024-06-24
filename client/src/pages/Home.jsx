@@ -56,16 +56,40 @@ const Home = () => {
   }, [token]);
 
   const pieData = [
-    { name: "New BoW", value: counts.newBoWCount },
-    { name: "Received", value: counts.receivedCount },
-    { name: "Ongoing", value: counts.ongoingCount },
-    { name: "Improving", value: counts.improvingCount },
-    { name: "Almost", value: counts.almostCount },
-    { name: "Closed", value: counts.closedCount },
-    { name: "Follow-up 1", value: counts.followUp1Count },
-    { name: "Follow-up 2", value: counts.followUp2Count },
-    { name: "No Update", value: counts.noUpdateCount },
-    { name: "Weekly Service", value: counts.weeklyServiceCounts },
+    { name: "New BoW", value: counts.newBoWCount, color: "border-blue-500" },
+    {
+      name: "Received",
+      value: counts.receivedCount,
+      color: "border-green-500",
+    },
+    { name: "Ongoing", value: counts.ongoingCount, color: "border-yellow-500" },
+    {
+      name: "Improving",
+      value: counts.improvingCount,
+      color: "border-purple-500",
+    },
+    { name: "Almost", value: counts.almostCount, color: "border-orange-500" },
+    { name: "Closed", value: counts.closedCount, color: "border-red-500" },
+    {
+      name: "Follow-up 1",
+      value: counts.followUp1Count,
+      color: "border-teal-500",
+    },
+    {
+      name: "Follow-up 2",
+      value: counts.followUp2Count,
+      color: "border-indigo-500",
+    },
+    {
+      name: "No Update",
+      value: counts.noUpdateCount,
+      color: "border-gray-500",
+    },
+    {
+      name: "Weekly Service",
+      value: counts.weeklyServiceCounts,
+      color: "border-pink-500",
+    },
   ];
 
   return (
@@ -78,25 +102,26 @@ const Home = () => {
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="relative overflow-hidden bg-neutral-800 dark:bg-white shadow-md rounded-xl h-full dark:hover:bg-gray-200 hover:bg-neutral-700 transition duration-300">
-              <Link to="/pools">
-                <div className="p-9 text-center">
-                  <h3 className="text-4xl font-bold dark:text-gray-900 text-white">
-                    {counts.allBodiesOfWater}
-                  </h3>
-                  <h3 className="mt-6 text-2xl font-bold dark:text-gray-900 text-white">
-                    All Bodies of Water
-                  </h3>
-                  <p className="mt-6 text-base dark:text-gray-600 text-gray-300">
-                    The total number of bodies of waters in the database
-                  </p>
-                </div>
-              </Link>
-            </div>
+            <Link
+              to="/pools"
+              className="relative overflow-hidden bg-neutral-800 dark:bg-white shadow-md rounded-xl h-full dark:hover:bg-gray-200 dark:active:bg-gray-500 active:bg-gray-300 hover:bg-neutral-700 transition duration-300 border-4 border-neutral-700 hover:border-gray-200 dark:hover:border-gray-600"
+            >
+              <div className="p-9 text-center">
+                <h3 className="text-4xl font-bold dark:text-gray-900 text-white">
+                  {counts.allBodiesOfWater}
+                </h3>
+                <h3 className="mt-6 text-2xl font-bold dark:text-gray-900 text-white">
+                  All Bodies of Water
+                </h3>
+                <p className="mt-6 text-base dark:text-gray-600 text-gray-300 ">
+                  The total number of bodies of waters in the database
+                </p>
+              </div>
+            </Link>
             {pieData.map((data, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden bg-neutral-800 dark:bg-white shadow-md rounded-xl h-full dark:hover:bg-gray-200 hover:bg-neutral-700 transition duration-300"
+                className={`relative overflow-hidden bg-neutral-800 dark:bg-white shadow-md rounded-xl h-full dark:hover:bg-gray-200 hover:bg-neutral-700 transition duration-300 border-4 ${data.color}`}
               >
                 <div className="p-9 text-center">
                   <h3 className="text-4xl font-bold dark:text-gray-900 text-white">
