@@ -529,7 +529,11 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 {pool.status}
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100">
-                {pool.assignedTo}
+                {pool.assignedTo === "Hannah" ? (
+                  <span className="text-pink-500">{pool.assignedTo}</span>
+                ) : (
+                  <span>{pool.assignedTo}</span>
+                )}
               </td>
               <td className="py-3">
                 <div className="space-x-2 dark:text-gray-100 font-bold">
