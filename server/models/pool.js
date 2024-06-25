@@ -46,4 +46,6 @@ poolSchema.virtual("coverImagePath").get(function () {
 poolSchema.set("toJSON", { virtuals: true });
 poolSchema.set("toObject", { virtuals: true });
 
+poolSchema.index({ updatedAt: -1 });
+
 export const Pool = mongoose.model("Pool", poolSchema);

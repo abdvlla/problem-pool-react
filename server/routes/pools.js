@@ -1,12 +1,12 @@
 import express from "express";
 import { Pool } from "../models/pool.js";
-const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
 
 const router = express.Router();
+const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
 
 // Save images to the pool
 function saveImages(pool, coversEncoded, removeCover) {
-  if (removeCover && Array.isArray(removeCover)) {
+  if (removeCover) {
     pool.images = pool.images.filter(
       (img) =>
         !removeCover.includes(
@@ -17,37 +17,31 @@ function saveImages(pool, coversEncoded, removeCover) {
 
   if (!coversEncoded) return;
 
-  try {
-    const covers = Array.isArray(coversEncoded)
-      ? coversEncoded
-      : [coversEncoded];
+  const covers = Array.isArray(coversEncoded) ? coversEncoded : [coversEncoded];
+  const newImages = covers
+    .map((coverEncoded) => {
+      const cover = JSON.parse(coverEncoded);
+      if (cover && imageMimeTypes.includes(cover.type)) {
+        return {
+          image: Buffer.from(cover.data, "base64"),
+          imageType: cover.type,
+        };
+      }
+    })
+    .filter(Boolean);
 
-    const newImages = covers
-      .map((coverEncoded) => {
-        const cover = JSON.parse(coverEncoded);
-        if (cover != null && imageMimeTypes.includes(cover.type)) {
-          return {
-            image: Buffer.from(cover.data, "base64"),
-            imageType: cover.type,
-          };
-        }
-      })
-      .filter(Boolean);
-
-    pool.images = pool.images.concat(newImages);
-  } catch (err) {
-    console.error("Error parsing cover data", err);
-  }
+  pool.images = pool.images.concat(newImages);
 }
 
-// Get all pools with optional filters
+// Get all pools
 router.get("/", async (req, res) => {
   try {
     const pools = await Pool.find({})
       .sort({ updatedAt: -1 })
       .select(
         "firstName lastName email number assignedTo status updatedAt todaysList"
-      );
+      )
+      .allowDiskUse(true);
 
     return res.status(200).json({
       count: pools.length,
@@ -61,31 +55,7 @@ router.get("/", async (req, res) => {
 
 // Create a new pool
 router.post("/", async (req, res) => {
-  const newPool = new Pool({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    number: req.body.number,
-    email: req.body.email,
-    altNumber: req.body.altNumber,
-    altEmail: req.body.altEmail,
-    bodyOfWater: req.body.bodyOfWater,
-    status: req.body.status,
-    description: req.body.description,
-    system: req.body.system,
-    pump: req.body.pump,
-    filter: req.body.filter,
-    heater: req.body.heater,
-    hhlBuild: req.body.hhlBuild,
-    size: req.body.size,
-    otherEquipment: req.body.otherEquipment,
-    brand: req.body.brand,
-    make: req.body.make,
-    assignedTo: req.body.assignedTo,
-    conditionPool: req.body.conditionPool,
-    conditionHt: req.body.conditionHt,
-    todaysList: req.body.todaysList,
-  });
-
+  const newPool = new Pool(req.body);
   saveImages(newPool, req.body.images, req.body.removeCover);
 
   try {
@@ -113,24 +83,11 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Bulk update pools
 router.put("/bulk-update", async (req, res) => {
   try {
-    const { ids, assignedTo, todaysList, status } = req.body;
-
-    const updateData = {};
-    if (assignedTo !== undefined) {
-      updateData.assignedTo = assignedTo;
-    }
-    if (todaysList !== undefined) {
-      updateData.todaysList = todaysList;
-    }
-
-    if (status !== undefined) {
-      updateData.status = status;
-    }
-
+    const { ids, ...updateData } = req.body;
     await Pool.updateMany({ _id: { $in: ids } }, { $set: updateData });
-
     return res.status(200).send({ message: "Pools updated successfully" });
   } catch (error) {
     console.log(error.message);
@@ -150,7 +107,6 @@ router.put("/:id", async (req, res) => {
     const { images, removedImages, ...otherData } = req.body;
     Object.assign(pool, otherData);
     saveImages(pool, images, removedImages);
-
     await pool.save();
 
     return res
@@ -163,20 +119,17 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete a specific pool by ID
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", async (req, res) => {
   try {
-    const { id } = request.params;
-
+    const { id } = req.params;
     const result = await Pool.findByIdAndDelete(id);
-
     if (!result) {
-      return response.status(404).json({ message: "Pool not found" });
+      return res.status(404).json({ message: "Pool not found" });
     }
-
-    return response.status(200).send({ message: "Pool deleted successfully" });
+    return res.status(200).send({ message: "Pool deleted successfully" });
   } catch (error) {
     console.log(error.message);
-    response.status(500).send({ message: error.message });
+    res.status(500).send({ message: error.message });
   }
 });
 
