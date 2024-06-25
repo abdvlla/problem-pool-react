@@ -27,11 +27,9 @@ const App = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          if (data.valid) {
-            setIsLoggedIn(true);
-          } else {
+          setIsLoggedIn(data.valid);
+          if (!data.valid) {
             localStorage.removeItem("token");
-            setIsLoggedIn(false);
           }
           setLoading(false);
         })
@@ -45,12 +43,10 @@ const App = () => {
   }, []);
 
   const handleLogin = () => {
-    console.log("User logged in");
     Swal.fire({
       icon: "success",
       title: "Success!",
       text: "Successfully logged in.",
-      width: 500,
       toast: true,
       position: "top-end",
       showConfirmButton: false,
@@ -61,12 +57,10 @@ const App = () => {
   };
 
   const handleLogout = () => {
-    console.log("User logged out");
     Swal.fire({
       icon: "success",
       title: "Success!",
       text: "Successfully logged out.",
-      width: 500,
       toast: true,
       position: "top-end",
       showConfirmButton: false,

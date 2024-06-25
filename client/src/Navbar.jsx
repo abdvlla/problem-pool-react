@@ -16,84 +16,70 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
     navigate("/auth");
   }, [onLogout, navigate]);
 
-  const closeMobileMenu = useCallback(() => {
-    setMobileMenuOpen(false);
-  }, []);
+  const closeMobileMenu = useCallback(() => setMobileMenuOpen(false), []);
 
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    document.documentElement.classList.toggle("dark", darkMode);
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
-  if (!isLoggedIn) {
-    return null;
-  }
+  if (!isLoggedIn) return null;
 
   return (
-    <header className="top-0 z-50 sticky border-solid border-2 dark:border-gray-600 dark:border-t-0  dark:border dark:border-x-0 bg-gray-50 dark:bg-neutral-900 dark:bg-opacity-95 bg-opacity-95">
-      <div>
-        <nav
-          className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
-          aria-label="Global"
-        >
-          <div className="hidden lg:flex lg:flex-1">
-            <NavLink to="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">HHL Home</span>
-              <img
-                className="h-8 w-auto"
-                src="https://poolsuppliesnovascotia.pro/cdn/shop/files/Logo_e26ade37-5699-44c7-831e-4e21036feb4e.jpg?v=1711477056&width=300"
-                alt="Logo"
-              />
-            </NavLink>
-          </div>
-          <div className="flex lg:hidden">
-            <button
-              type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-800 dark:text-gray-200"
-              onClick={() => setMobileMenuOpen(true)}
-            >
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
-          <div className="hidden lg:flex lg:gap-x-12">
-            <NavLink
-              to="/pools"
-              className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
-            >
-              BoW
-            </NavLink>
-            <NavLink
-              to="/pools/new"
-              className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
-            >
-              New BoW
-            </NavLink>
-          </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
-            <button
-              className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
-              onClick={logout}
-            >
-              Log out
-            </button>
-          </div>
-          <DarkModeSwitch
-            checked={darkMode}
-            onChange={toggleDarkMode}
-            className="ml-8"
-            aria-hidden="true"
-          />
-        </nav>
-      </div>
+    <header className="top-0 z-50 sticky border-solid border-2 dark:border-gray-600 dark:border-t-0 dark:border-x-0 bg-gray-50 dark:bg-neutral-900 dark:bg-opacity-95 bg-opacity-95">
+      <nav
+        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <div className="hidden lg:flex lg:flex-1">
+          <NavLink to="/" className="-m-1.5 p-1.5">
+            <span className="sr-only">HHL Home</span>
+            <img
+              className="h-8 w-auto"
+              src="https://poolsuppliesnovascotia.pro/cdn/shop/files/Logo_e26ade37-5699-44c7-831e-4e21036feb4e.jpg?v=1711477056&width=300"
+              alt="Logo"
+            />
+          </NavLink>
+        </div>
+        <div className="flex lg:hidden">
+          <button
+            type="button"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-800 dark:text-gray-200"
+            onClick={() => setMobileMenuOpen(true)}
+          >
+            <span className="sr-only">Open main menu</span>
+            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="hidden lg:flex lg:gap-x-12">
+          <NavLink
+            to="/pools"
+            className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
+          >
+            BoW
+          </NavLink>
+          <NavLink
+            to="/pools/new"
+            className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
+          >
+            New BoW
+          </NavLink>
+        </div>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
+          <button
+            className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
+            onClick={logout}
+          >
+            Log out
+          </button>
+        </div>
+        <DarkModeSwitch
+          checked={darkMode}
+          onChange={() => setDarkMode(!darkMode)}
+          className="ml-8"
+          aria-hidden="true"
+        />
+      </nav>
       <Dialog
         className="lg:hidden"
         open={mobileMenuOpen}
@@ -108,7 +94,6 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
               onClick={closeMobileMenu}
             >
               Home
-              <span className="sr-only">Your Company</span>
             </NavLink>
             <button
               type="button"

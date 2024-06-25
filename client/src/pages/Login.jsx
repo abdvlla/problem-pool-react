@@ -32,6 +32,8 @@ const Login = ({ onLogin }) => {
     } catch (err) {
       console.error("Login failed:", err);
       setError("Invalid credentials");
+      setUsername("");
+      setPassword("");
       Swal.fire({
         icon: "error",
         title: "Failed login attempt",

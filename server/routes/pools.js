@@ -1,11 +1,12 @@
 import express from "express";
 import { Pool } from "../models/pool.js";
+import sharp from "sharp";
 
 const router = express.Router();
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"];
 
 // Save images to the pool
-function saveImages(pool, coversEncoded, removeCover) {
+async function saveImages(pool, coversEncoded, removeCover) {
   if (removeCover) {
     pool.images = pool.images.filter(
       (img) =>
@@ -18,17 +19,22 @@ function saveImages(pool, coversEncoded, removeCover) {
   if (!coversEncoded) return;
 
   const covers = Array.isArray(coversEncoded) ? coversEncoded : [coversEncoded];
-  const newImages = covers
-    .map((coverEncoded) => {
-      const cover = JSON.parse(coverEncoded);
-      if (cover && imageMimeTypes.includes(cover.type)) {
-        return {
-          image: Buffer.from(cover.data, "base64"),
-          imageType: cover.type,
-        };
-      }
-    })
-    .filter(Boolean);
+  const newImagesPromises = covers.map(async (coverEncoded) => {
+    const cover = JSON.parse(coverEncoded);
+    if (cover && imageMimeTypes.includes(cover.type)) {
+      const resizedImage = await sharp(Buffer.from(cover.data, "base64"))
+        .resize({ width: 800, height: 800, fit: sharp.fit.inside })
+        .webp({ quality: 80 })
+        .toBuffer();
+
+      return {
+        image: resizedImage,
+        imageType: "image/webp",
+      };
+    }
+  });
+
+  const newImages = (await Promise.all(newImagesPromises)).filter(Boolean);
 
   pool.images = pool.images.concat(newImages);
 }
@@ -56,7 +62,7 @@ router.get("/", async (req, res) => {
 // Create a new pool
 router.post("/", async (req, res) => {
   const newPool = new Pool(req.body);
-  saveImages(newPool, req.body.images, req.body.removeCover);
+  await saveImages(newPool, req.body.images, req.body.removeCover);
 
   try {
     const pool = await Pool.create(newPool);
@@ -106,7 +112,7 @@ router.put("/:id", async (req, res) => {
 
     const { images, removedImages, ...otherData } = req.body;
     Object.assign(pool, otherData);
-    saveImages(pool, images, removedImages);
+    await saveImages(pool, images, removedImages);
     await pool.save();
 
     return res
