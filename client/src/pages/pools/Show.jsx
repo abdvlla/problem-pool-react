@@ -18,9 +18,7 @@ const Show = () => {
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_BASE_URL}/customers/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         const data = response.data;
@@ -36,11 +34,11 @@ const Show = () => {
           title: "Error!",
           text: "Not able to load file. Make sure it exists and try again later",
           icon: "error",
-          showConfirmButton: false,
           timer: 2500,
           timerProgressBar: true,
           position: "top-end",
           toast: true,
+          showConfirmButton: false,
         });
       });
   }, [id, token]);
@@ -56,23 +54,21 @@ const Show = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-          position: "top-end",
-          toast: true,
-        });
         axios
           .delete(`${import.meta.env.VITE_API_BASE_URL}/customers/${id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           })
           .then(() => {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+              timer: 2000,
+              timerProgressBar: true,
+              position: "top-end",
+              toast: true,
+              showConfirmButton: false,
+            });
             navigate("/pools");
           })
           .catch((error) => {
@@ -81,11 +77,11 @@ const Show = () => {
               title: "Error!",
               text: "Not able to delete file. Make sure it exists and try again later.",
               icon: "error",
-              showConfirmButton: false,
               timer: 2000,
               timerProgressBar: true,
               position: "top-end",
               toast: true,
+              showConfirmButton: false,
             });
           });
       }
@@ -101,13 +97,40 @@ const Show = () => {
     );
   }
 
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
+  const formatDate = (date) =>
+    date.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    });
+
+  const DetailItem = ({ label, value, isEmail, isButton }) => {
+    if (!value) return null;
+
+    return (
+      <div>
+        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
+          {label}
+        </dt>
+        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
+          {isEmail ? (
+            <button
+              className="text-blue-600 dark:text-blue-400 underline"
+              onClick={() => (window.location = `mailto:${value}`)}
+            >
+              {value}
+            </button>
+          ) : isButton ? (
+            <span className="font-semibold underline">{value}</span>
+          ) : (
+            value
+          )}
+        </dd>
+      </div>
+    );
   };
 
   const ImagesGrid = ({ images }) => (
@@ -139,14 +162,12 @@ const Show = () => {
             Edit
           </button>
         </Link>
-        <Link>
-          <button
-            onClick={handleDelete}
-            className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
-          >
-            Delete
-          </button>
-        </Link>
+        <button
+          onClick={handleDelete}
+          className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+        >
+          Delete
+        </button>
       </div>
       <h1 className="text-xl font-bold mb-4 dark:text-gray-100">
         Customer BoW information
@@ -155,252 +176,93 @@ const Show = () => {
         <div className="border-t border-gray-200 dark:border-gray-700">
           <dl className="divide-y divide-gray-200 dark:divide-gray-700">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
-              {pool.lastName && (
-                <div>
-                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Customer name
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                    {pool.firstName + " " + pool.lastName}
-                  </dd>
-                </div>
-              )}
-
-              {pool.email && (
-                <div>
-                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    E-mail(s)
-                  </dt>
-                  <dd className="mt-1 text-sm text-blue-600 dark:text-blue-400 underline">
-                    <button
-                      className="underline"
-                      onClick={() => (window.location = `mailto:${pool.email}`)}
-                    >
-                      {pool.email}
-                    </button>
-                  </dd>
-                  {pool.altEmail && (
-                    <dd className="mt-1 text-sm text-blue-600 dark:text-blue-400 underline">
-                      <button
-                        className="underline"
-                        onClick={() =>
-                          (window.location = `mailto:${pool.altEmail}`)
-                        }
-                      >
-                        {pool.altEmail}
-                      </button>
-                    </dd>
-                  )}
-                </div>
-              )}
-              {pool.number && (
-                <div>
-                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Phone number(s)
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                    {pool.number}
-                  </dd>
-                  {pool.altNumber && (
-                    <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                      {pool.altNumber}
-                    </dd>
-                  )}
-                </div>
-              )}
+              <DetailItem
+                label="Customer name"
+                value={`${pool.firstName} ${pool.lastName}`}
+              />
+              <DetailItem label="E-mail" value={pool.email} isEmail />
+              <DetailItem
+                label="Alternate E-mail"
+                value={pool.altEmail}
+                isEmail
+              />
+              <DetailItem label="Phone number" value={pool.number} />
+              <DetailItem
+                label="Alternate phone number"
+                value={pool.altNumber}
+              />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
-              <div>
-                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Current status
-                </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
-                  {pool.status}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Assigned to
-                </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
-                  {pool.assignedTo}
-                </dd>
-              </div>
-              <div id="condition">
-                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Condition
-                </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
-                  {pool.conditionPool ? pool.conditionPool : pool.conditionHt}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Created at
-                </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
-                  {pool.createdAt.toLocaleDateString("en-US", options)}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Last updated
-                </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
-                  {pool.updatedAt.toLocaleDateString("en-US", options)}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Today's list
-                </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 font-semibold underline">
-                  {pool.todaysList}
-                </dd>
-              </div>
+              <DetailItem label="Current status" value={pool.status} isButton />
+              <DetailItem
+                label="Assigned to"
+                value={pool.assignedTo}
+                isButton
+              />
+              <DetailItem
+                label="Condition"
+                value={pool.conditionPool || pool.conditionHt}
+                isButton
+              />
+              <DetailItem
+                label="Created at"
+                value={formatDate(pool.createdAt)}
+                isButton
+              />
+              <DetailItem
+                label="Last updated"
+                value={formatDate(pool.updatedAt)}
+                isButton
+              />
+              <DetailItem
+                label="Today's list"
+                value={pool.todaysList}
+                isButton
+              />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
-              <div>
-                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Body of water
-                </dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                  {pool.bodyOfWater}
-                </dd>
-              </div>
-              {pool.system && (
-                <div>
-                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    System
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                    {pool.system}
-                  </dd>
-                </div>
+              <DetailItem label="Body of water" value={pool.bodyOfWater} />
+              <DetailItem label="System" value={pool.system} />
+              <DetailItem label="HHL Build" value={pool.hhlBuild} />
+              {["IG", "AG", "OG", "Other", "Pool (Unknown type)"].includes(
+                pool.bodyOfWater
+              ) && (
+                <>
+                  <DetailItem label="Pump" value={pool.pump} />
+                  <DetailItem label="Filter" value={pool.filter} />
+                  <DetailItem label="Pool size" value={pool.size} />
+                  <DetailItem label="Heater" value={pool.heater} />
+                </>
               )}
-              {pool.hhlBuild && (
-                <div>
-                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    HHL Build
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                    {pool.hhlBuild}
-                  </dd>
-                </div>
+              {["HT", "SS"].includes(pool.bodyOfWater) && (
+                <>
+                  <DetailItem label="Brand" value={pool.brand} />
+                  <DetailItem label="Make" value={pool.make} />
+                </>
               )}
-
-              {pool.bodyOfWater &&
-                (pool.bodyOfWater === "IG" ||
-                  pool.bodyOfWater === "AG" ||
-                  pool.bodyOfWater === "OG" ||
-                  pool.bodyOfWater === "Other" ||
-                  pool.bodyOfWater === "Pool (Unknown type)") && (
-                  <>
-                    {pool.pump && (
-                      <div id="pump">
-                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                          Pump
-                        </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                          {pool.pump}
-                        </dd>
-                      </div>
-                    )}
-                    {pool.filter && (
-                      <div id="filter">
-                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                          Filter
-                        </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                          {pool.filter}
-                        </dd>
-                      </div>
-                    )}
-                    {pool.size && (
-                      <div id="size">
-                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                          Pool size
-                        </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                          {pool.size}
-                        </dd>
-                      </div>
-                    )}
-                    {pool.heater && (
-                      <div id="heater">
-                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                          Heater
-                        </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                          {pool.heater}
-                        </dd>
-                      </div>
-                    )}
-                  </>
-                )}
-
-              {pool.bodyOfWater &&
-                (pool.bodyOfWater === "HT" || pool.bodyOfWater === "SS") && (
-                  <>
-                    {pool.brand && (
-                      <div id="brand">
-                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                          Brand
-                        </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                          {pool.brand}
-                        </dd>
-                      </div>
-                    )}
-                    {pool.make && (
-                      <div id="make">
-                        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                          Make
-                        </dt>
-                        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                          {pool.make}
-                        </dd>
-                      </div>
-                    )}
-                  </>
-                )}
-
-              {pool.otherEquipment && (
-                <div>
-                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Other equipment
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
-                    {pool.otherEquipment}
-                  </dd>
-                </div>
-              )}
+              <DetailItem label="Other equipment" value={pool.otherEquipment} />
             </div>
             {pool.description && (
               <div className="grid grid-cols-1 gap-8 py-6">
-                <div>
-                  <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                    Description
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200 whitespace-pre-line">
+                <DetailItem
+                  label="Description"
+                  value={
                     <div className="ql-container ql-snow dark:bg-neutral-800 dark:border-gray-700">
                       <div
                         className="ql-editor dark:text-white"
                         dangerouslySetInnerHTML={{ __html: pool.description }}
                       />
                     </div>
-                  </dd>
-                </div>
+                  }
+                />
               </div>
             )}
             {pool.coverImagePath && pool.coverImagePath.length > 0 && (
               <div className="py-6">
-                <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Images
-                </dt>
-                <dd className="mt-2 text-sm text-gray-900 dark:text-gray-100">
-                  <ImagesGrid images={pool.coverImagePath} />
-                </dd>
+                <DetailItem
+                  label="Images"
+                  value={<ImagesGrid images={pool.coverImagePath} />}
+                />
               </div>
             )}
           </dl>
@@ -410,14 +272,12 @@ const Show = () => {
                 Edit
               </button>
             </Link>
-            <Link>
-              <button
-                onClick={handleDelete}
-                className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
-              >
-                Delete
-              </button>
-            </Link>
+            <button
+              onClick={handleDelete}
+              className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
