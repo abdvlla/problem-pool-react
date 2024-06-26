@@ -29,7 +29,16 @@ const Index = () => {
       setPools(response.data.data);
     } catch (err) {
       console.error("Error fetching pools data:", err);
-      setError("Failed to fetch pools data");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong! Bodies of water were not fetched. Try refreshing your page or try again later.",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
     } finally {
       setLoading(false);
     }
