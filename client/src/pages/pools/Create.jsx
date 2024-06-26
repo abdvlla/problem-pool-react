@@ -181,7 +181,19 @@ const Create = () => {
       });
   };
 
-  const handleCancel = () => navigate("/");
+  const handleCancel = () => {
+    navigate("/pools");
+    Swal.fire({
+      icon: "warning",
+      title: "Warning!",
+      text: "Your changes were not saved.",
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 2500,
+      timerProgressBar: true,
+    });
+  };
 
   return (
     <section className="">

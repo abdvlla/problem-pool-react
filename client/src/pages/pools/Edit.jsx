@@ -20,30 +20,75 @@ registerPlugin(
   FilePondPluginImageExifOrientation
 );
 
+const InputField = ({
+  label,
+  value,
+  onChange,
+  type = "text",
+  placeholder = "",
+  name,
+}) => (
+  <div className="w-full">
+    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+      {label}
+    </label>
+    <input
+      type={type}
+      value={value}
+      onChange={onChange}
+      name={name}
+      className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+      placeholder={placeholder}
+    />
+  </div>
+);
+
+const SelectField = ({ label, value, onChange, options, name }) => (
+  <div className="w-full">
+    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+      {label}
+    </label>
+    <select
+      value={value}
+      onChange={onChange}
+      name={name}
+      className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+    >
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  </div>
+);
+
 const Edit = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [number, setNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [altNumber, setAltNumber] = useState("");
-  const [altEmail, setAltEmail] = useState("");
-  const [bodyOfWater, setBodyOfWater] = useState("");
-  const [status, setStatus] = useState("");
-  const [description, setDescription] = useState("");
-  const [system, setSystem] = useState("");
-  const [pump, setPump] = useState("");
-  const [filter, setFilter] = useState("");
-  const [heater, setHeater] = useState("");
-  const [hhlBuild, setHhlBuild] = useState("");
-  const [size, setSize] = useState("");
-  const [otherEquipment, setOtherEquipment] = useState("");
-  const [brand, setBrand] = useState("");
-  const [make, setMake] = useState("");
-  const [assignedTo, setAssignedTo] = useState("");
-  const [conditionPool, setConditionPool] = useState("");
-  const [conditionHt, setConditionHt] = useState("");
-  const [todaysList, setTodaysList] = useState("");
-  const [priority, setPriority] = useState("");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    number: "",
+    email: "",
+    altNumber: "",
+    altEmail: "",
+    bodyOfWater: "",
+    status: "",
+    description: "",
+    system: "",
+    pump: "",
+    filter: "",
+    heater: "",
+    hhlBuild: "",
+    size: "",
+    otherEquipment: "",
+    brand: "",
+    make: "",
+    assignedTo: "",
+    conditionPool: "",
+    conditionHt: "",
+    todaysList: "",
+    priority: "",
+  });
 
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,18 +104,14 @@ const Edit = () => {
 
   const toolbarOptions = [
     [{ header: [1, 2, 3, false] }],
-    ["bold", "italic", "underline", "strike"], // toggled buttons
+    ["bold", "italic", "underline", "strike"],
     ["link", "image"],
-    [{ header: 1 }, { header: 2 }], // custom button values
-
     [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-    [{ script: "super" }], // superscript/subscript
-    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-
-    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+    [{ script: "super" }],
+    [{ indent: "-1" }, { indent: "+1" }],
+    [{ color: [] }, { background: [] }],
     [{ align: [] }],
-
-    ["clean"], // remove formatting button
+    ["clean"],
   ];
 
   useEffect(() => {
@@ -82,37 +123,39 @@ const Edit = () => {
       })
       .then((response) => {
         const data = response.data;
-        setFirstName(data.firstName);
-        setLastName(data.lastName);
-        setNumber(data.number);
-        setEmail(data.email);
-        setAltNumber(data.altNumber);
-        setAltEmail(data.altEmail);
-        setBodyOfWater(data.bodyOfWater);
-        setStatus(data.status);
-        setDescription(data.description);
-        setSystem(data.system);
-        setPump(data.pump);
-        setFilter(data.filter);
-        setHeater(data.heater);
-        setHhlBuild(data.hhlBuild);
-        setSize(data.size);
-        setOtherEquipment(data.otherEquipment);
-        setBrand(data.brand);
-        setMake(data.make);
-        setAssignedTo(data.assignedTo);
-        setConditionPool(data.conditionPool);
-        setConditionHt(data.conditionHt);
+        setFormData({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          number: data.number,
+          email: data.email,
+          altNumber: data.altNumber,
+          altEmail: data.altEmail,
+          bodyOfWater: data.bodyOfWater,
+          status: data.status,
+          description: data.description,
+          system: data.system,
+          pump: data.pump,
+          filter: data.filter,
+          heater: data.heater,
+          hhlBuild: data.hhlBuild,
+          size: data.size,
+          otherEquipment: data.otherEquipment,
+          brand: data.brand,
+          make: data.make,
+          assignedTo: data.assignedTo,
+          conditionPool: data.conditionPool,
+          conditionHt: data.conditionHt,
+          todaysList: data.todaysList,
+          priority: data.priority,
+        });
         setExistingImages(data.coverImagePath);
-        setTodaysList(data.todaysList);
-        setPriority(data.priority);
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
         Swal.fire({
           title: "Error!",
-          text: "Not unable to load file. Make sure it exists and try again later.",
+          text: "Unable to load file. Make sure it exists and try again later.",
           icon: "error",
           showConfirmButton: false,
           timer: 2500,
@@ -132,9 +175,9 @@ const Edit = () => {
           toolbar: toolbarOptions,
         },
       });
-      quill.root.innerHTML = description;
+      quill.root.innerHTML = formData.description;
       quill.on("text-change", () => {
-        setDescription(quill.root.innerHTML);
+        setFormData((prev) => ({ ...prev, description: quill.root.innerHTML }));
       });
     }
   }, [loading, quillRef.current]);
@@ -142,13 +185,20 @@ const Edit = () => {
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center h-screen">
-        <GiBoatFishing className=" text-6xl text-blue-600 dark:text-blue-400" />
+        <GiBoatFishing className="text-6xl text-blue-600 dark:text-blue-400" />
         <p className="dark:text-gray-50 mt-4">Loading...</p>
       </div>
     );
   }
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleEditPool = () => {
+    const { firstName, lastName, bodyOfWater } = formData;
+
     if (!firstName || !lastName || !bodyOfWater) {
       Swal.fire({
         icon: "error",
@@ -166,39 +216,16 @@ const Edit = () => {
       return JSON.stringify({ type, data: file });
     });
 
-    const data = {
-      firstName,
-      lastName,
-      number,
-      email,
-      altNumber,
-      altEmail,
-      bodyOfWater,
-      status,
-      description,
-      system,
-      pump,
-      filter,
-      heater,
-      hhlBuild,
-      size,
-      otherEquipment,
-      brand,
-      make,
-      assignedTo,
-      conditionPool,
-      conditionHt,
-      images,
-      removedImages,
-      todaysList,
-      priority,
-    };
     axios
-      .put(`${import.meta.env.VITE_API_BASE_URL}/customers/${id}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .put(
+        `${import.meta.env.VITE_API_BASE_URL}/customers/${id}`,
+        { ...formData, images, removedImages },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then(() => {
         setIsLoading(false);
         navigate(`/pools/${id}`);
@@ -233,6 +260,16 @@ const Edit = () => {
 
   const handleCancel = () => {
     navigate(`/pools/${id}`);
+    Swal.fire({
+      icon: "warning",
+      title: "Warning!",
+      text: "Your changes were not saved.",
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 2500,
+      timerProgressBar: true,
+    });
   };
 
   const handleRemoveImage = (image) => {
@@ -250,367 +287,255 @@ const Edit = () => {
       </h1>
       <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-lg bg-gray-50 dark:bg-neutral-900 dark:shadow-gray-400">
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 text-left">
-          <div className="max-w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Customer first name
-            </label>
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="First name"
-            />
-          </div>
-          <div className="max-w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Customer last name
-            </label>
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="Last name"
-              required={true}
-            />
-          </div>
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="Email"
-            />
-          </div>
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Phone #
-            </label>
-            <input
-              type="text"
-              value={number}
-              onChange={(e) => setNumber(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="(902) XXX-XXXX"
-            />
-          </div>
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Alternative email
-            </label>
-            <input
-              type="email"
-              value={altEmail}
-              onChange={(e) => setAltEmail(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="Email"
-            />
-          </div>
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Alternative phone #
-            </label>
-            <input
-              type="text"
-              value={altNumber}
-              onChange={(e) => setAltNumber(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="(902) XXX-XXXX"
-            />
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Body of Water
-            </label>
-            <select
-              value={bodyOfWater}
-              onChange={(e) => setBodyOfWater(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-            >
-              <option value=""></option>
-              <option value="Pool (Unknown type)">Pool (Unknown type)</option>
-              <option value="IG">IG</option>
-              <option value="AG">AG</option>
-              <option value="OG">OG</option>
-              <option value="HT">HT</option>
-              <option value="SS">SS</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Status
-            </label>
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-            >
-              <option value=""></option>
-              <option value="New BoW">New BoW</option>
-              <option value="Received">Received</option>
-              <option value="Weekly service">Weekly service</option>
-              <option value="Follow-up 1">Follow-up 1</option>
-              <option value="Follow-up 2">Follow-up 2</option>
-              <option value="Ongoing">Ongoing</option>
-              <option value="Improving">Improving</option>
-              <option value="No update">No update</option>
-              <option value="Almost">Almost</option>
-              <option value="Closed">Closed</option>
-            </select>
-          </div>
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              System
-            </label>
-            <input
-              type="text"
-              value={system}
-              onChange={(e) => setSystem(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="Maintenance chemicals"
-            />
-          </div>
-          {["Pool (Unknown type)", "IG", "AG", "OG"].includes(bodyOfWater) && (
+          <InputField
+            label="Customer first name"
+            value={formData.firstName}
+            onChange={handleInputChange}
+            name="firstName"
+          />
+          <InputField
+            label="Customer last name"
+            value={formData.lastName}
+            onChange={handleInputChange}
+            name="lastName"
+          />
+          <InputField
+            label="Email"
+            type="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            name="email"
+          />
+          <InputField
+            label="Phone #"
+            value={formData.number}
+            onChange={handleInputChange}
+            name="number"
+            placeholder="(902) XXX-XXXX"
+          />
+          <InputField
+            label="Alternative email"
+            type="email"
+            value={formData.altEmail}
+            onChange={handleInputChange}
+            name="altEmail"
+          />
+          <InputField
+            label="Alternative phone #"
+            value={formData.altNumber}
+            onChange={handleInputChange}
+            name="altNumber"
+            placeholder="(902) XXX-XXXX"
+          />
+          <SelectField
+            label="Body of Water"
+            value={formData.bodyOfWater}
+            onChange={handleInputChange}
+            name="bodyOfWater"
+            options={[
+              { value: "", label: "" },
+              { value: "Pool (Unknown type)", label: "Pool (Unknown type)" },
+              { value: "IG", label: "IG" },
+              { value: "AG", label: "AG" },
+              { value: "OG", label: "OG" },
+              { value: "HT", label: "HT" },
+              { value: "SS", label: "SS" },
+              { value: "Other", label: "Other" },
+            ]}
+          />
+          <SelectField
+            label="Status"
+            value={formData.status}
+            onChange={handleInputChange}
+            name="status"
+            options={[
+              { value: "", label: "" },
+              { value: "New BoW", label: "New BoW" },
+              { value: "Received", label: "Received" },
+              { value: "Weekly service", label: "Weekly service" },
+              { value: "Follow-up 1", label: "Follow-up 1" },
+              { value: "Follow-up 2", label: "Follow-up 2" },
+              { value: "Ongoing", label: "Ongoing" },
+              { value: "Improving", label: "Improving" },
+              { value: "No update", label: "No update" },
+              { value: "Almost", label: "Almost" },
+              { value: "Closed", label: "Closed" },
+            ]}
+          />
+          <InputField
+            label="System"
+            value={formData.system}
+            onChange={handleInputChange}
+            name="system"
+            placeholder="Maintenance chemicals"
+          />
+          {["Pool (Unknown type)", "IG", "AG", "OG"].includes(
+            formData.bodyOfWater
+          ) && (
             <>
-              <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Pool size
-                </label>
-                <input
-                  type="text"
-                  value={size}
-                  onChange={(e) => setSize(e.target.value)}
-                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="Pool size"
-                />
-              </div>
-              <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Pump
-                </label>
-                <input
-                  type="text"
-                  value={pump}
-                  onChange={(e) => setPump(e.target.value)}
-                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="Pool pump"
-                />
-              </div>
-              <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Filter
-                </label>
-                <input
-                  type="text"
-                  value={filter}
-                  onChange={(e) => setFilter(e.target.value)}
-                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="Pool filter"
-                />
-              </div>
-              <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Heater
-                </label>
-                <input
-                  type="text"
-                  value={heater}
-                  onChange={(e) => setHeater(e.target.value)}
-                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="Heating system (if any)"
-                />
-              </div>
-              <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Condition
-                </label>
-                <select
-                  value={conditionPool}
-                  onChange={(e) => setConditionPool(e.target.value)}
-                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                >
-                  <option value=""></option>
-                  <option value="Clear">Clear</option>
-                  <option value="Blue/Cloudy (cannot see floor)">
-                    Blue/Cloudy (cannot see floor)
-                  </option>
-                  <option value="Milky Dead Algae">Milky Dead Algae</option>
-                  <option value="Hazy">Hazy</option>
-                  <option value="Algae - Green Cloudy">
-                    Algae - Green Cloudy
-                  </option>
-                  <option value="Algae - On Floor">Algae - On Floor</option>
-                  <option value="Discolored water">Discolored water</option>
-                  <option value="Stains">Stains</option>
-                  <option value="Fine debris settling on floor">
-                    Fine debris settling on floor
-                  </option>
-                  <option value="Zero Alkalinity">Zero Alkalinity</option>
-                </select>
-              </div>
+              <InputField
+                label="Pool size"
+                value={formData.size}
+                onChange={handleInputChange}
+                name="size"
+                placeholder="Pool size"
+              />
+              <InputField
+                label="Pump"
+                value={formData.pump}
+                onChange={handleInputChange}
+                name="pump"
+                placeholder="Pool pump"
+              />
+              <InputField
+                label="Filter"
+                value={formData.filter}
+                onChange={handleInputChange}
+                name="filter"
+                placeholder="Pool filter"
+              />
+              <InputField
+                label="Heater"
+                value={formData.heater}
+                onChange={handleInputChange}
+                name="heater"
+                placeholder="Heating system (if any)"
+              />
+              <SelectField
+                label="Condition"
+                value={formData.conditionPool}
+                onChange={handleInputChange}
+                name="conditionPool"
+                options={[
+                  { value: "", label: "" },
+                  { value: "Clear", label: "Clear" },
+                  {
+                    value: "Blue/Cloudy (cannot see floor)",
+                    label: "Blue/Cloudy (cannot see floor)",
+                  },
+                  { value: "Milky Dead Algae", label: "Milky Dead Algae" },
+                  { value: "Hazy", label: "Hazy" },
+                  {
+                    value: "Algae - Green Cloudy",
+                    label: "Algae - Green Cloudy",
+                  },
+                  { value: "Algae - On Floor", label: "Algae - On Floor" },
+                  { value: "Discolored water", label: "Discolored water" },
+                  { value: "Stains", label: "Stains" },
+                  {
+                    value: "Fine debris settling on floor",
+                    label: "Fine debris settling on floor",
+                  },
+                  { value: "Zero Alkalinity", label: "Zero Alkalinity" },
+                ]}
+              />
             </>
           )}
-          {["HT", "SS"].includes(bodyOfWater) && (
+          {["HT", "SS"].includes(formData.bodyOfWater) && (
             <>
-              <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Brand
-                </label>
-                <input
-                  type="text"
-                  value={brand}
-                  onChange={(e) => setBrand(e.target.value)}
-                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="Brand"
-                />
-              </div>
-              <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Make
-                </label>
-                <input
-                  type="text"
-                  value={make}
-                  onChange={(e) => setMake(e.target.value)}
-                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                  placeholder="Make"
-                />
-              </div>
-              <div className="w-full">
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-                  Condition
-                </label>
-                <select
-                  value={conditionHt}
-                  onChange={(e) => setConditionHt(e.target.value)}
-                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                >
-                  <option value=""></option>
-                  <option value="Clear">Clear</option>
-                  <option value="Cloudy">Cloudy</option>
-                  <option value="Foaming">Foaming</option>
-                  <option value="Odors">Odors</option>
-                  <option value="Stains">Stains</option>
-                  <option value="Discolored water">Discolored water</option>
-                  <option value="Scale">Scale</option>
-                  <option value="Biofilm">Biofilm</option>
-                </select>
-              </div>
+              <InputField
+                label="Brand"
+                value={formData.brand}
+                onChange={handleInputChange}
+                name="brand"
+                placeholder="Brand"
+              />
+              <InputField
+                label="Make"
+                value={formData.make}
+                onChange={handleInputChange}
+                name="make"
+                placeholder="Make"
+              />
+              <SelectField
+                label="Condition"
+                value={formData.conditionHt}
+                onChange={handleInputChange}
+                name="conditionHt"
+                options={[
+                  { value: "", label: "" },
+                  { value: "Clear", label: "Clear" },
+                  { value: "Cloudy", label: "Cloudy" },
+                  { value: "Foaming", label: "Foaming" },
+                  { value: "Odors", label: "Odors" },
+                  { value: "Stains", label: "Stains" },
+                  { value: "Discolored water", label: "Discolored water" },
+                  { value: "Scale", label: "Scale" },
+                  { value: "Biofilm", label: "Biofilm" },
+                ]}
+              />
             </>
           )}
-          <div className="w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Other equipment
-            </label>
-            <input
-              type="text"
-              value={otherEquipment}
-              onChange={(e) => setOtherEquipment(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-              placeholder="Other equipment (if any)"
-            />
-          </div>
-          <div>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Assigned to
-            </label>
-            <select
-              value={assignedTo}
-              onChange={(e) => setAssignedTo(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-            >
-              <option value=""></option>
-              <option value="Colby">Colby</option>
-              <option value="Jenn">Jenn</option>
-              <option value="Jessica">Jessica</option>
-              <option value="Amaya">Amaya</option>
-              <option value="Ben">Ben</option>
-              <option value="Hannah">Hannah</option>
-              <option value="Jack">Jack</option>
-              <option value="Jaime">Jaime</option>
-              <option value="Mark">Mark</option>
-              <option value="Service">Service</option>
-              <option value="Construction">Construction</option>
-            </select>
-          </div>
-          <div className="">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Today's List
-            </label>
-            <select
-              value={todaysList}
-              onChange={(e) => setTodaysList(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-            >
-              <option value=""></option>
-              <option value="Yes">Yes</option>
-              <option value="Done">Done</option>
-            </select>
-          </div>
-          <div className="">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              Priority
-            </label>
-            <select
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-            >
-              <option value="">None</option>
-              {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
-                <option key={num} value={num}>
-                  {num}
-                </option>
-              ))}
-            </select>
-          </div>
+          <InputField
+            label="Other equipment"
+            value={formData.otherEquipment}
+            onChange={handleInputChange}
+            name="otherEquipment"
+            placeholder="Other equipment (if any)"
+          />
+          <SelectField
+            label="Assigned to"
+            value={formData.assignedTo}
+            onChange={handleInputChange}
+            name="assignedTo"
+            options={[
+              { value: "", label: "" },
+              { value: "Colby", label: "Colby" },
+              { value: "Jenn", label: "Jenn" },
+              { value: "Jessica", label: "Jessica" },
+              { value: "Amaya", label: "Amaya" },
+              { value: "Ben", label: "Ben" },
+              { value: "Hannah", label: "Hannah" },
+              { value: "Jack", label: "Jack" },
+              { value: "Jaime", label: "Jaime" },
+              { value: "Mark", label: "Mark" },
+              { value: "Service", label: "Service" },
+              { value: "Construction", label: "Construction" },
+            ]}
+          />
+          <SelectField
+            label="Today's List"
+            value={formData.todaysList}
+            onChange={handleInputChange}
+            name="todaysList"
+            options={[
+              { value: "", label: "" },
+              { value: "Yes", label: "Yes" },
+              { value: "Done", label: "Done" },
+            ]}
+          />
+          <SelectField
+            label="Priority"
+            value={formData.priority}
+            onChange={handleInputChange}
+            name="priority"
+            options={[
+              { value: "", label: "None" },
+              ...Array.from({ length: 10 }, (_, i) => ({
+                value: i + 1,
+                label: `${i + 1}`,
+              })),
+            ]}
+          />
           <div className="max-w-full">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               HHL Build
             </label>
             <div className="flex gap-x-3">
-              <div className="flex space-x-0.5">
-                <input
-                  type="radio"
-                  name="hhlBuild"
-                  value="Yes"
-                  checked={hhlBuild === "Yes"}
-                  onChange={(e) => setHhlBuild(e.target.value)}
-                />
-                <label className="text-sm text-gray-500 dark:text-gray-400 ms-3">
-                  Yes
-                </label>
-              </div>
-              <div className="flex space-x-0.5">
-                <input
-                  type="radio"
-                  name="hhlBuild"
-                  value="No"
-                  checked={hhlBuild === "No"}
-                  onChange={(e) => setHhlBuild(e.target.value)}
-                />
-                <label className="text-sm text-gray-500 dark:text-gray-400 ms-3">
-                  No
-                </label>
-              </div>
-              <div className="flex space-x-0.5">
-                <input
-                  type="radio"
-                  name="hhlBuild"
-                  value="Unknown"
-                  checked={hhlBuild === "Unknown"}
-                  onChange={(e) => setHhlBuild(e.target.value)}
-                />
-                <label className="text-sm text-gray-500 dark:text-gray-400 ms-3">
-                  Unknown
-                </label>
-              </div>
+              {["Yes", "No", "Unknown"].map((value) => (
+                <div key={value} className="flex space-x-0.5">
+                  <input
+                    type="radio"
+                    name="hhlBuild"
+                    value={value}
+                    checked={formData.hhlBuild === value}
+                    onChange={handleInputChange}
+                  />
+                  <label className="text-sm text-gray-500 dark:text-gray-400 ms-3">
+                    {value}
+                  </label>
+                </div>
+              ))}
             </div>
           </div>
           <div className="sm:col-span-2">
