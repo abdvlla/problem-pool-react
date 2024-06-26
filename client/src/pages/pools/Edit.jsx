@@ -3,18 +3,16 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import BackButton from "../../components/BackButton";
-
 import { FilePond, registerPlugin } from "react-filepond";
 import FilePondPluginFileEncode from "filepond-plugin-file-encode";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import "filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css";
 import "filepond/dist/filepond.min.css";
-
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
+import { GiBoatFishing } from "react-icons/gi";
 
 registerPlugin(
   FilePondPluginFileEncode,
@@ -45,11 +43,13 @@ const Edit = () => {
   const [conditionPool, setConditionPool] = useState("");
   const [conditionHt, setConditionHt] = useState("");
   const [todaysList, setTodaysList] = useState("");
+  const [priority, setPriority] = useState("");
 
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [existingImages, setExistingImages] = useState([]);
   const [removedImages, setRemovedImages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -105,16 +105,8 @@ const Edit = () => {
         setConditionHt(data.conditionHt);
         setExistingImages(data.coverImagePath);
         setTodaysList(data.todaysList);
-        const quill = new Quill(quillRef.current, {
-          theme: "snow",
-          modules: {
-            toolbar: toolbarOptions,
-          },
-        });
-        quill.root.innerHTML = data.description;
-        quill.on("text-change", () => {
-          setDescription(quill.root.innerHTML);
-        });
+        setPriority(data.priority);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -128,8 +120,33 @@ const Edit = () => {
           position: "top-end",
           toast: true,
         });
+        setLoading(false);
       });
   }, [id, token]);
+
+  useEffect(() => {
+    if (!loading && quillRef.current) {
+      const quill = new Quill(quillRef.current, {
+        theme: "snow",
+        modules: {
+          toolbar: toolbarOptions,
+        },
+      });
+      quill.root.innerHTML = description;
+      quill.on("text-change", () => {
+        setDescription(quill.root.innerHTML);
+      });
+    }
+  }, [loading, quillRef.current]);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen">
+        <GiBoatFishing className=" text-6xl text-blue-600 dark:text-blue-400" />
+        <p className="dark:text-gray-50 mt-4">Loading...</p>
+      </div>
+    );
+  }
 
   const handleEditPool = () => {
     if (!firstName || !lastName || !bodyOfWater) {
@@ -174,6 +191,7 @@ const Edit = () => {
       images,
       removedImages,
       todaysList,
+      priority,
     };
     axios
       .put(`${import.meta.env.VITE_API_BASE_URL}/customers/${id}`, data, {
@@ -533,6 +551,23 @@ const Edit = () => {
               <option value=""></option>
               <option value="Yes">Yes</option>
               <option value="Done">Done</option>
+            </select>
+          </div>
+          <div className="">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+              Priority
+            </label>
+            <select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+            >
+              <option value="">None</option>
+              {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
+                <option key={num} value={num}>
+                  {num}
+                </option>
+              ))}
             </select>
           </div>
           <div className="max-w-full">

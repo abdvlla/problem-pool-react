@@ -30,6 +30,7 @@ const poolSchema = new mongoose.Schema(
     conditionPool: String,
     conditionHt: String,
     todaysList: String,
+    priority: String,
   },
   { timestamps: true }
 );

@@ -7,6 +7,7 @@ import "quill/dist/quill.snow.css";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import LazyLoad from "react-lazyload";
+import { GiBo, GiBoatFishing } from "react-icons/gi";
 
 const Show = () => {
   const token = localStorage.getItem("token");
@@ -90,9 +91,9 @@ const Show = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="loader"></div>
-        <p className="dark:text-gray-50">Loading...</p>
+      <div className="flex flex-col justify-center items-center h-screen">
+        <GiBoatFishing className=" text-6xl text-blue-600 dark:text-blue-400" />
+        <p className="dark:text-gray-50 mt-4">Loading...</p>
       </div>
     );
   }
@@ -219,6 +220,7 @@ const Show = () => {
                 value={pool.todaysList}
                 isButton
               />
+              <DetailItem label="Priority" value={pool.priority} isButton />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
               <DetailItem label="Body of water" value={pool.bodyOfWater} />

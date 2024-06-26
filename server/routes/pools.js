@@ -45,7 +45,7 @@ router.get("/", async (req, res) => {
     const pools = await Pool.find({})
       .sort({ updatedAt: -1 })
       .select(
-        "firstName lastName email number assignedTo status updatedAt todaysList"
+        "firstName lastName email number assignedTo status updatedAt todaysList priority"
       )
       .allowDiskUse(true);
 

@@ -27,7 +27,7 @@ const Home = () => {
 
     const fetchCounts = async () => {
       try {
-        const response = await axios.get(
+        const { data } = await axios.get(
           `${import.meta.env.VITE_API_BASE_URL}/home`,
           {
             headers: {
@@ -35,7 +35,7 @@ const Home = () => {
             },
           }
         );
-        setCounts(response.data.data || {});
+        setCounts(data.data || {});
       } catch (error) {
         console.error("Error fetching data:", error);
         Swal.fire({

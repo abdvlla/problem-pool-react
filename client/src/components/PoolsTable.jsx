@@ -26,6 +26,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
   const [bulkAssignedTo, setBulkAssignedTo] = useState("");
   const [bulkTodaysList, setBulkTodaysList] = useState("");
   const [bulkStatus, setBulkStatus] = useState("");
+  const [bulkPriority, setBulkPriority] = useState("");
   const [showBulkOptions, setShowBulkOptions] = useState(false);
 
   useEffect(() => {
@@ -43,21 +44,34 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
   ]);
 
   const handleSort = (key) => {
-    setSortConfig((prev) => ({
-      key,
-      direction:
-        prev.key === key && prev.direction === "ascending"
-          ? "descending"
-          : "ascending",
-    }));
+    setSortConfig((prev) => {
+      if (prev.key === key) {
+        return {
+          key,
+          direction:
+            prev.direction === "ascending" ? "descending" : "ascending",
+        };
+      } else {
+        return {
+          key,
+          direction: "ascending",
+        };
+      }
+    });
   };
 
   const sortedPools = useMemo(() => {
     return [...pools].sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key])
-        return sortConfig.direction === "ascending" ? -1 : 1;
-      if (a[sortConfig.key] > b[sortConfig.key])
-        return sortConfig.direction === "ascending" ? 1 : -1;
+      let aValue = a[sortConfig.key];
+      let bValue = b[sortConfig.key];
+
+      if (sortConfig.key === "priority") {
+        aValue = parseInt(aValue, 10);
+        bValue = parseInt(bValue, 10);
+      }
+
+      if (aValue < bValue) return sortConfig.direction === "ascending" ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === "ascending" ? 1 : -1;
       return 0;
     });
   }, [pools, sortConfig]);
@@ -139,6 +153,10 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
     setStaffFilter("");
     setTodaysListFilter("");
     setSearchQuery("");
+    setBulkAssignedTo("");
+    setBulkPriority("");
+    setBulkStatus("");
+    setBulkTodaysList("");
     localStorage.removeItem("statusFilter");
     localStorage.removeItem("staffFilter");
     localStorage.removeItem("todaysListFilter");
@@ -165,7 +183,8 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
       selectedPools,
       bulkAssignedTo,
       bulkTodaysList,
-      bulkStatus
+      bulkStatus,
+      bulkPriority
     );
   };
 
@@ -410,6 +429,24 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 <option value="Done">Done</option>
               </select>
             </div>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+                Update priority
+              </label>
+              <select
+                className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                value={bulkPriority}
+                onChange={(e) => setBulkPriority(e.target.value)}
+              >
+                <option value=""></option>
+                <option value=" ">None</option>
+                {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
+                  <option key={num} value={num}>
+                    {num}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <button
               onClick={handleBulkUpdate}
@@ -458,6 +495,17 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             </th>
             <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
               Today's list
+            </th>
+            <th
+              className="py-3 font-semibold text-gray-800 dark:text-gray-100 cursor-pointer"
+              onClick={() => handleSort("priority")}
+            >
+              Priority (1-10){" "}
+              {sortConfig.key === "priority"
+                ? sortConfig.direction === "ascending"
+                  ? "↑"
+                  : "↓"
+                : ""}
             </th>
             <th
               className="py-3 font-semibold text-gray-800 dark:text-gray-100 cursor-pointer hidden md:table-cell"
@@ -546,6 +594,9 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                   <span>{pool.todaysList}</span>
                 </div>
               </td>
+              <td className="py-3 text-gray-900 dark:text-gray-100">
+                {pool.priority}
+              </td>
               <td className="py-3 text-gray-900 dark:text-gray-100 hidden md:table-cell">
                 {new Date(pool.updatedAt).toLocaleDateString()}
               </td>
@@ -579,12 +630,12 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
         <div className="flex-end">
           <button
             className={`px-3 py-2 rounded-md mr-2 ${
-              currentPage === 1
+              currentPage === 1 || totalPages === 0
                 ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
                 : "bg-blue-500 text-white"
             }`}
             onClick={() => setCurrentPage(1)}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || totalPages === 0}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -603,12 +654,12 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
           </button>
           <button
             className={`px-3 py-2 rounded-md mr-2 ${
-              currentPage === 1
+              currentPage === 1 || totalPages === 0
                 ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
                 : "bg-blue-500 text-white"
             }`}
             onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || totalPages === 0}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -627,12 +678,12 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
           </button>
           <button
             className={`px-3 py-2 rounded-md mr-2 ${
-              currentPage === totalPages
+              currentPage === totalPages || totalPages === 0
                 ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
                 : "bg-blue-500 text-white"
             }`}
             onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || totalPages === 0}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -651,12 +702,12 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
           </button>
           <button
             className={`px-3 py-2 rounded-md ${
-              currentPage === totalPages
+              currentPage === totalPages || totalPages === 0
                 ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
                 : "bg-blue-500 text-white"
             }`}
             onClick={() => setCurrentPage(totalPages)}
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages || totalPages === 0}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

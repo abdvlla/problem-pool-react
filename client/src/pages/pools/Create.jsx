@@ -38,6 +38,7 @@ const Create = () => {
   const [conditionPool, setConditionPool] = useState("");
   const [conditionHt, setConditionHt] = useState("");
   const [todaysList, setTodaysList] = useState("");
+  const [priority, setPriority] = useState("");
 
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -118,6 +119,7 @@ const Create = () => {
       conditionHt,
       images,
       todaysList,
+      priority,
     };
     axios
       .post(`${import.meta.env.VITE_API_BASE_URL}/customers`, data, {
@@ -462,7 +464,7 @@ const Create = () => {
               <option value="Construction">Construction</option>
             </select>
           </div>
-          <div className="">
+          <div>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
               Today's List
             </label>
@@ -474,6 +476,23 @@ const Create = () => {
               <option value=""></option>
               <option value="Yes">Yes</option>
               <option value="Done">Done</option>
+            </select>
+          </div>
+          <div className="">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+              Priority
+            </label>
+            <select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+            >
+              <option value="">None</option>
+              {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
+                <option key={num} value={num}>
+                  {num}
+                </option>
+              ))}
             </select>
           </div>
           <div className="max-w-full">

@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
     ]).exec();
 
     const statusCounts = {
-      allBodiesOfWater: counts.reduce((acc, curr) => acc + curr.count, 0),
+      allBodiesOfWater: counts.reduce((acc, { count }) => acc + count, 0),
       newBoWCount: counts.find((c) => c._id === "New BoW")?.count || 0,
       receivedCount: counts.find((c) => c._id === "Received")?.count || 0,
       ongoingCount: counts.find((c) => c._id === "Ongoing")?.count || 0,

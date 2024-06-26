@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import PoolsTable from "../../components/PoolsTable";
+import Swal from "sweetalert2";
+import { GiBoatFishing } from "react-icons/gi";
 
 const Index = () => {
   const token = localStorage.getItem("token");
@@ -37,7 +39,8 @@ const Index = () => {
     selectedPools,
     bulkAssignedTo,
     bulkTodaysList,
-    bulkStatus
+    bulkStatus,
+    bulkPriority
   ) => {
     if (!token) {
       setError("User not authenticated");
@@ -52,6 +55,7 @@ const Index = () => {
           assignedTo: bulkAssignedTo || undefined,
           todaysList: bulkTodaysList || undefined,
           status: bulkStatus || undefined,
+          priority: bulkPriority || undefined,
         },
         {
           headers: {
@@ -60,10 +64,19 @@ const Index = () => {
         }
       );
 
-      fetchPools(); // Refresh the pools data after the update
+      fetchPools();
     } catch (err) {
       console.error("Failed to update pools", err);
-      setError("Failed to update pools");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong! Selected bodies of water have not been updated.",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
     }
   };
 
@@ -73,9 +86,9 @@ const Index = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="loader"></div>
-        <p className="dark:text-white">Loading...</p>
+      <div className="flex flex-col justify-center items-center h-screen">
+        <GiBoatFishing className=" text-6xl text-blue-600 dark:text-blue-400" />
+        <p className="dark:text-gray-50 mt-4">Loading...</p>
       </div>
     );
   }
