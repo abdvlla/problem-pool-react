@@ -101,6 +101,7 @@ const Edit = () => {
   const token = localStorage.getItem("token");
 
   const quillRef = useRef(null);
+  const quillInstance = useRef(null);
 
   const toolbarOptions = [
     [{ header: [1, 2, 3, false] }],
@@ -168,16 +169,19 @@ const Edit = () => {
   }, [id, token]);
 
   useEffect(() => {
-    if (!loading && quillRef.current) {
-      const quill = new Quill(quillRef.current, {
+    if (!loading && quillRef.current && !quillInstance.current) {
+      quillInstance.current = new Quill(quillRef.current, {
         theme: "snow",
         modules: {
           toolbar: toolbarOptions,
         },
       });
-      quill.root.innerHTML = formData.description;
-      quill.on("text-change", () => {
-        setFormData((prev) => ({ ...prev, description: quill.root.innerHTML }));
+      quillInstance.current.root.innerHTML = formData.description;
+      quillInstance.current.on("text-change", () => {
+        setFormData((prev) => ({
+          ...prev,
+          description: quillInstance.current.root.innerHTML,
+        }));
       });
     }
   }, [loading, quillRef.current]);
