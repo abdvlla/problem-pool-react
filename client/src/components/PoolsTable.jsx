@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 const PoolsTable = ({ pools, onBulkUpdate }) => {
@@ -43,7 +43,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
     searchQuery,
   ]);
 
-  const handleSort = (key) => {
+  const handleSort = useCallback((key) => {
     setSortConfig((prev) => {
       if (prev.key === key) {
         return {
@@ -58,20 +58,35 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
         };
       }
     });
-  };
+  }, []);
 
   const sortedPools = useMemo(() => {
     return [...pools].sort((a, b) => {
-      let aValue = a[sortConfig.key];
-      let bValue = b[sortConfig.key];
+      const aDate = new Date(a.updatedAt).getTime();
+      const bDate = new Date(b.updatedAt).getTime();
+      const aValidDate = !isNaN(aDate);
+      const bValidDate = !isNaN(bDate);
 
       if (sortConfig.key === "priority") {
-        aValue = parseInt(aValue, 10);
-        bValue = parseInt(bValue, 10);
+        if (a.priority && !b.priority) return -1;
+        if (!a.priority && b.priority) return 1;
+        if (a.priority && b.priority) {
+          return sortConfig.direction === "ascending"
+            ? a.priority - b.priority
+            : b.priority - a.priority;
+        }
       }
 
-      if (aValue < bValue) return sortConfig.direction === "ascending" ? -1 : 1;
-      if (aValue > bValue) return sortConfig.direction === "ascending" ? 1 : -1;
+      if (sortConfig.key === "updatedAt") {
+        if (aValidDate && !bValidDate) return -1;
+        if (!aValidDate && bValidDate) return 1;
+        if (aValidDate && bValidDate) {
+          return sortConfig.direction === "ascending"
+            ? aDate - bDate
+            : bDate - aDate;
+        }
+      }
+
       return 0;
     });
   }, [pools, sortConfig]);
@@ -137,12 +152,8 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
 
   const totalPages = Math.ceil(filteredPools.length / entriesPerPage);
 
-  let startPage = Math.max(1, currentPage - 2);
-  let endPage = Math.min(startPage + 4, totalPages);
-
-  if (endPage - startPage < 4) {
-    startPage = Math.max(1, endPage - 4);
-  }
+  const startPage = Math.max(1, Math.min(currentPage - 2, totalPages - 4));
+  const endPage = Math.min(startPage + 4, totalPages);
 
   const pages = [...Array(endPage - startPage + 1).keys()].map(
     (i) => startPage + i
@@ -170,9 +181,11 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
 
   const handleCheckboxChange = (e, poolId) => {
     if (e.target.checked) {
-      setSelectedPools([...selectedPools, poolId]);
+      setSelectedPools((prevSelected) => [...prevSelected, poolId]);
     } else {
-      setSelectedPools(selectedPools.filter((id) => id !== poolId));
+      setSelectedPools((prevSelected) =>
+        prevSelected.filter((id) => id !== poolId)
+      );
     }
   };
 
