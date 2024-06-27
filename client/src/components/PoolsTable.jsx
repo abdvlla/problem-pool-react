@@ -500,6 +500,9 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 />
               )}
             </th>
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
+              #
+            </th>
             <th className=" font-semibold text-gray-800 dark:text-gray-100">
               First name
             </th>
@@ -573,7 +576,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
           </tr>
         </thead>
         <tbody>
-          {currentPools.map((pool) => (
+          {currentPools.map((pool, index) => (
             <tr
               key={pool._id}
               className="bg-white dark:bg-neutral-800 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-neutral-700 text-sm"
@@ -586,6 +589,9 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                     onChange={(e) => handleCheckboxChange(e, pool._id)}
                   />
                 )}
+              </td>
+              <td className="py-3 text-gray-900 dark:text-gray-100 select-all">
+                {indexOfFirstPool + index + 1}.
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100 select-all">
                 {pool.firstName}
