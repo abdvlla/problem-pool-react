@@ -178,6 +178,8 @@ const Show = () => {
                 label="Alternate phone number"
                 value={pool.altNumber}
               />
+              <DetailItem label="Street" value={pool.street} />
+              <DetailItem label="Town" value={pool.town} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
               <DetailItem label="Current status" value={pool.status} isButton />

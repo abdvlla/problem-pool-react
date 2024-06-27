@@ -94,30 +94,28 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
 
   const filteredPools = useMemo(() => {
     return sortedPools.filter((pool) => {
+      const query = searchQuery.toLowerCase();
+      const keywords = query.split(" ");
+
       return (
         (!statusFilter ||
-          pool.status.toLowerCase().includes(statusFilter.toLowerCase())) &&
+          pool.status?.toLowerCase().includes(statusFilter.toLowerCase())) &&
         (!staffFilter ||
-          (pool.assignedTo &&
-            pool.assignedTo
-              .toLowerCase()
-              .includes(staffFilter.toLowerCase()))) &&
+          pool.assignedTo?.toLowerCase().includes(staffFilter.toLowerCase())) &&
         (!todaysListFilter ||
-          (pool.todaysList &&
-            pool.todaysList
-              .toLowerCase()
-              .includes(todaysListFilter.toLowerCase()))) &&
-        (!searchQuery ||
-          searchQuery
-            .toLowerCase()
-            .split(" ")
-            .every(
-              (keyword) =>
-                pool.firstName.toLowerCase().includes(keyword) ||
-                pool.lastName.toLowerCase().includes(keyword) ||
-                pool.email.toLowerCase().includes(keyword) ||
-                pool.number.includes(keyword)
-            ))
+          pool.todaysList
+            ?.toLowerCase()
+            .includes(todaysListFilter.toLowerCase())) &&
+        keywords.every((keyword) => {
+          return (
+            pool.firstName?.toLowerCase().includes(keyword) ||
+            pool.lastName?.toLowerCase().includes(keyword) ||
+            pool.email?.toLowerCase().includes(keyword) ||
+            pool.street?.toLowerCase().includes(keyword) ||
+            pool.town?.toLowerCase().includes(keyword) ||
+            pool.number?.toLowerCase().startsWith(keyword)
+          );
+        })
       );
     });
   }, [statusFilter, staffFilter, todaysListFilter, searchQuery, sortedPools]);
@@ -514,6 +512,12 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             <th className="py-3 font-semibold text-gray-800 dark:text-gray-100 hidden md:table-cell">
               Phone
             </th>
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100 hidden md:table-cell">
+              Street
+            </th>
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100 hidden md:table-cell">
+              Town
+            </th>
             <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
               Status
             </th>
@@ -599,6 +603,12 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               </td>
               <td className="py-3 select-all text-gray-900 dark:text-gray-100 hidden md:table-cell">
                 {pool.number}
+              </td>
+              <td className="py-3 text-gray-900 dark:text-gray-100 hidden md:table-cell">
+                {pool.street}
+              </td>
+              <td className="py-3 text-gray-900 dark:text-gray-100 hidden md:table-cell">
+                {pool.town}
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100">
                 {pool.status}

@@ -83,6 +83,8 @@ const Create = () => {
     conditionHt: "",
     todaysList: "",
     priority: "",
+    street: "",
+    town: "",
   });
 
   const [files, setFiles] = useState([]);
@@ -245,6 +247,20 @@ const Create = () => {
             onChange={handleInputChange}
             name="altNumber"
             placeholder="(902) XXX-XXXX"
+          />
+          <InputField
+            label="Street"
+            value={formData.street}
+            onChange={handleInputChange}
+            name="street"
+            placeholder="Street address"
+          />
+          <InputField
+            label="Town"
+            value={formData.town}
+            onChange={handleInputChange}
+            name="town"
+            placeholder="Town"
           />
           <SelectField
             label="Body of Water"

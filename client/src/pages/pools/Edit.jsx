@@ -88,6 +88,8 @@ const Edit = () => {
     conditionHt: "",
     todaysList: "",
     priority: "",
+    street: "",
+    town: "",
   });
 
   const [files, setFiles] = useState([]);
@@ -148,6 +150,8 @@ const Edit = () => {
           conditionHt: data.conditionHt,
           todaysList: data.todaysList,
           priority: data.priority,
+          street: data.street,
+          town: data.town,
         });
         setExistingImages(data.coverImagePath);
         setLoading(false);
@@ -330,6 +334,20 @@ const Edit = () => {
             onChange={handleInputChange}
             name="altNumber"
             placeholder="(902) XXX-XXXX"
+          />
+          <InputField
+            label="Street"
+            value={formData.street}
+            onChange={handleInputChange}
+            name="street"
+            placeholder="Street address"
+          />
+          <InputField
+            label="Town"
+            value={formData.town}
+            onChange={handleInputChange}
+            name="town"
+            placeholder="Town"
           />
           <SelectField
             label="Body of Water"

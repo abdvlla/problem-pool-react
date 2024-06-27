@@ -31,6 +31,8 @@ const poolSchema = new mongoose.Schema(
     conditionHt: String,
     todaysList: String,
     priority: String,
+    street: String,
+    town: String,
   },
   { timestamps: true }
 );
