@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const PoolsTable = ({ pools, onBulkUpdate }) => {
   const [entriesPerPage, setEntriesPerPage] = useState(
@@ -190,7 +191,19 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
   };
 
   const handleBulkUpdate = async () => {
-    if (selectedPools.length === 0) return;
+    if (selectedPools.length === 0) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "No bodies of water selected. Please select bodies of water to update.",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      return;
+    }
 
     await onBulkUpdate(
       selectedPools,
@@ -199,6 +212,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
       bulkStatus,
       bulkPriority
     );
+    setSelectedPools([]);
   };
 
   return (

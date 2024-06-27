@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import axios from "axios";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import BackButton from "../../components/BackButton";
 import "quill/dist/quill.snow.css";
-import Zoom from "react-medium-image-zoom";
-import "react-medium-image-zoom/dist/styles.css";
-import LazyLoad from "react-lazyload";
-import { GiBo, GiBoatFishing } from "react-icons/gi";
+import { GiBoatFishing } from "react-icons/gi";
+
+const ImagesGrid = lazy(() => import("../../components/ImagesGrid"));
+const ErrorBoundary = lazy(() => import("../../components/ErrorBoundary"));
 
 const Show = () => {
   const token = localStorage.getItem("token");
   const [pool, setPool] = useState({});
+  const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -26,6 +27,9 @@ const Show = () => {
         data.createdAt = new Date(data.createdAt);
         data.updatedAt = new Date(data.updatedAt);
         setPool(data);
+        if (data.coverImagePath && data.coverImagePath.length > 0) {
+          setImages(data.coverImagePath);
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -134,24 +138,6 @@ const Show = () => {
     );
   };
 
-  const ImagesGrid = ({ images }) => (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-      {images.map((imagePath, index) => (
-        <div key={index} className="relative">
-          <LazyLoad height={200} offset={100} once>
-            <Zoom>
-              <img
-                className="w-full h-auto rounded-lg cursor-pointer transition-transform duration-300 transform hover:scale-105"
-                src={imagePath}
-                alt={`Image ${index + 1}`}
-              />
-            </Zoom>
-          </LazyLoad>
-        </div>
-      ))}
-    </div>
-  );
-
   return (
     <>
       <div className="mx-auto max-w-5xl mt-4">
@@ -259,15 +245,27 @@ const Show = () => {
                 />
               </div>
             )}
-            {pool.coverImagePath && pool.coverImagePath.length > 0 && (
-              <div className="py-6">
-                <DetailItem
-                  label="Images"
-                  value={<ImagesGrid images={pool.coverImagePath} />}
-                />
-              </div>
-            )}
           </dl>
+          {images.length > 0 && (
+            <div className="py-6">
+              <DetailItem
+                label="Images"
+                value={
+                  <ErrorBoundary>
+                    <Suspense
+                      fallback={
+                        <div className="flex justify-center items-center h-64">
+                          <p>Loading images...</p>
+                        </div>
+                      }
+                    >
+                      <ImagesGrid images={images} />
+                    </Suspense>
+                  </ErrorBoundary>
+                }
+              />
+            </div>
+          )}
           <div className="py-6 flex space-x-2 justify-center">
             <Link to={`/pools/${pool._id}/edit`}>
               <button className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">

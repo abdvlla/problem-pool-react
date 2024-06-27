@@ -167,6 +167,7 @@ const Create = () => {
       })
       .catch((error) => {
         setIsLoading(false);
+        console.log(error);
         Swal.fire({
           icon: "error",
           title: "Oops...",
