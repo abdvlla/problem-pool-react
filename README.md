@@ -1,6 +1,10 @@
-# Make sure you have Node.js and npm installed on your machine.
+# Problem pools
+## Private website created for employer
 
-## Steps:
+> [!IMPORTANT]
+>  Make sure you have Node.js and npm installed on your machine before proceeding.
+
+## Steps to clone and use:
 1. Open terminal (Terminal -> New Terminal)
 2. type "cd server"
 3. type "npm i"
