@@ -214,7 +214,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
   };
 
   return (
-    <div className="content-center py-6 px-5 mx-auto max-w-screen-xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 dark:bg-neutral-900 mt-4 ">
+    <div className="content-center py-6 px-5 mx-auto max-w-screen-2xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 dark:bg-neutral-900 mt-4 ">
       <div className="flex justify-between mb-4">
         <div className="justify-start">
           <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 px-2 ">
