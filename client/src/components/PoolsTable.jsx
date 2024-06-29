@@ -527,11 +527,11 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
               Assigned to
             </th>
-            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
+            <th className="py-3 font-semibold text-gray-800 dark:text-gray-100 hidden md:table-cell">
               Today's list
             </th>
             <th
-              className="py-3 font-semibold text-gray-800 dark:text-gray-100 cursor-pointer"
+              className="py-3 font-semibold text-gray-800 dark:text-gray-100 cursor-pointer hidden md:table-cell"
               onClick={() => handleSort("priority")}
             >
               Priority (1-10){" "}
@@ -626,7 +626,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                   <span>{pool.assignedTo}</span>
                 )}
               </td>
-              <td className="py-3">
+              <td className="py-3 hidden md:table-cell">
                 <div className="space-x-2 dark:text-gray-100 font-bold">
                   {pool.todaysList === "Yes" && (
                     <span className="inline-block w-3 h-3 bg-yellow-500 rounded-full"></span>
@@ -637,7 +637,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                   <span>{pool.todaysList}</span>
                 </div>
               </td>
-              <td className="py-3 text-gray-900 dark:text-gray-100">
+              <td className="py-3 text-gray-900 dark:text-gray-100 hidden md:table-cell">
                 {pool.priority}
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100 hidden md:table-cell">
@@ -653,7 +653,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 /
                 <Link
                   to={`/pools/${pool._id}/edit`}
-                  className="font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                  className="font-medium text-blue-600 dark:text-blue-400 hover:underline "
                 >
                   Edit
                 </Link>

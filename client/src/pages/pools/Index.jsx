@@ -113,7 +113,7 @@ const Index = () => {
       } catch (err) {
         console.error("Error checking for updates:", err);
       }
-    }, 900000); // 900000ms to Check every 15 minutes
+    }, 300000); // 300,000ms to Check every 5 minutes
 
     return () => clearInterval(interval);
   }, [token]);
