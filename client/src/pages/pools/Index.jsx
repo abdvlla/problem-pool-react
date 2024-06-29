@@ -3,6 +3,7 @@ import axios from "axios";
 import PoolsTable from "../../components/PoolsTable";
 import Swal from "sweetalert2";
 import { GiBoatFishing } from "react-icons/gi";
+import { SlArrowUp } from "react-icons/sl";
 
 const Index = () => {
   const token = localStorage.getItem("token");
@@ -10,6 +11,7 @@ const Index = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [unseenChanges, setUnseenChanges] = useState(false);
+  const [showScrollTopButton, setShowScrollTopButton] = useState(false);
 
   const fetchPools = useCallback(async () => {
     if (!token) {
@@ -134,6 +136,23 @@ const Index = () => {
     }
   }, [unseenChanges, fetchPools]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200) {
+        setShowScrollTopButton(true);
+      } else {
+        setShowScrollTopButton(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center h-screen">
@@ -153,6 +172,19 @@ const Index = () => {
         All bodies of water
       </h1>
       <PoolsTable pools={pools} onBulkUpdate={handleBulkUpdate} />
+      {showScrollTopButton && (
+        <div className="p-8 fixed bottom-5 left-5 flex flex-col items-center">
+          <button
+            onClick={scrollToTop}
+            className="flex items-center justify-center w-10 h-10 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300"
+          >
+            <SlArrowUp />
+          </button>
+          <span className="text-sm  text-blue-500 dark:text-blue-400">
+            Back to Top
+          </span>
+        </div>
+      )}
     </>
   );
 };
