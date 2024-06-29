@@ -1,6 +1,6 @@
-Make sure you have Node.js and npm installed on your machine.
+# Make sure you have Node.js and npm installed on your machine.
 
-Steps:
+## Steps:
 1. Open terminal (Terminal -> New Terminal)
 2. type "cd server"
 3. type "npm i"
@@ -12,15 +12,15 @@ Steps:
 8. type "npm run dev"
 9. open the link provided
 
-!!! Make sure you fill out the .env in the SERVER folder with these variables !!!
+## Make sure you fill out the .env in the SERVER folder with these variables !!!
 
-PORT
-DATABASE_URL
-SECRET_KEY
-ADMIN_USERNAME
-ADMIN_PASSWORD
-JWT_SECRET
-CORS_ORIGIN= (the link you get from step 8)
+- PORT
+- DATABASE_URL
+- SECRET_KEY
+- ADMIN_USERNAME
+- ADMIN_PASSWORD
+- JWT_SECRET
+- CORS_ORIGIN= (the link you get from step 8)
 
-In the CLIENT folder, fill this variable
-VITE_API_BASE_URL= (the link from step 4)
+## In the CLIENT folder, fill this variable
+- VITE_API_BASE_URL= (the link from step 4)
