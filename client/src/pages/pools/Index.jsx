@@ -9,6 +9,7 @@ const Index = () => {
   const [pools, setPools] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [unseenChanges, setUnseenChanges] = useState(false);
 
   const fetchPools = useCallback(async () => {
     if (!token) {
@@ -92,6 +93,46 @@ const Index = () => {
   useEffect(() => {
     fetchPools();
   }, [fetchPools]);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/customers/changes`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.data.hasUpdates) {
+          setUnseenChanges(true);
+        }
+      } catch (err) {
+        console.error("Error checking for updates:", err);
+      }
+    }, 900000); // 900000ms to Check every 15 minutes
+
+    return () => clearInterval(interval);
+  }, [token]);
+
+  useEffect(() => {
+    if (unseenChanges) {
+      Swal.fire({
+        icon: "info",
+        title: "New updates available!",
+        text: "There are new or updated bodies of water. Please refresh to see the latest data.",
+        toast: true,
+        position: "top",
+        confirmButtonText: "Refresh",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetchPools();
+          setUnseenChanges(false);
+        }
+      });
+    }
+  }, [unseenChanges, fetchPools]);
 
   if (loading) {
     return (

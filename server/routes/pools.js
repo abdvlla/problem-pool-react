@@ -59,6 +59,22 @@ router.get("/", async (req, res) => {
   }
 });
 
+let lastUpdateTime = new Date();
+
+router.get("/changes", async (req, res) => {
+  try {
+    const latestPool = await Pool.findOne().sort({ updatedAt: -1 });
+    if (latestPool && latestPool.updatedAt > lastUpdateTime) {
+      lastUpdateTime = new Date();
+      return res.status(200).json({ hasUpdates: true });
+    }
+    return res.status(200).json({ hasUpdates: false });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
 // Create a new pool
 router.post("/", async (req, res) => {
   const newPool = new Pool(req.body);
