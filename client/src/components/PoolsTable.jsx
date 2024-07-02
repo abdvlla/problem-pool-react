@@ -214,7 +214,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
   };
 
   return (
-    <div className="content-center py-6 px-5 mx-auto max-w-screen-2xl relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 dark:bg-neutral-900 mt-4 ">
+    <div className="content-center py-6 px-5 mx-auto w-10/12 relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 dark:bg-neutral-900 mt-4 ">
       <div className="flex justify-between mb-4">
         <div className="justify-start">
           <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 px-2 ">
@@ -483,8 +483,8 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
         </div>
       )}
       <table id="poolTable" className="table-auto shadow-lg rounded w-full">
-        <thead className="bg-gray-200 dark:bg-neutral-600">
-          <tr className="text-sm">
+        <thead className="bg-gray-300 dark:bg-neutral-700">
+          <tr className="text-sm text-gray-900 dark:text-gray-100">
             <th>
               {showBulkOptions && (
                 <input
@@ -629,12 +629,15 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
               <td className="py-3 hidden md:table-cell">
                 <div className="space-x-2 dark:text-gray-100 font-bold">
                   {pool.todaysList === "Yes" && (
-                    <span className="inline-block w-3 h-3 bg-yellow-500 rounded-full"></span>
+                    <span className="inline-block px-2  text-sm font-semibold text-yellow-900 bg-yellow-300 rounded-full">
+                      Yes
+                    </span>
                   )}
                   {pool.todaysList === "Done" && (
-                    <span className="inline-block w-3 h-3 bg-green-500 rounded-full"></span>
+                    <span className="inline-block px-2  text-sm font-semibold text-green-900 bg-green-300 rounded-full">
+                      Done
+                    </span>
                   )}
-                  <span>{pool.todaysList}</span>
                 </div>
               </td>
               <td className="py-3 text-gray-900 dark:text-gray-100 hidden md:table-cell">
@@ -675,7 +678,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             className={`px-3 py-2 rounded-md mr-2 ${
               currentPage === 1 || totalPages === 0
                 ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
-                : "bg-blue-500 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-900"
             }`}
             onClick={() => setCurrentPage(1)}
             disabled={currentPage === 1 || totalPages === 0}

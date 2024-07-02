@@ -58,6 +58,20 @@ const SelectField = ({ label, value, onChange, options, name }) => (
   </div>
 );
 
+const formatPhoneNumber = (value) => {
+  if (!value) return value;
+  const phoneNumber = value.replace(/[^\d]/g, "");
+  const phoneNumberLength = phoneNumber.length;
+  if (phoneNumberLength < 4) return phoneNumber;
+  if (phoneNumberLength < 7) {
+    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+  }
+  return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
+    3,
+    6
+  )}-${phoneNumber.slice(6, 10)}`;
+};
+
 const Create = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -120,7 +134,11 @@ const Create = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === "number" || name === "altNumber") {
+      setFormData((prev) => ({ ...prev, [name]: formatPhoneNumber(value) }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSavePool = () => {
