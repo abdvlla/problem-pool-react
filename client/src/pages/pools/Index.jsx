@@ -12,6 +12,7 @@ const Index = () => {
   const [loading, setLoading] = useState(true);
   const [unseenChanges, setUnseenChanges] = useState(false);
   const [showScrollTopButton, setShowScrollTopButton] = useState(false);
+  const [staff, setStaff] = useState([]);
 
   const fetchPools = useCallback(async () => {
     if (!token) {
@@ -153,6 +154,26 @@ const Index = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  useEffect(() => {
+    const fetchStaff = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/employees`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setStaff(response.data);
+      } catch (error) {
+        console.error("Error fetching staff:", error);
+      }
+    };
+
+    fetchStaff();
+  }, [token]);
+
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center h-screen">
@@ -171,7 +192,7 @@ const Index = () => {
       <h1 className="mt-3 text-xl font-bold dark:text-white">
         All bodies of water
       </h1>
-      <PoolsTable pools={pools} onBulkUpdate={handleBulkUpdate} />
+      <PoolsTable pools={pools} onBulkUpdate={handleBulkUpdate} staff={staff} />{" "}
       {showScrollTopButton && (
         <div className="p-8 fixed bottom-5 left-5 flex flex-col items-center">
           <button

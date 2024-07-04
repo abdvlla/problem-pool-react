@@ -104,6 +104,8 @@ const Create = () => {
   const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [staff, setStaff] = useState([]);
+
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -131,6 +133,24 @@ const Create = () => {
       setFormData((prev) => ({ ...prev, description: quill.root.innerHTML }));
     });
   }, []);
+
+  useEffect(() => {
+    fetchStaff();
+  }, [token]);
+
+  const fetchStaff = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/employees`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setStaff(response.data);
+    } catch (error) {
+      console.error("Error fetching staff:", error);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -433,17 +453,10 @@ const Create = () => {
             name="assignedTo"
             options={[
               { value: "", label: "" },
-              { value: "Colby", label: "Colby" },
-              { value: "Jenn", label: "Jenn" },
-              { value: "Jessica", label: "Jessica" },
-              { value: "Amaya", label: "Amaya" },
-              { value: "Ben", label: "Ben" },
-              { value: "Hannah", label: "Hannah" },
-              { value: "Jack", label: "Jack" },
-              { value: "Jaime", label: "Jaime" },
-              { value: "Mark", label: "Mark" },
-              { value: "Service", label: "Service" },
-              { value: "Construction", label: "Construction" },
+              ...staff.map((member) => ({
+                value: member.name,
+                label: member.name,
+              })),
             ]}
           />
           <SelectField

@@ -2,7 +2,8 @@ import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const PoolsTable = ({ pools, onBulkUpdate }) => {
+const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
+  // Accept staff prop
   const [entriesPerPage, setEntriesPerPage] = useState(
     () => parseInt(localStorage.getItem("entriesPerPage")) || 10
   );
@@ -279,26 +280,11 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 value={staffFilter}
               >
                 <option value="">All</option>
-                <option value="Jenn">Jenn</option>
-                <option className="text-blue-600" value="Colby">
-                  Colby
-                </option>
-                <option className="text-blue-500" value="Ben">
-                  Ben
-                </option>
-                <option className="text-pink-500" value="Hannah">
-                  Hannah
-                </option>
-                <option value="Amaya">Amaya</option>
-                <option className="text-orange-500" value="Jack">
-                  Jack
-                </option>
-                <option className="text-pink-400" value="Jaime">
-                  Jaime
-                </option>
-                <option value="Mark">Mark</option>
-                <option value="Service">Service</option>
-                <option value="Construction">Construction</option>
+                {staff.map((member) => (
+                  <option key={member._id} value={member.name}>
+                    {member.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -418,25 +404,11 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
                 onChange={(e) => setBulkAssignedTo(e.target.value)}
               >
                 <option value=""></option>
-                <option value=" ">None</option>
-                <option value="Jenn">Jenn</option>
-                <option className="text-blue-600" value="Colby">
-                  Colby
-                </option>
-                <option className="text-blue-500" value="Ben">
-                  Ben
-                </option>
-                <option className="text-pink-500" value="Hannah">
-                  Hannah
-                </option>
-                <option value="Amaya">Amaya</option>
-                <option className="text-orange-500" value="Jack">
-                  Jack
-                </option>
-                <option value="Jaime">Jaime</option>
-                <option value="Mark">Mark</option>
-                <option value="Service">Service</option>
-                <option value="Construction">Construction</option>
+                {staff.map((member) => (
+                  <option key={member._id} value={member.name}>
+                    {member.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
@@ -555,7 +527,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             <th className=" font-semibold text-gray-800 dark:text-gray-100">
               <button
                 onClick={() => setShowBulkOptions(!showBulkOptions)}
-                className=" ml-4flex items-center justify-center px-2 py-2 text-gray-100 bg-gray-700 rounded-full shadow-md hover:bg-gray-900  dark:text-gray-900 dark:bg-gray-200 dark:hover:bg-gray-100 focus:ring ring-blue-600"
+                className="items-center justify-center px-2 py-2 text-gray-100 bg-gray-700 rounded-full shadow-md hover:bg-gray-900  dark:text-gray-900 dark:bg-gray-200 dark:hover:bg-gray-100 focus:ring ring-blue-600"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -702,7 +674,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             className={`px-3 py-2 rounded-md mr-2 ${
               currentPage === 1 || totalPages === 0
                 ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
-                : "bg-blue-500 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-900"
             }`}
             onClick={() => setCurrentPage(currentPage - 1)}
             disabled={currentPage === 1 || totalPages === 0}
@@ -726,7 +698,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             className={`px-3 py-2 rounded-md mr-2 ${
               currentPage === totalPages || totalPages === 0
                 ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
-                : "bg-blue-500 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-900"
             }`}
             onClick={() => setCurrentPage(currentPage + 1)}
             disabled={currentPage === totalPages || totalPages === 0}
@@ -750,7 +722,7 @@ const PoolsTable = ({ pools, onBulkUpdate }) => {
             className={`px-3 py-2 rounded-md ${
               currentPage === totalPages || totalPages === 0
                 ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
-                : "bg-blue-500 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-900"
             }`}
             onClick={() => setCurrentPage(totalPages)}
             disabled={currentPage === totalPages || totalPages === 0}

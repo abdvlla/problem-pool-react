@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 // Routes imports
 import index from "./routes/index.js";
 import pools from "./routes/pools.js";
+import staff from "./routes/staff.js";
 
 dotenv.config();
 
@@ -70,6 +71,7 @@ const authenticateToken = (req, res, next) => {
 // Routes
 app.use("/home", authenticateToken, index);
 app.use("/customers", authenticateToken, pools);
+app.use("/employees", authenticateToken, staff);
 app.post("/verify-token", authenticateToken, (req, res) => {
   res.status(200).send({ valid: true });
 });

@@ -7,6 +7,7 @@ import Create from "./pages/pools/Create";
 import Show from "./pages/pools/Show";
 import Edit from "./pages/pools/Edit";
 import Login from "./pages/Login";
+import Staff from "./pages/Staff/";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 import Swal from "sweetalert2";
@@ -123,6 +124,14 @@ const App = () => {
           path="/login"
           element={
             isLoggedIn ? <Navigate to="/" /> : <Login onLogin={handleLogin} />
+          }
+        />
+        <Route
+          path="/staff"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Staff />
+            </ProtectedRoute>
           }
         />
         <Route path="*" element={<Navigate to="/" replace />} />

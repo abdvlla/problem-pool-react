@@ -111,6 +111,7 @@ const Edit = () => {
   const [existingImages, setExistingImages] = useState([]);
   const [removedImages, setRemovedImages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [staff, setStaff] = useState([]);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -132,6 +133,22 @@ const Edit = () => {
   ];
 
   useEffect(() => {
+    const fetchStaff = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/employees`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setStaff(response.data);
+      } catch (error) {
+        console.error("Error fetching staff:", error);
+      }
+    };
+
+    fetchStaff();
+
     axios
       .get(`${import.meta.env.VITE_API_BASE_URL}/customers/${id}`, {
         headers: {
@@ -203,15 +220,6 @@ const Edit = () => {
       });
     }
   }, [loading, quillRef.current]);
-
-  if (loading) {
-    return (
-      <div className="flex flex-col justify-center items-center h-screen">
-        <GiBoatFishing className="text-6xl text-blue-600 dark:text-blue-400" />
-        <p className="dark:text-gray-50 mt-4">Loading...</p>
-      </div>
-    );
-  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -302,6 +310,15 @@ const Edit = () => {
     setRemovedImages((prev) => [...prev, image]);
     setExistingImages((prev) => prev.filter((img) => img !== image));
   };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen">
+        <GiBoatFishing className="text-6xl text-blue-600 dark:text-blue-400" />
+        <p className="dark:text-gray-50 mt-4">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <section className="">
@@ -520,17 +537,10 @@ const Edit = () => {
             name="assignedTo"
             options={[
               { value: "", label: "" },
-              { value: "Colby", label: "Colby" },
-              { value: "Jenn", label: "Jenn" },
-              { value: "Jessica", label: "Jessica" },
-              { value: "Amaya", label: "Amaya" },
-              { value: "Ben", label: "Ben" },
-              { value: "Hannah", label: "Hannah" },
-              { value: "Jack", label: "Jack" },
-              { value: "Jaime", label: "Jaime" },
-              { value: "Mark", label: "Mark" },
-              { value: "Service", label: "Service" },
-              { value: "Construction", label: "Construction" },
+              ...staff.map((member) => ({
+                value: member.name,
+                label: member.name,
+              })),
             ]}
           />
           <SelectField

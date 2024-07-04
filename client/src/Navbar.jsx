@@ -64,6 +64,12 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
           >
             New BoW
           </NavLink>
+          <NavLink
+            to="/staff"
+            className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
+          >
+            Staff
+          </NavLink>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
           <button
@@ -120,6 +126,13 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
                   onClick={closeMobileMenu}
                 >
                   New BoW
+                </NavLink>
+                <NavLink
+                  to="/staff"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  onClick={closeMobileMenu}
+                >
+                  Staff
                 </NavLink>
               </div>
               <div className="py-6">
