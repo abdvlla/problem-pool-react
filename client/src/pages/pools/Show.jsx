@@ -143,7 +143,7 @@ const Show = () => {
       <div className="mx-auto max-w-5xl mt-4">
         <BackButton />
       </div>
-      <div className="py-6 flex space-x-2 justify-center">
+      <div className=" flex mb-2 space-x-2 justify-center">
         <Link to={`/pools/${pool._id}/edit`}>
           <button className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
             Edit
@@ -156,10 +156,8 @@ const Show = () => {
           Delete
         </button>
       </div>
-      <h1 className="text-xl font-bold mb-4 dark:text-gray-100">
-        Customer BoW information
-      </h1>
-      <div className="content-center py-8 px-6 mx-auto max-w-4xl bg-gray-50 dark:bg-neutral-900 shadow-lg rounded-lg text-left">
+
+      <div className="content-center py-8 px-6 mx-auto max-w-6xl bg-gray-50 dark:bg-neutral-900 shadow-lg rounded-lg text-left">
         <div className="border-t border-gray-200 dark:border-gray-700">
           <dl className="divide-y divide-gray-200 dark:divide-gray-700">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
@@ -181,7 +179,7 @@ const Show = () => {
               <DetailItem label="Street" value={pool.street} />
               <DetailItem label="Town" value={pool.town} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 py-6">
               <DetailItem label="Current status" value={pool.status} isButton />
               <DetailItem
                 label="Assigned to"
@@ -210,7 +208,7 @@ const Show = () => {
               />
               <DetailItem label="Priority" value={pool.priority} isButton />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 py-6">
               <DetailItem label="Body of water" value={pool.bodyOfWater} />
               <DetailItem label="System" value={pool.system} />
               <DetailItem label="HHL Build" value={pool.hhlBuild} />

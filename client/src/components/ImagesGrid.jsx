@@ -4,7 +4,7 @@ import "react-medium-image-zoom/dist/styles.css";
 import LazyLoad from "react-lazyload";
 
 const ImagesGrid = ({ images }) => (
-  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
     {images.map((imagePath, index) => (
       <div key={index} className="relative">
         <LazyLoad

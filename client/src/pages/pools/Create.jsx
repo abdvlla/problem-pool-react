@@ -245,7 +245,7 @@ const Create = () => {
         Add a new body of water
       </h1>
       <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-lg dark:shadow-gray-400 bg-gray-50 dark:bg-neutral-900">
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 text-left">
+        <div className="grid gap-4 grid-cols-2 lg:grid-cols sm:gap-6 text-left">
           <InputField
             label="Customer first name"
             value={formData.firstName}

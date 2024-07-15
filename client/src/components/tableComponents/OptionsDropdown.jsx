@@ -6,12 +6,12 @@ const OptionsDropdown = ({ poolId }) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button className=" rounded-md hover:bg-gray-200 dark:hover:bg-neutral-700 focus:outline-none ">
+        <button className=" rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            className="inline-block h-5 w-5 stroke-current dark:text-white text-black"
+            className="inline-block h-5 w-8 stroke-current dark:text-white text-black"
           >
             <path
               strokeLinecap="round"
@@ -24,10 +24,10 @@ const OptionsDropdown = ({ poolId }) => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="min-w-[50px] dark:bg-white space-y-2 bg-neutral-600 rounded-md p-2 text-center shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="min-w-[50px] dark:bg-white space-y-2 bg-neutral-600 rounded-md p-3 text-center shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           sideOffset={5}
         >
-          <DropdownMenu.Item className="group flex items-center h-5 px-2 rounded-md text-sm text-gray-50 dark:text-black hover:bg-gray-500 dark:hover:bg-gray-400 focus:outline-none">
+          <DropdownMenu.Item className="group flex items-center h-5 px-3 rounded-md text-sm text-gray-50 dark:text-black hover:bg-gray-500 dark:hover:bg-gray-400 focus:outline-none">
             <Link to={`/pools/${poolId}`} className="w-full h-full">
               View
             </Link>
