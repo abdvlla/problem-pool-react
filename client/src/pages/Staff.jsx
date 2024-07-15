@@ -171,7 +171,7 @@ const Staff = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-xl py-8 mt-8 rounded-lg shadow-lg dark:shadow-gray-400 bg-gray-50 dark:bg-neutral-900">
+    <div className="container mx-auto p-4 max-w-xl py-8 mt-8 rounded-lg shadow-lg shadow-gray-500  bg-gray-50 dark:bg-neutral-900">
       <h2 className="text-2xl font-bold mb-4 dark:text-white">Manage Staff</h2>
       <div className="grid mx-auto max-w-xl mb-4">
         <input
@@ -179,7 +179,7 @@ const Staff = () => {
           placeholder="Name of staff"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+          className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
         />
         <button
           onClick={handleAddStaff}
@@ -204,7 +204,7 @@ const Staff = () => {
                   onChange={(e) =>
                     setEditName({ ...editName, [member._id]: e.target.value })
                   }
-                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2"
                 />
               )}
             </div>
