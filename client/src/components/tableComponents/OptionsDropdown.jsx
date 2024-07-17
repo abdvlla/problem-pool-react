@@ -6,12 +6,12 @@ const OptionsDropdown = ({ poolId }) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button className=" rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 focus:outline-none ">
+        <button className="btn-xs btn-ghost">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            className="inline-block h-5 w-8 stroke-current dark:text-white text-black"
+            className="inline-block h-5 w-8 stroke-current "
           >
             <path
               strokeLinecap="round"

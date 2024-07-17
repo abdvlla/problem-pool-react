@@ -14,11 +14,11 @@ const BulkOptions = ({
 }) => (
   <div className="flex justify-center items-center space-x-4 mb-4">
     <div>
-      <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+      <label className="block text-sm font-medium leading-6  ">
         Update status
       </label>
       <select
-        className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3  text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+        className="relative w-full cursor-default rounded-md   py-1.5 pl-3  text-left  shadow-sm ring-1 ring-inset focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
         value={bulkStatus}
         onChange={onStatusChange}
       >
@@ -37,11 +37,11 @@ const BulkOptions = ({
       </select>
     </div>
     <div>
-      <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+      <label className="block text-sm font-medium leading-6  ">
         Assign to staff
       </label>
       <select
-        className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+        className="relative w-full cursor-default rounded-md    py-1.5 pl-3 text-left  shadow-sm ring-1 ring-inset  focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
         value={bulkAssignedTo}
         onChange={onAssignedToChange}
       >
@@ -54,11 +54,11 @@ const BulkOptions = ({
       </select>
     </div>
     <div>
-      <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+      <label className="block text-sm font-medium leading-6  ">
         Update today's list
       </label>
       <select
-        className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+        className="relative w-full cursor-default rounded-md    py-1.5 pl-3 text-left  shadow-sm ring-1 ring-inset  focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
         value={bulkTodaysList}
         onChange={onTodaysListChange}
       >
@@ -69,11 +69,11 @@ const BulkOptions = ({
       </select>
     </div>
     <div>
-      <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+      <label className="block text-sm font-medium leading-6  ">
         Update priority
       </label>
       <select
-        className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+        className="relative w-full cursor-default rounded-md    py-1.5 pl-3 text-left  shadow-sm ring-1 ring-inset  focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
         value={bulkPriority}
         onChange={onPriorityChange}
       >

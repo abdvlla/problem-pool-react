@@ -9,8 +9,8 @@ const TableHeader = ({
   selectedPools,
   setShowBulkOptions,
 }) => (
-  <thead className="bg-gray-300 dark:bg-neutral-700">
-    <tr className="text-sm text-gray-900 dark:text-gray-100">
+  <thead className="text-xs bg-base-300">
+    <tr>
       <th>
         {showBulkOptions && (
           <input
@@ -24,47 +24,30 @@ const TableHeader = ({
           />
         )}
       </th>
-      <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">#</th>
-      <th className="font-semibold text-gray-800 dark:text-gray-100">
-        First name
-      </th>
-      <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
-        Last name
-      </th>
-      <th className="py-3 font-semibold text-gray-800 dark:text-gray-100 hidden md:table-cell">
-        Email
-      </th>
-      <th className="py-3 font-semibold text-gray-800 dark:text-gray-100 hidden md:table-cell">
-        Phone
-      </th>
-      <th className="py-3 font-semibold text-gray-800 dark:text-gray-100 hidden md:table-cell">
-        Street
-      </th>
-      <th className="py-3 font-semibold text-gray-800 dark:text-gray-100 hidden md:table-cell">
-        Town
-      </th>
-      <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
-        Status
-      </th>
-      <th className="py-3 font-semibold text-gray-800 dark:text-gray-100">
-        Assigned to
-      </th>
-      <th className="py-3 font-semibold text-gray-800 dark:text-gray-100 hidden md:table-cell">
-        Today's list
-      </th>
+      <th className=" font-semibold ">#</th>
+      <th className="font-semibold ">First name</th>
+      <th className=" font-semibold ">Last name</th>
+      <th className=" font-semibold  hidden md:table-cell">Email</th>
+      <th className=" font-semibold  hidden md:table-cell">Phone</th>
+      <th className=" font-semibold  hidden md:table-cell">Street</th>
+      <th className=" font-semibold  hidden md:table-cell">Town</th>
+      <th className=" font-semibold ">Status</th>
+      <th className=" font-semibold ">Assigned to</th>
+      <th className=" font-semibold  hidden md:table-cell">Today's list</th>
       <th
-        className="py-3 font-semibold text-gray-800 dark:text-gray-100 cursor-pointer hidden md:table-cell"
+        className=" font-semibold  cursor-pointer hidden md:table-cell"
         onClick={() => handleSort("priority")}
       >
-        Priority (1-10){" "}
+        Priority{" "}
         {sortConfig.key === "priority"
           ? sortConfig.direction === "ascending"
             ? "↑"
             : "↓"
           : ""}
       </th>
+      <th className=" font-semibold  hidden md:table-cell">CD</th>
       <th
-        className="py-3 font-semibold text-gray-800 dark:text-gray-100 cursor-pointer hidden md:table-cell"
+        className=" font-semibold  cursor-pointer hidden md:table-cell"
         onClick={() => handleSort("updatedAt")}
       >
         Last updated{" "}
@@ -74,10 +57,10 @@ const TableHeader = ({
             : "↓"
           : ""}
       </th>
-      <th className="font-semibold text-gray-800 dark:text-gray-100">
+      <th className="font-semibold ">
         <button
           onClick={() => setShowBulkOptions(!showBulkOptions)}
-          className="items-center justify-center px-2 py-2 text-gray-100 bg-gray-700 rounded-full shadow-md hover:bg-gray-900 dark:text-gray-900 dark:bg-gray-200 dark:hover:bg-gray-100 focus:ring ring-blue-600"
+          className="items-center justify-center px-2 py-2  rounded-full shadow-md  focus:ring ring-blue-600"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

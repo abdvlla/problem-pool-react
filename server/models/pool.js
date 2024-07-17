@@ -33,6 +33,7 @@ const poolSchema = new mongoose.Schema(
     priority: String,
     street: String,
     town: String,
+    chlorineDemand: Boolean,
   },
   { timestamps: true }
 );

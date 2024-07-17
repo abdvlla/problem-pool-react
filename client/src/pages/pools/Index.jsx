@@ -189,10 +189,12 @@ const Index = () => {
 
   return (
     <>
-      <h1 className="mt-3 text-xl font-bold dark:text-white">
-        All bodies of water
-      </h1>
-      <PoolsTable pools={pools} onBulkUpdate={handleBulkUpdate} staff={staff} />{" "}
+      <h1 className="mt-3 text-xl font-bold ">All bodies of water</h1>
+      <PoolsTable
+        pools={pools}
+        onBulkUpdate={handleBulkUpdate}
+        staff={staff}
+      />{" "}
       {showScrollTopButton && (
         <div className="p-8 fixed bottom-5 left-5 flex flex-col items-center">
           <button

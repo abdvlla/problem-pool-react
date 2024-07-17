@@ -29,15 +29,13 @@ const InputField = ({
   name,
 }) => (
   <div className="w-full">
-    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-      {label}
-    </label>
+    <label className="block mb-2 text-sm font-medium ">{label}</label>
     <input
       type={type}
       value={value}
       onChange={onChange}
       name={name}
-      className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+      className="  border    text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
       placeholder={placeholder}
     />
   </div>
@@ -45,14 +43,12 @@ const InputField = ({
 
 const SelectField = ({ label, value, onChange, options, name }) => (
   <div className="w-full">
-    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-      {label}
-    </label>
+    <label className="block mb-2 text-sm font-medium ">{label}</label>
     <select
       value={value}
       onChange={onChange}
       name={name}
-      className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+      className="  border    text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
     >
       {options.map((option) => (
         <option key={option.value} value={option.value}>
@@ -104,6 +100,7 @@ const Edit = () => {
     priority: "",
     street: "",
     town: "",
+    chlorineDemand: false,
   });
 
   const [files, setFiles] = useState([]);
@@ -183,6 +180,7 @@ const Edit = () => {
           priority: data.priority,
           street: data.street,
           town: data.town,
+          chlorineDemand: data.chlorineDemand,
         });
         setExistingImages(data.coverImagePath);
         setLoading(false);
@@ -222,8 +220,10 @@ const Edit = () => {
   }, [loading, quillRef.current]);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "number" || name === "altNumber") {
+    const { name, value, type, checked } = e.target;
+    if (type === "checkbox") {
+      setFormData((prev) => ({ ...prev, [name]: checked }));
+    } else if (name === "number" || name === "altNumber") {
       setFormData((prev) => ({ ...prev, [name]: formatPhoneNumber(value) }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -314,8 +314,8 @@ const Edit = () => {
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center h-screen">
-        <GiBoatFishing className="text-6xl text-blue-600 dark:text-blue-400" />
-        <p className="dark:text-gray-50 mt-4">Loading...</p>
+        <GiBoatFishing className="text-6xl text-blue-600 " />
+        <p className=" mt-4">Loading...</p>
       </div>
     );
   }
@@ -325,10 +325,8 @@ const Edit = () => {
       <div className="mx-auto max-w-5xl mt-4">
         <BackButton />
       </div>
-      <h1 className="text-xl font-bold mb-4 dark:text-gray-100">
-        Edit body of water
-      </h1>
-      <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-lg bg-gray-50 dark:bg-neutral-900 dark:shadow-gray-400">
+      <h1 className="text-xl font-bold mb-4 ">Edit body of water</h1>
+      <div className="px-4 mx-auto max-w-2xl lg:py-8 rounded overflow-hidden shadow-xl">
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 text-left">
           <InputField
             label="Customer first name"
@@ -568,9 +566,7 @@ const Edit = () => {
             ]}
           />
           <div className="max-w-full">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
-              HHL Build
-            </label>
+            <label className="block mb-2 text-sm font-medium ">HHL Build</label>
             <div className="flex gap-x-3">
               {["Yes", "No", "Unknown"].map((value) => (
                 <div key={value} className="flex space-x-0.5">
@@ -581,28 +577,36 @@ const Edit = () => {
                     checked={formData.hhlBuild === value}
                     onChange={handleInputChange}
                   />
-                  <label className="text-sm text-gray-500 dark:text-gray-400 ms-3">
-                    {value}
-                  </label>
+                  <label className="text-sm  ms-3">{value}</label>
                 </div>
               ))}
             </div>
           </div>
+          <div className="max-w-full">
+            <label className="block mb-2 text-sm font-medium">
+              Chlorine Demand
+            </label>
+            <div className="flex gap-x-3">
+              <input
+                type="checkbox"
+                name="chlorineDemand"
+                checked={formData.chlorineDemand}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
           <div className="sm:col-span-2">
             <div>
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+              <label className="block mb-2 text-sm font-medium ">
                 Description
               </label>
-              <div
-                className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 dark:text-white"
-                ref={quillRef}
-              />
+              <div className=" border  rounded-lg p-2 " ref={quillRef} />
             </div>
           </div>
           <div className="sm:col-span-2">
             {existingImages.length > 0 && (
               <>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                <label className="block mb-2 text-sm font-medium ">
                   Existing Images
                 </label>
                 <div className="flex flex-wrap gap-4">
@@ -616,7 +620,7 @@ const Edit = () => {
                       <button
                         type="button"
                         onClick={() => handleRemoveImage(image)}
-                        className="absolute top-0 left-0 bg-white text-black p-1 rounded-full opacity-85 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-0 left-0  p-1 rounded-full opacity-85 group-hover:opacity-100 transition-opacity"
                       >
                         <svg
                           className="w-4 h-4"
@@ -648,20 +652,20 @@ const Edit = () => {
               maxTotalFileSize="20MB"
               name="images"
               labelIdle='Drag & drop your images or <span class="filepond--label-action">Browse</span>'
-              className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 rounded-lg"
+              className=" border  rounded-lg"
             />
           </div>
           <div className="flex flex-cols-2 space-x-1">
             <button
               onClick={handleCancel}
-              className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+              className="btn btn-error bg-red-500"
               disabled={isLoading}
             >
               Cancel
             </button>
             <button
               onClick={handleEditPool}
-              className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800"
+              className="btn btn-success bg-green-500"
               disabled={isLoading}
             >
               {isLoading ? "Updating..." : "Update"}

@@ -16,7 +16,7 @@ const Pagination = ({
 
   return (
     <div className="flex justify-between mt-3">
-      <div className="flex-start text-gray-900 dark:text-gray-100">
+      <div className="flex-start  ">
         <p>
           Showing {indexOfFirstPool + 1} to{" "}
           {Math.min(indexOfLastPool, filteredPools.length)} of{" "}
@@ -27,7 +27,7 @@ const Pagination = ({
         <button
           className={`px-3 py-2 rounded-md mr-2 ${
             currentPage === 1 || totalPages === 0
-              ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
+              ? "bg-gray-200    cursor-not-allowed"
               : "bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-900"
           }`}
           onClick={() => setCurrentPage(1)}
@@ -51,7 +51,7 @@ const Pagination = ({
         <button
           className={`px-3 py-2 rounded-md mr-2 ${
             currentPage === 1 || totalPages === 0
-              ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
+              ? "bg-gray-200 cursor-not-allowed"
               : "bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-900"
           }`}
           onClick={() => setCurrentPage(currentPage - 1)}
@@ -75,7 +75,7 @@ const Pagination = ({
         <button
           className={`px-3 py-2 rounded-md mr-2 ${
             currentPage === totalPages || totalPages === 0
-              ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
+              ? "bg-gray-200    cursor-not-allowed"
               : "bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-900"
           }`}
           onClick={() => setCurrentPage(currentPage + 1)}
@@ -99,7 +99,7 @@ const Pagination = ({
         <button
           className={`px-3 py-2 rounded-md ${
             currentPage === totalPages || totalPages === 0
-              ? "bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-gray-100 cursor-not-allowed"
+              ? "bg-gray-200   cursor-not-allowed"
               : "bg-blue-500 text-white hover:bg-blue-700 active:bg-blue-900"
           }`}
           onClick={() => setCurrentPage(totalPages)}

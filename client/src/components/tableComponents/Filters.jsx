@@ -17,11 +17,11 @@ const Filters = ({
 }) => (
   <div className="flex mb-4 space-y-4 sm:space-y-0">
     <div className="justify-start ">
-      <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+      <label className="block text-sm font-medium leading-6">
         Entries per page
       </label>
       <select
-        className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+        className="relative w-full cursor-default rounded-md    py-1.5 pl-3 text-left shadow-sm ring-1 ring-inset  focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
         id="page-length"
         aria-labelledby="page-length-label"
         onChange={onEntriesChange}
@@ -36,11 +36,11 @@ const Filters = ({
 
     <div className="mx-auto flex flex-row items-center space-x-4 ">
       <div className=" ">
-        <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+        <label className="block text-sm font-medium leading-6">
           Filter by status
         </label>
         <select
-          className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+          className="relative w-full cursor-default rounded-md   py-1.5 pl-3 text-left shadow-sm ring-1 ring-inset   focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
           id="status-filter"
           name="status"
           aria-labelledby="status-filter-label"
@@ -62,11 +62,11 @@ const Filters = ({
       </div>
 
       <div className=" ">
-        <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+        <label className="block text-sm font-medium leading-6 ">
           Filter by staff
         </label>
         <select
-          className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+          className="relative w-full cursor-default rounded-md   py-1.5 pl-3 text-left shadow-sm ring-1 ring-inset   focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
           id="staff-filter"
           name="staff"
           aria-labelledby="staff-filter-label"
@@ -83,11 +83,11 @@ const Filters = ({
       </div>
 
       <div className=" ">
-        <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+        <label className="block text-sm font-medium leading-6 ">
           Filter today's list
         </label>
         <select
-          className="relative w-full cursor-default rounded-md bg-white dark:bg-neutral-800 dark:text-gray-100 py-1.5 pl-3 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+          className="relative w-full cursor-default rounded-md py-1.5 pl-3 text-left shadow-sm ring-1 ring-inset   focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
           id="todaysList-filter"
           name="todaysList"
           aria-labelledby="todaysList-filter-label"
@@ -108,13 +108,13 @@ const Filters = ({
     </div>
 
     <div className="flex flex-col  w-full md:w-auto">
-      <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100 px-2">
+      <label className="block text-sm font-medium leading-6  px-2">
         Search records
       </label>
       <div className="relative mt-1">
         <input
           type="text"
-          className="block w-full p-2 text-sm text-gray-900 dark:bg-neutral-800 dark:text-gray-100 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+          className="block w-full p-2 text-sm    border   rounded-lg focus:ring-blue-500 focus:border-blue-500"
           placeholder="Search..."
           onChange={onSearchChange}
           value={searchQuery}
@@ -122,7 +122,7 @@ const Filters = ({
         {searchQuery === "" ? (
           <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <svg
-              className="w-5 h-5 text-gray-500"
+              className="w-5 h-5 "
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -137,7 +137,7 @@ const Filters = ({
             </svg>
           </div>
         ) : (
-          <div className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-800 dark:text-gray-200">
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3  ">
             <button onClick={onClearSearch}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

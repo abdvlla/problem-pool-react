@@ -96,8 +96,8 @@ const Show = () => {
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center h-screen">
-        <GiBoatFishing className=" text-6xl text-blue-600 dark:text-blue-400" />
-        <p className="dark:text-gray-50 mt-4">Loading...</p>
+        <GiBoatFishing className=" text-6xl text-blue-600 " />
+        <p className=" mt-4">Loading...</p>
       </div>
     );
   }
@@ -117,10 +117,8 @@ const Show = () => {
 
     return (
       <div>
-        <dt className="text-sm font-medium text-gray-900 dark:text-gray-100">
-          {label}
-        </dt>
-        <dd className="mt-1 text-sm text-gray-700 dark:text-gray-200">
+        <dt className="text-sm font-medium  ">{label}</dt>
+        <dd className="mt-1 text-sm ">
           {isEmail ? (
             <button
               className="text-blue-600 dark:text-blue-400 underline"
@@ -143,7 +141,7 @@ const Show = () => {
       <div className="mx-auto max-w-5xl mt-4">
         <BackButton />
       </div>
-      <div className=" flex mb-2 space-x-2 justify-center">
+      <div className="flex mb-2 space-x-2 justify-center">
         <Link to={`/pools/${pool._id}/edit`}>
           <button className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
             Edit
@@ -157,9 +155,9 @@ const Show = () => {
         </button>
       </div>
 
-      <div className="content-center py-8 px-6 mx-auto max-w-6xl bg-gray-50 dark:bg-neutral-900 shadow-lg rounded-lg text-left">
-        <div className="border-t border-gray-200 dark:border-gray-700">
-          <dl className="divide-y divide-gray-200 dark:divide-gray-700">
+      <div className="content-center py-8 px-6 mx-auto max-w-6xl rounded-lg text-left shadow-2xl border-2">
+        <div className="border-t ">
+          <dl className="divide-y ">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-6">
               <DetailItem
                 label="Customer name"
@@ -207,6 +205,11 @@ const Show = () => {
                 isButton
               />
               <DetailItem label="Priority" value={pool.priority} isButton />
+              <DetailItem
+                label="Chlorine Demand"
+                value={pool.chlorineDemand ? "Yes" : "No"}
+                isButton
+              />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 py-6">
               <DetailItem label="Body of water" value={pool.bodyOfWater} />
@@ -235,9 +238,9 @@ const Show = () => {
                 <DetailItem
                   label="Description"
                   value={
-                    <div className="ql-container ql-snow dark:bg-neutral-800 dark:border-gray-700">
+                    <div className="ql-container ql-snow ">
                       <div
-                        className="ql-editor dark:text-white"
+                        className="ql-editor"
                         dangerouslySetInnerHTML={{ __html: pool.description }}
                       />
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -19,14 +19,15 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
   const closeMobileMenu = useCallback(() => setMobileMenuOpen(false), []);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", darkMode);
+    const theme = darkMode ? "dark" : "corporate";
+    document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
   if (!isLoggedIn) return null;
 
   return (
-    <header className="top-0 z-50 sticky border-solid border-2 dark:border-gray-600 dark:border-t-0 dark:border-x-0 bg-gray-50 dark:bg-neutral-900 dark:bg-opacity-95 bg-opacity-95">
+    <header className="top-0 z-50 sticky border-solid border-2 dark:border-gray-600 dark:border-t-0 dark:border-x-0 bg-base-300 bg-opacity-95">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -44,7 +45,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
         <div className="flex lg:hidden">
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-800 dark:text-gray-200"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5  "
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
@@ -52,30 +53,18 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
           </button>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
-          <NavLink
-            to="/pools"
-            className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
-          >
+          <NavLink to="/pools" className="text-sm font-semibold leading-6 ">
             BoW
           </NavLink>
-          <NavLink
-            to="/pools/new"
-            className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
-          >
+          <NavLink to="/pools/new" className="text-sm font-semibold leading-6 ">
             New BoW
           </NavLink>
-          <NavLink
-            to="/staff"
-            className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
-          >
+          <NavLink to="/staff" className="text-sm font-semibold leading-6 ">
             Staff
           </NavLink>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
-          <button
-            className="text-sm font-semibold leading-6 text-gray-800 hover:text-neutral-950 dark:hover:text-gray-50 dark:text-gray-200"
-            onClick={logout}
-          >
+          <button className="text-sm font-semibold leading-6 " onClick={logout}>
             Log out
           </button>
         </div>
@@ -92,18 +81,18 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
         onClose={closeMobileMenu}
       >
         <div className="fixed inset-0 z-50" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-50 dark:bg-neutral-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-300 dark:sm:ring-gray-700">
+        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto  px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-300 dark:sm:ring-gray-700">
           <div className="flex items-center justify-between">
             <NavLink
               to="/"
-              className="-m-1.5 p-1.5 block rounded-lg py-2 text-base dark:text-white font-semibold leading-7"
+              className="-m-1.5 p-1.5 block rounded-lg py-2 text-base  font-semibold leading-7"
               onClick={closeMobileMenu}
             >
               Home
             </NavLink>
             <button
               type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-800 dark:text-gray-200"
+              className="-m-2.5 rounded-md p-2.5  "
               onClick={closeMobileMenu}
             >
               <span className="sr-only">Close menu</span>
@@ -115,21 +104,21 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
               <div className="py-6">
                 <NavLink
                   to="/pools"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold   hover:bg-gray-200 dark:hover:bg-gray-700"
                   onClick={closeMobileMenu}
                 >
                   BoW
                 </NavLink>
                 <NavLink
                   to="/pools/new"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold   hover:bg-gray-200 dark:hover:bg-gray-700"
                   onClick={closeMobileMenu}
                 >
                   New BoW
                 </NavLink>
                 <NavLink
                   to="/staff"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold   hover:bg-gray-200 dark:hover:bg-gray-700"
                   onClick={closeMobileMenu}
                 >
                   Staff
@@ -137,7 +126,7 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
               </div>
               <div className="py-6">
                 <button
-                  className="-mx-3 block w-full rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 text-left"
+                  className="-mx-3 block w-full rounded-lg px-3 py-2.5 text-base font-semibold leading-7   hover:bg-gray-200 dark:hover:bg-gray-700 text-left"
                   onClick={() => {
                     logout();
                     closeMobileMenu();

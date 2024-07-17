@@ -211,7 +211,7 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
   };
 
   return (
-    <div className="content-center py-6 px-5 mx-auto w-10/12 relative overflow-x-auto sm:rounded-lg border rounded-lg shadow bg-gray-50 dark:bg-neutral-900 mt-4 ">
+    <div className="content-center py-7 px-4 mx-auto w-10/12 relative overflow-x-auto sm:rounded-lg border rounded-lg shadow   mt-4 ">
       <Filters
         entriesPerPage={entriesPerPage}
         onEntriesChange={handleEntriesChange}
@@ -241,7 +241,7 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
           onBulkUpdate={handleBulkUpdate}
         />
       )}
-      <table id="poolTable" className="table-auto shadow-lg rounded w-full">
+      <table id="poolTable" className="table-sm bg-base-100 table-auto w-full">
         <TableHeader
           showBulkOptions={showBulkOptions}
           sortConfig={sortConfig}
