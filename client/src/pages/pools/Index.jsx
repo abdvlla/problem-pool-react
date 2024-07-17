@@ -53,7 +53,8 @@ const Index = () => {
     bulkAssignedTo,
     bulkTodaysList,
     bulkStatus,
-    bulkPriority
+    bulkPriority,
+    bulkChlorineDemand
   ) => {
     if (!token) {
       setError("User not authenticated");
@@ -69,6 +70,7 @@ const Index = () => {
           todaysList: bulkTodaysList || undefined,
           status: bulkStatus || undefined,
           priority: bulkPriority || undefined,
+          chlorineDemand: bulkChlorineDemand || undefined,
         },
         {
           headers: {

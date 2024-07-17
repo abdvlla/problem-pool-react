@@ -8,9 +8,11 @@ const Filters = ({
   todaysListFilter,
   searchQuery,
   staff,
+  chlorineDemandFilter,
   onStatusFilterChange,
   onStaffFilterChange,
   onTodaysListFilterChange,
+  onChlorineDemandFilterChange,
   onSearchChange,
   onClearFilters,
   onClearSearch,
@@ -97,6 +99,23 @@ const Filters = ({
           <option value="">All</option>
           <option value="yes">Yes</option>
           <option value="done">Done</option>
+        </select>
+      </div>
+      <div className=" ">
+        <label className="block text-sm font-medium leading-6 ">
+          Filter by CD
+        </label>
+        <select
+          className="relative w-full cursor-default rounded-md py-1.5 pl-3 text-left shadow-sm ring-1 ring-inset   focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+          id="chlorineDemand-filter"
+          name="chlorineDemand"
+          aria-labelledby="chlorineDemand-filter-label"
+          value={chlorineDemandFilter}
+          onChange={onChlorineDemandFilterChange}
+        >
+          <option value="">All</option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
         </select>
       </div>
       <button

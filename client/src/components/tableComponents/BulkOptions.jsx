@@ -6,10 +6,12 @@ const BulkOptions = ({
   bulkAssignedTo,
   bulkTodaysList,
   bulkPriority,
+  bulkChlorineDemand,
   onStatusChange,
   onAssignedToChange,
   onTodaysListChange,
   onPriorityChange,
+  onChlorineDemandChange,
   onBulkUpdate,
 }) => (
   <div className="flex justify-center items-center space-x-4 mb-4">
@@ -84,6 +86,21 @@ const BulkOptions = ({
             {num}
           </option>
         ))}
+      </select>
+    </div>
+    <div>
+      <label className="block text-sm font-medium leading-6">
+        Chlorine Demand
+      </label>
+
+      <select
+        className="relative w-full cursor-default rounded-md    py-1.5 pl-3 text-left  shadow-sm ring-1 ring-inset  focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+        value={bulkChlorineDemand}
+        onChange={onChlorineDemandChange}
+      >
+        <option value=""></option>
+        <option value="false">No</option>
+        <option value="true">Yes</option>
       </select>
     </div>
     <button

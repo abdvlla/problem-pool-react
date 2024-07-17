@@ -20,6 +20,9 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
   const [todaysListFilter, setTodaysListFilter] = useState(
     localStorage.getItem("todaysListFilter") || ""
   );
+  const [chlorineDemandFilter, setChlorineDemandFilter] = useState(
+    localStorage.getItem("chlorineDemandFilter") || ""
+  );
   const [searchQuery, setSearchQuery] = useState(
     localStorage.getItem("searchQuery") || ""
   );
@@ -32,6 +35,7 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
   const [bulkTodaysList, setBulkTodaysList] = useState("");
   const [bulkStatus, setBulkStatus] = useState("");
   const [bulkPriority, setBulkPriority] = useState("");
+  const [bulkChlorineDemand, setBulkChlorineDemand] = useState("");
   const [showBulkOptions, setShowBulkOptions] = useState(false);
 
   useEffect(() => {
@@ -39,12 +43,14 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
     localStorage.setItem("statusFilter", statusFilter);
     localStorage.setItem("staffFilter", staffFilter);
     localStorage.setItem("todaysListFilter", todaysListFilter);
+    localStorage.setItem("chlorineDemandFilter", chlorineDemandFilter);
     localStorage.setItem("searchQuery", searchQuery);
   }, [
     entriesPerPage,
     statusFilter,
     staffFilter,
     todaysListFilter,
+    chlorineDemandFilter,
     searchQuery,
   ]);
 
@@ -110,6 +116,9 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
           pool.todaysList
             ?.toLowerCase()
             .includes(todaysListFilter.toLowerCase())) &&
+        (!chlorineDemandFilter ||
+          (chlorineDemandFilter === "true" && pool.chlorineDemand) ||
+          (chlorineDemandFilter === "false" && !pool.chlorineDemand)) &&
         keywords.every((keyword) => {
           return (
             pool.firstName?.toLowerCase().includes(keyword) ||
@@ -122,7 +131,14 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
         })
       );
     });
-  }, [statusFilter, staffFilter, todaysListFilter, searchQuery, sortedPools]);
+  }, [
+    statusFilter,
+    staffFilter,
+    todaysListFilter,
+    chlorineDemandFilter,
+    searchQuery,
+    sortedPools,
+  ]);
 
   const handleEntriesChange = (e) => {
     setEntriesPerPage(parseInt(e.target.value, 10));
@@ -144,6 +160,11 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
     setCurrentPage(1);
   };
 
+  const handleChlorineDemandFilterChange = (e) => {
+    setChlorineDemandFilter(e.target.value);
+    setCurrentPage(1);
+  };
+
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
     setCurrentPage(1);
@@ -160,13 +181,16 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
     setStaffFilter("");
     setTodaysListFilter("");
     setSearchQuery("");
+    setChlorineDemandFilter("");
     setBulkAssignedTo("");
     setBulkPriority("");
     setBulkStatus("");
     setBulkTodaysList("");
+    setBulkChlorineDemand("");
     localStorage.removeItem("statusFilter");
     localStorage.removeItem("staffFilter");
     localStorage.removeItem("todaysListFilter");
+    localStorage.removeItem("chlorineDemandFilter");
     localStorage.removeItem("searchQuery");
   };
 
@@ -205,7 +229,8 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
       bulkAssignedTo,
       bulkTodaysList,
       bulkStatus,
-      bulkPriority
+      bulkPriority,
+      bulkChlorineDemand
     );
     setSelectedPools([]);
   };
@@ -218,11 +243,13 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
         statusFilter={statusFilter}
         staffFilter={staffFilter}
         todaysListFilter={todaysListFilter}
+        chlorineDemandFilter={chlorineDemandFilter}
         searchQuery={searchQuery}
         staff={staff}
         onStatusFilterChange={handleStatusFilterChange}
         onStaffFilterChange={handleStaffFilterChange}
         onTodaysListFilterChange={handleTodaysListFilterChange}
+        onChlorineDemandFilterChange={handleChlorineDemandFilterChange}
         onSearchChange={handleSearchChange}
         onClearFilters={clearFilters}
         onClearSearch={clearSearch}
@@ -234,10 +261,12 @@ const PoolsTable = ({ pools, onBulkUpdate, staff }) => {
           bulkAssignedTo={bulkAssignedTo}
           bulkTodaysList={bulkTodaysList}
           bulkPriority={bulkPriority}
+          bulkChlorineDemand={bulkChlorineDemand}
           onStatusChange={(e) => setBulkStatus(e.target.value)}
           onAssignedToChange={(e) => setBulkAssignedTo(e.target.value)}
           onTodaysListChange={(e) => setBulkTodaysList(e.target.value)}
           onPriorityChange={(e) => setBulkPriority(e.target.value)}
+          onChlorineDemandChange={(e) => setBulkChlorineDemand(e.target.value)}
           onBulkUpdate={handleBulkUpdate}
         />
       )}
