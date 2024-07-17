@@ -93,27 +93,27 @@ const Home = () => {
   ];
 
   return (
-    <div className="bg-gray-50 dark:bg-neutral-800 text-gray-100 min-h-screen">
+    <div className="  min-h-screen">
       <section className="py-12 sm:py-12 lg:py-16">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="max-w-xl mx-auto text-center xl:max-w-2xl mb-12">
-            <h2 className="text-3xl font-bold leading-tight dark:text-gray-50 sm:text-4xl xl:text-5xl text-black">
+            <h2 className="text-3xl font-bold leading-tight  sm:text-4xl xl:text-5xl">
               Customer Status Statistics
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Link
               to="/pools"
-              className="relative overflow-hidden bg-neutral-800 dark:bg-white shadow-md rounded-xl h-full dark:hover:bg-gray-200 dark:active:bg-gray-500 active:bg-gray-300 hover:bg-neutral-700 transition duration-300 border-4 border-neutral-700 hover:border-gray-200 dark:hover:border-gray-600"
+              className="relative overflow-hidden  bg-white shadow-md rounded-xl h-full hover:bg-gray-200 active:bg-gray-500   transition duration-300 border-4  hover:border-gray-600"
             >
               <div className="p-9 text-center">
-                <h3 className="text-4xl font-bold dark:text-gray-900 text-white">
+                <h3 className="text-4xl font-bold text-gray-900 ">
                   {counts.allBodiesOfWater}
                 </h3>
-                <h3 className="mt-6 text-2xl font-bold dark:text-gray-900 text-white">
+                <h3 className="mt-6 text-2xl font-bold text-gray-900 ">
                   All Bodies of Water
                 </h3>
-                <p className="mt-6 text-base dark:text-gray-600 text-gray-300 ">
+                <p className="mt-6 text-base text-gray-600 ">
                   The total number of bodies of waters in the database
                 </p>
               </div>
@@ -121,16 +121,16 @@ const Home = () => {
             {pieData.map((data, index) => (
               <div
                 key={index}
-                className={`relative overflow-hidden bg-neutral-800 dark:bg-white shadow-md rounded-xl h-full dark:hover:bg-gray-200 hover:bg-neutral-700 transition duration-300 border-4 ${data.color}`}
+                className={`relative overflow-hidden  bg-white shadow-md rounded-xl h-full hover:bg-gray-200  transition duration-300 border-4 ${data.color}`}
               >
                 <div className="p-9 text-center">
-                  <h3 className="text-4xl font-bold dark:text-gray-900 text-white">
+                  <h3 className="text-4xl font-bold text-gray-900">
                     {data.value}
                   </h3>
-                  <h3 className="mt-6 text-2xl font-bold dark:text-gray-900 text-white">
+                  <h3 className="mt-6 text-2xl font-bold text-gray-900">
                     {data.name}
                   </h3>
-                  <p className="mt-6 text-base dark:text-gray-600 text-gray-300">
+                  <p className="mt-6 text-base text-gray-600 ">
                     {`These are the bodies of water that are in the ${data.name} status.`}
                   </p>
                 </div>

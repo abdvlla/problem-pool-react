@@ -171,19 +171,19 @@ const Staff = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-xl py-8 mt-8 rounded-lg shadow-lg shadow-gray-500  bg-gray-50 dark:bg-neutral-900">
-      <h2 className="text-2xl font-bold mb-4 dark:text-white">Manage Staff</h2>
+    <div className="container mx-auto p-4 max-w-xl py-8 mt-8 rounded-lg shadow-lg shadow-gray-500  ">
+      <h2 className="text-2xl font-bold mb-4 ">Manage Staff</h2>
       <div className="grid mx-auto max-w-xl mb-4">
         <input
           type="text"
           placeholder="Name of staff"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
+          className=" border border-gray-300   text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5"
         />
         <button
           onClick={handleAddStaff}
-          className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition duration-150 ease-in-out mt-4 mx-auto"
+          className="btn btn-sm btn-primary mx-auto my-2"
         >
           Add staff
         </button>
@@ -192,7 +192,7 @@ const Staff = () => {
         {staff.map((member) => (
           <li
             key={member._id}
-            className="p-2 border dark:border-gray-700 rounded-lg flex items-center justify-between shadow-sm hover:shadow-lg transition-shadow duration-200 dark:bg-neutral-800 dark:text-white"
+            className="p-2 border  rounded-lg flex items-center justify-between shadow-sm hover:shadow-lg transition-shadow duration-200 "
           >
             <div className="flex items-center">
               {!editMode[member._id] ? (
@@ -204,7 +204,7 @@ const Staff = () => {
                   onChange={(e) =>
                     setEditName({ ...editName, [member._id]: e.target.value })
                   }
-                  className="bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2"
+                  className=" border border-gray-300   text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2"
                 />
               )}
             </div>
@@ -213,13 +213,13 @@ const Staff = () => {
                 <>
                   <button
                     onClick={() => toggleEditMode(member._id)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition duration-150 ease-in-out"
+                    className="btn btn-sm btn-primary"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDeleteStaff(member._id)}
-                    className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition duration-150 ease-in-out"
+                    className="btn btn-sm btn-error"
                   >
                     Delete
                   </button>
@@ -230,13 +230,13 @@ const Staff = () => {
                     onClick={() =>
                       handleEditStaff(member._id, editName[member._id])
                     }
-                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg transition duration-150 ease-in-out"
+                    className="btn btn-sm btn-success"
                   >
                     Save
                   </button>
                   <button
                     onClick={() => handleCancelEdit(member._id)}
-                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition duration-150 ease-in-out"
+                    className="btn btn-sm btn-error"
                   >
                     Cancel
                   </button>
